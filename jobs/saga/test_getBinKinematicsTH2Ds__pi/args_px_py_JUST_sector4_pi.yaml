@@ -1,0 +1,23 @@
+baseoutpath: "out_px_py_JUST_sector4_pi_" #NOTE: This will be prepended to the default output path like so: `<baseoutpath><binscheme_name>.csv`.
+inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pi_*.root"
+tree: "t"
+nthreads: 8
+save_pdfs: true
+cuts: "Q2>1 && W>2 && y<0.75 && mx_pi>1.5 && (sector_e!=4 && sector_pi==4) && sqrt(px_pi*px_pi+py_pi*py_pi+pz_pi*pz_pi)>1.25 && sqrt(px_pi*px_pi+py_pi*py_pi+pz_pi*pz_pi)<5.0 && TMath::Abs(TMath::ATan2(px_pi,pz_pi))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
+particle_suffixes: ["_pi"]
+var_formulas:
+  - ["phperp2_pi", "(float)phperp_pi*phperp_pi"]
+binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
+binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_fullbin.yaml"]
+binvars: [] #NOTE: INCLUDE ALL VARIABLE NAMES AND LIMITS TO AUTOMATICALLY APPLY OVERALL LIMIT CUTS
+binvar_lims: []
+depolvars: []
+depolvar_lims: []
+asymfitvars: []
+asymfitvar_lims: []
+massfitvars: []
+massfitvar_lims: []
+kinvars: [["px_pi","py_pi"],["px_e","py_e"]]
+kinvar_lims: [[[-1.25,1.25],[-1.25,1.25]],[[-2.0,2.0],[-2.0,2.0]]]
+kinvar_bins: [[50,50],[50,50]]

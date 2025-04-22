@@ -1,0 +1,25 @@
+baseoutpath: "out_mc_rgh_fullbin_dphi_nosector4_" #NOTE: This will be prepended to the default output path like so: `<baseoutpath><binscheme_name>.csv`.
+inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pipim_*.root"
+tree: "t"
+nthreads: 8
+save_pdfs: true
+cuts: "Q2>1 && W>2 && y<0.75 && mx_pipim>1.5 && xF_pi>0.0 && xF_pim>0.0 && (sector_e!=4 && sector_pi!=4 && sector_pim!=4) && TMath::Abs(TMath::ATan2(px_pi,pz_pi))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
+particle_suffixes: ["_pi","_pim"]
+var_formulas:
+  - ["dphi_e_pi","(float)(abs(phi_e-phi_pi)<TMath::Pi() ? (phi_e-phi_pi) : ((phi_e-phi_pi)>0 ? -2*TMath::Pi() + (phi_e-phi_pi) : (2*TMath::Pi()+(phi_e-phi_pi))))"]
+  - ["dphi_e_pim","(float)(abs(phi_e-phi_pim)<TMath::Pi() ? (phi_e-phi_pim) : ((phi_e-phi_pim)>0 ? -2*TMath::Pi() + (phi_e-phi_pim) : (2*TMath::Pi()+(phi_e-phi_pim))))"]
+  - ["dphi_pi_pim","(float)(abs(phi_pi-phi_pim)<TMath::Pi() ? (phi_pi-phi_pim) : ((phi_pi-phi_pim)>0 ? -2*TMath::Pi() + (phi_pi-phi_pim) : (2*TMath::Pi()+(phi_pi-phi_pim))))"]
+binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
+binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_fullbin.yaml"]
+binvars: [] #NOTE: INCLUDE ALL VARIABLE NAMES AND LIMITS TO AUTOMATICALLY APPLY OVERALL LIMIT CUTS
+binvar_lims: []
+depolvars: []
+depolvar_lims: []
+asymfitvars: []
+asymfitvar_lims: []
+massfitvars: []
+massfitvar_lims: []
+kinvars: ["dphi_e_pi","dphi_e_pim","dphi_pi_pim"]
+kinvar_lims: [[-3.14,3.15],[-3.14,3.14],[-3.14,3.14]]
+kinvar_bins: [100,100,100]

@@ -1,0 +1,73 @@
+baseoutpath: "out_" #NOTE: This will be prepended to the default output path like so: `<baseoutpath><binscheme_name>.csv`.
+inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pim_*.root"
+tree: "t"
+nthreads: 1
+cuts: "Q2>1 && W>2 && y<0.75 && mx_pim>1.5 && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)>1.25 && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)<5.0 && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+inject_asym: true
+inject_seed: 2
+mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
+sgasyms: [0.1]
+bgasyms: [0.0]
+particle_suffixes: ["_pim"]
+mc_sg_match_name: "mc_sg_match"
+mc_sg_match_formula: "(bool)(true)" #NOTE: dtheta and dphi variables are automatically defined for the given particle suffixes.
+fsgasyms_xs_name: "fsgasyms_xs"
+fsgasyms_xs_formula: "(float)(sin_phi_h*depol0*sgasyms[0])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fbgasyms_xs_name: "fbgasyms_xs"
+fbgasyms_xs_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+randvar_name: "randvar"
+xs_name: "XS"
+helicity_name: "heli"
+helicity_formula: "-helicity"
+helicity_states:
+  plus: 1
+  zero: 0
+  minus: -1
+var_formulas: #NOTE: Variable definitions will be applied in order in case of dependencies, and they should follow the form [variable_name,formula].
+  - ["phperp2_pim","(float)(phperp_pim*phperp_pim)"]
+  - ["sin_phi_h","(float)sin(phi_h_pim) "]
+  - ["sin_phi_h_mc","(float)sin(phi_h_pim_mc)"]
+  - ["gamma","(float)(2.0*0.9383*x/sqrt(Q2))"]
+  - ["gamma_mc","(float)(2.0*0.9383*x_mc/sqrt(Q2_mc))"]
+  - ["epsilon","(float)((1-y-0.25*y*y*gamma*gamma)/(1-y+0.5*y*y+0.25*y*y*gamma*gamma))"]
+  - ["epsilon_mc","(float)((1-y_mc-0.25*y_mc*y_mc*gamma_mc*gamma_mc)/(1-y_mc+0.5*y_mc*y_mc+0.25*y_mc*y_mc*gamma_mc*gamma_mc))"]
+  - ["depol0","(float)sqrt(2*epsilon*(1-epsilon))"] 
+  - ["depol0_mc","(float)sqrt(2*epsilon_mc*(1-epsilon_mc))"]
+binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
+binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pim.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
+binvars: ["Q2","x","phperp2_pim","phperp_pim","z_pim","mx_pim"]
+binvar_titles: ["Q^{2} (GeV^{2})","x","P^{2}_{#perp#pi^{=}} (GeV)","P_{#perp#pi^{-}} (GeV)","z_{#pi^{-}}","M_{X, #pi^{-}} (GeV)"]
+binvar_lims: [[1,11],[0,1],[0,1.6],[0,1.25],[0,1],[0.0,5]]
+binvar_bins: [16,16,16,16,16]
+depolvars: ["depol0"]
+depolvar_titles: ["depol0"]
+depolvar_lims: [[-1,1]]
+depolvar_bins: [16]
+asymfitvars: ["sin_phi_h"]
+asymfitvar_titles: ["sin(#phi_{h})"]
+asymfitvar_lims: [[-1,1]]
+asymfitvar_bins: [16]
+massfitvars: []
+massfitvar_titles: []
+massfitvar_lims: []
+massfitvar_bins: []
+pol: 1.0 #NOTE: 0.8922 Average Polarization for RGA Fall 2018 Outbending data runs >= 5331
+asymfit_formula: "x[0]*x[1]*x[2]" #NOTE: This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfitpar_inits: [0.0]
+asymfitpar_initlims: [[-0.5,0.5]]
+use_sumw2error: false
+use_average_depol: false
+use_extended_nll: false
+use_binned_fit: false
+massfit_nbins_conv: 1000
+massfit_sig_pdf_name: "" #NOTE: This must be one of ("gauss","landau","cb","landau_X_gauss","cb_X_gauss").  No mass fit will be applied if an empty string is passed.
+massfit_sg_region_min: 0.0
+massfit_sg_region_max: 0.0
+sgyield_name: "sgyield"
+bgYield_name: "bgyield"
+use_splot: false
+massfit_sgcut: ""
+massfit_bgcut: ""
+use_sb_subtraction: false
+use_binned_sb_weights: false
+logpath: "out.txt"

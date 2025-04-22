@@ -1,0 +1,22 @@
+baseoutpath: "out_" #NOTE: This will be prepended to the default output path like so: `<baseoutpath><binscheme_name>.csv`.
+inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pim_*.root"
+tree: "t"
+nthreads: 8
+cuts: "Q2>1 && W>2 && y<0.75 && mx_pim>1.5 && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
+particle_suffixes: ["_pim"]
+var_formulas:
+  - ["phperp2_pim","phperp_pim*phperp_pim"]
+binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
+binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pim.yaml"]
+binvars: [] #NOTE: INCLUDE ALL VARIABLE NAMES AND LIMITS TO AUTOMATICALLY APPLY OVERALL LIMIT CUTS
+binvar_lims: []
+depolvars: []
+depolvar_lims: []
+asymfitvars: []
+asymfitvar_lims: []
+massfitvars: []
+massfitvar_lims: []
+kinvars: [["z_pim","phperp_pim"],["z_pim","phperp2_pim"]]
+kinvar_lims: [[[0.0,1.0],[0.0,1.25]],[[0.0,1.0],[0.0,1.6]]]
+kinvar_bins: [[50,50],[50,50]]
