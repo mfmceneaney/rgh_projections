@@ -31,6 +31,9 @@ chain_configs = dict(
     **ibatches,
 ) if nbatch > 1 else {}
 
+# Set sector4 label
+sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+
 # Set base directories to aggregate
 run_groups = ['dt_rgc']
 channels   = ['pi','pim','pipim']
@@ -140,7 +143,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             plot_results_kwargs_base,
             **{
                 'old_dat_path':os.path.basename(base_dir),
-                'new_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgh__{ch}__1D/')),
+                'new_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgh{sector4_label}__{ch}__1D/')),
                 'old_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/')),
                 'count_key':'count',
                 'yerr_key':'',
@@ -180,7 +183,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         plot_results_kwargs_base['xlabel'] = xlabel_map[binscheme_name]
         plot_results_kwargs_base['binlims'] = binlims
         plot_results_kwargs_base['hist_paths'] = [
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins_binscheme_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins{sector4_label}_binscheme_kinematics.root')),
             os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_1d_bins_binscheme_kinematics.root')),
             os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_binscheme_kinematics.root')),
         ]
@@ -279,7 +282,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
             # Set additional arguments for saga.aggregate.plot_results()
             plot_results_kwargs_base['sgasyms'] = config['sgasyms']
-            plot_results_kwargs_base['outpath'] = config_out_path
+            plot_results_kwargs_base['outpath'] = config_out_path.replace(sep+result_name+ext,sector4_label+sep+result_name+ext)
 
             # Plot the graph
             sagas.plot_results(ax,**aggregate_graph,**plot_results_kwargs_base)
