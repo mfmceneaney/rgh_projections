@@ -8,7 +8,8 @@ setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections" #N
 setenv RGH_SIM_HOME /volatile/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
 
 # Set variables for saga
-setenv SAGA_BUILD_DIR "/volatile/clas12/users/$USER/saga/build" #NOTE: CHANGE AS NEEDED. This is the build directory for your local repo of: https://github.com/mfmceneaney/saga
+setenv SAGA_HOME "/volatile/clas12/users/$USER/saga" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/saga
+setenv SAGA_BUILD_DIR "$SAGA_HOME/build"
 
 # Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 setenv RGA_MC_DIR "/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
