@@ -10,7 +10,7 @@ from saga.orchestrate import create_jobs, submit_jobs
 dry_run=True
 
 # Set base directories
-run_groups = ["rgh_mc","rgh_mc_sector4","rgc_mc","rgc_dt"]
+run_groups = ["mc_rgh","mc_rgh_sector4","mc_rgc"]
 channels = ["pi","pim","pipim"]
 base_dirs = [
     f"test_getKinBinnedAsym__{rg}__{ch}__1D/" for rg in run_groups for ch in channels

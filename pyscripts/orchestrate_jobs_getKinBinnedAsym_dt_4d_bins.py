@@ -11,7 +11,7 @@ import saga.aggregate as sagas
 dry_run=True
 
 # Set base directories
-run_groups = ["rgc_dt"]
+run_groups = ["dt_rgc"]
 channels = ["pi","pim","pipim"]
 base_dirs = [
     f"test_getKinBinnedAsym__{rg}__{ch}/" for rg in run_groups for ch in channels
