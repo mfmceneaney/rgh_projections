@@ -1,0 +1,15 @@
+binscheme:
+  nested:
+    - phperp_k:
+        bins: 3
+        lims: [0.0, 0.4, 0.7, 1.755]
+        nested:
+          - z_k:
+              bins: 2
+              lims: [0.0, 0.25, 1.0]
+          - z_k:
+              bins: 2
+              lims: [0.0, 0.25, 1.0]
+          - z_k:
+              bins: 2
+              lims: [0.0, 0.25, 1.0]
