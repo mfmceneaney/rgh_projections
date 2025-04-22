@@ -36,7 +36,7 @@ channels = ['pi','pim','pipim']
 for ch in channels:
 
     # Setup input paths
-    base_dir     = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__rgc_dt__{ch}/'))
+    base_dir     = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__dt_rgc__{ch}/'))
     submit_path  = os.path.join(base_dir,"submit.sh")
     yaml_path    = os.path.join(base_dir,"args.yaml")
     out_path     = os.path.join(base_dir,"jobs.txt")
