@@ -70,12 +70,33 @@ Finally, aggregate results from injection studies, rescale uncertainty projectio
 Here are some examples of the plots you can produce with the python scripts.
 
 You can plot your bin schemes with average kinematics marked for each bin:
-![RGH bin scheme in x and Q2 plot](./figs/binscheme2d_x_Q2_pi.png)
-![RGH bin scheme in z and pT plot](./figs/binscheme2d_z_pT_pi.png)
+
+<object data="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+<object data="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
 Or plot ratios of, e.g. acceptance ratios between different detector configurations, for example excluding particles from sector 4 or not. 
-![RGH ratios of acceptance ratios plot](./figs/acceptance_ratios_x_pi.png)
+
+<object data="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
 And, most importantly, you can plot rescaled uncertainty projections and show the relevant kinematics distributions in the background.
-![RGH uncertainty projections plot](./figs/projections_x_pi.png)
+
+<object data="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
 
 #
 
