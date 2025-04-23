@@ -11,18 +11,14 @@ export RGH_SIM_HOME=/volatile/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS
 export SAGA_HOME="/volatile/clas12/users/$USER/saga" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/saga
 export SAGA_BUILD_DIR="$SAGA_HOME/build"
 
-# Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
-export RGA_MC_DIR="/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
-export RGC_MC_DIR="/work/cebaf24gev/sidis/reconstructed/polarized-plus-10.5GeV-proton/hipo/"
-export RGA_DT_DIR="/cache/clas12/rg-a/production/recon/fall2018/torus-1/pass1/v1/dst/train/nSidis/"
-export RGC_DT_DIR="/cache/clas12/rg-c/production/fall22/pass1/NH3/dst/train/sidisdvcs/"
-export RGC_MC_DIR_22GeV="/work/cebaf24gev/sidis/reconstructed/polarized-plus-22GeV-proton/hipo/"
+# Set variables for clasdis
+export CLASDIS_TARG=proton
+export CLASDIS_NMAX=10000
+export CLASDIS_TRIG=10000000
+export CLASDIS_POL=1
+export CLASDIS_GEN_PM=1
 
-# Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
-export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
-export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22GeV/dst"
-
-# Set beam energies and target lund pids for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
+# Set beam energies and target lund pids for clasdis and CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 export BEAM_ENERGY_RGA=10.6
 export TPID_RGA=2212
 export BEAM_ENERGY_RGC=10.55
@@ -33,6 +29,17 @@ export BEAM_ENERGY_RGC_22GeV=22.0
 export TPID_RGC_22GeV=2212
 export BEAM_ENERGY_RGH_22GeV=22.0
 export TPID_RGH_22GeV=2212
+
+# Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
+export RGA_MC_DIR="/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
+export RGC_MC_DIR="/work/cebaf24gev/sidis/reconstructed/polarized-plus-10.5GeV-proton/hipo/"
+export RGA_DT_DIR="/cache/clas12/rg-a/production/recon/fall2018/torus-1/pass1/v1/dst/train/nSidis/"
+export RGC_DT_DIR="/cache/clas12/rg-c/production/fall22/pass1/NH3/dst/train/sidisdvcs/"
+export RGC_MC_DIR_22GeV="/work/cebaf24gev/sidis/reconstructed/polarized-plus-22GeV-proton/hipo/"
+
+# Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
+export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
+export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22GeV/dst"
 
 # Set paths in yaml files for saga
 for file in $RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml; do
