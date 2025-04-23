@@ -16,7 +16,7 @@ export CLASDIS_TARG=proton
 export CLASDIS_NMAX=10000
 export CLASDIS_TRIG=10000000
 export CLASDIS_POL=1
-export CLADIS_PREFIX=out_tp_
+export CLASDIS_PREFIX=out_tp_
 export CLASDIS_GEN_PM=1
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis #NOTE: CHANGE AS NEEDED

@@ -16,7 +16,7 @@ setenv CLASDIS_TARG proton
 setenv CLASDIS_NMAX 10000
 setenv CLASDIS_TRIG 10000000
 setenv CLASDIS_POL 1
-setenv CLADIS_PREFIX out_tp_
+setenv CLASDIS_PREFIX out_tp_
 setenv CLASDIS_GEN_PM 1
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis #NOTE: CHANGE AS NEEDED
