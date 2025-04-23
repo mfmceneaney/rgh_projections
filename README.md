@@ -50,7 +50,7 @@ touch jobs.txt
 ./setup.sh >> jobs.txt
 ```
 
-Run kinematics jobs and by going into each directory and manually submitting:
+Run kinematics jobs by going into each directory and manually submitting:
 ```bash
 for file in jobs/saga/test_getBinKinematics*; do
     echo $file
