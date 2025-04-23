@@ -8,6 +8,26 @@ This is a storage repository for yamls and scripts used to create the RGH $\delt
 * [CLAS12-Analysis](https://github.com/mfmceneaney/CLAS12-Analysis.git)
 * [saga](https://github.com/mfmceneaney/saga.git)
 
+# Installation
+
+Begin by cloning the repository:
+```bash
+git clone https://github.com/mfmceneaney/rgh_projections.git
+```
+
+Make sure all the paths in the environment script are correct for you.
+In particular, you will need to manually set these variables in the environment script depending on your local installation paths and the paths for existing data and MC samples you wish to use:
+`RGH_PROJECTIONS_VOL_DIR`, `RGH_SIM_HOME`,`SAGA_BUILD_DIR`, `RG?_MC_DIR*`.
+Yaml paths will be set based on the paths given in the environment script.
+
+After configuring your environemnt script, add the following to your (bash) startup script:
+```bash
+# Set up RGH projections https://github.com/mfmceneaney/rgh_projections.git
+pushd /path/to/rgh_projections >> /dev/null
+source bin/env.sh
+popd >> /dev/null
+```
+
 # Overview
 
 First you must produce RGH simulation HIPO files using the directories in `jobs/rgh_simulation/`.
@@ -33,26 +53,6 @@ touch jobs.txt
 Run kinematics jobs and injection studies using the `pyscripts/orchestrate*.py` files.
 
 Finally, aggregate results from injection studies, rescale uncertainty projections, and plot kinematics and bin schemes with the remaining scripts in `pyscripts`.
-
-# Installation
-
-Begin by cloning the repository:
-```bash
-git clone https://github.com/mfmceneaney/rgh_projections.git
-```
-
-Make sure all the paths in the environment script are correct for you.
-In particular, you will need to manually set these variables in the environment script depending on your local installation paths and the paths for existing data and MC samples you wish to use:
-`RGH_PROJECTIONS_VOL_DIR`, `RGH_SIM_HOME`,`SAGA_BUILD_DIR`, `RG?_MC_DIR*`.
-Yaml paths will be set based on the paths given in the environment script.
-
-After configuring your environemnt script, add the following to your (bash) startup script:
-```bash
-# Set up RGH projections https://github.com/mfmceneaney/rgh_projections.git
-pushd /path/to/rgh_projections >> /dev/null
-source bin/env.sh
-popd >> /dev/null
-```
 
 #
 
