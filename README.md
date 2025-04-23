@@ -71,36 +71,16 @@ Here are some examples of the plots you can produce with the python scripts.
 
 You can plot your bin schemes with average kinematics marked for each bin:
 
-<object data="https://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
-<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+![figs/binscheme2d_x_Q2_pi.png](./figs/binscheme2d_x_Q2_pi.png)
+![figs/binscheme2d_z_pT_pi.png](./figs/binscheme2d_z_pT_pi.png)
 
 Or plot ratios of, e.g. acceptance ratios between different detector configurations, for example excluding particles from sector 4 or not. 
 
-<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+![figs/acceptance_ratios_x_pi.png](./figs/acceptance_ratios_x_pi.png)s
 
 And, most importantly, you can plot rescaled uncertainty projections and show the relevant kinematics distributions in the background.
 
-<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
-
-<p align="center">
-  <img src="./figs/projections_x_pi.pdf" width="350" title="projections_x_pi.pdf">
-</p>
+![figs/projections_x_pi.png](./figs/projections_x_pi.png)
 
 #
 
