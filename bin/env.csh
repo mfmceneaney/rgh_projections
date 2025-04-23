@@ -2,7 +2,7 @@
 
 # Set variables for this project
 setenv RGH_PROJECTIONS_HOME $PWD
-setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections" #NOTE: CHANGE IF YOU ARE USER OR STAFF.
+setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections" #NOTE: CHANGE AS NEEDED.
 
 # Set variables for rgh_simulation
 setenv RGH_SIM_HOME /volatile/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
@@ -44,9 +44,4 @@ foreach file ($RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml)
     sed -i.bak "s;/RGA_DT_DIR;$RGA_DT_DIR;g" $file
     sed -i.bak "s;/RGC_DT_DIR;$RGC_DT_DIR;g" $file
     sed -i.bak "s;/RGC_MC_DIR_22GeV;$RGC_MC_DIR_22GeV;g" $file
-end
-
-# Set paths in python scripts using saga outputs #TODO: JUST SET THESE FROM ENVIRONMENT VARIABLES. #TODO: COPY TO CSH SCRIPT TOO
-foreach file ($RGH_PROJECTIONS_HOME/pyscripts/*.py)
-    sed -i.bak "s;/RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
 end
