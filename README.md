@@ -71,30 +71,30 @@ Here are some examples of the plots you can produce with the python scripts.
 
 You can plot your bin schemes with average kinematics marked for each bin:
 
-<object data="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_x_Q2_pi.pdf">Download PDF</a>.</p>
+<object data="https://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_x_Q2_pi.pdf">Download PDF</a>.</p>
     </embed>
 </object>
-<object data="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/binscheme2d_z_pT_pi.pdf">Download PDF</a>.</p>
+<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/binscheme2d_z_pT_pi.pdf">Download PDF</a>.</p>
     </embed>
 </object>
 
 Or plot ratios of, e.g. acceptance ratios between different detector configurations, for example excluding particles from sector 4 or not. 
 
-<object data="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/acceptance_ratios_x_pi.pdf">Download PDF</a>.</p>
+<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/acceptance_ratios_x_pi.pdf">Download PDF</a>.</p>
     </embed>
 </object>
 
 And, most importantly, you can plot rescaled uncertainty projections and show the relevant kinematics distributions in the background.
 
-<object data="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/figs/projections_x_pi.pdf">Download PDF</a>.</p>
+<object data="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://github.com/mfmceneaney/rgh_projections/tree/main/figs/projections_x_pi.pdf">Download PDF</a>.</p>
     </embed>
 </object>
 
