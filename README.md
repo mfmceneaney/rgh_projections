@@ -15,7 +15,7 @@ Begin by cloning the repository:
 git clone https://github.com/mfmceneaney/rgh_projections.git
 ```
 
-Make sure all the paths in the environment script---[bin/env.sh](bin/env.sh) or [bin/env.csh](bin/env.csh)---are correct for you.
+Make sure all the paths in the environment script&mdash;[bin/env.sh](bin/env.sh) or [bin/env.csh](bin/env.csh)&mdash;are correct for you.
 In particular, you will need to manually set these variables in the environment script depending on your local installation paths and the paths for existing data and MC samples you wish to use:
 `RGH_PROJECTIONS_VOL_DIR`, `RGH_SIM_HOME`,`SAGA_BUILD_DIR`, `RG?_MC_DIR*`.
 Yaml paths will be set based on the paths given in the environment script.
@@ -50,7 +50,18 @@ touch jobs.txt
 ./setup.sh >> jobs.txt
 ```
 
-Run kinematics jobs and injection studies using the `pyscripts/orchestrate*.py` files.
+Run kinematics jobs and by going into each directory and manually submitting:
+```bash
+for file in jobs/saga/test_getBinKinematics*; do
+    echo $file
+    cd $file
+    touch jobs.txt
+    sbatch $PWD/submit.sh >> jobs.txt
+    cd -
+    echo
+done
+```
+Then, run injection studies using the `pyscripts/orchestrate*.py` files.
 
 Finally, aggregate results from injection studies, rescale uncertainty projections, and plot kinematics and bin schemes with the remaining scripts in `pyscripts`.
 
