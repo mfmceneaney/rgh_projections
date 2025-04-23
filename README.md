@@ -20,7 +20,7 @@ In particular, you will need to manually set these variables in the environment 
 `RGH_PROJECTIONS_VOL_DIR`, `RGH_SIM_HOME`,`SAGA_BUILD_DIR`, `RG?_MC_DIR*`.
 Yaml paths will be set based on the paths given in the environment script.
 
-After configuring your environemnt script, add the following to your (bash) startup script:
+After configuring your environment script, add the following to your (bash) startup script:
 ```bash
 # Set up RGH projections https://github.com/mfmceneaney/rgh_projections.git
 pushd /path/to/rgh_projections >> /dev/null
