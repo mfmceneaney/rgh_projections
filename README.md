@@ -15,7 +15,7 @@ Begin by cloning the repository:
 git clone https://github.com/mfmceneaney/rgh_projections.git
 ```
 
-Make sure all the paths in the environment script are correct for you.
+Make sure all the paths in the environment script---[bin/env.sh](bin/env.sh) or [bin/env.csh](bin/env.csh)---are correct for you.
 In particular, you will need to manually set these variables in the environment script depending on your local installation paths and the paths for existing data and MC samples you wish to use:
 `RGH_PROJECTIONS_VOL_DIR`, `RGH_SIM_HOME`,`SAGA_BUILD_DIR`, `RG?_MC_DIR*`.
 Yaml paths will be set based on the paths given in the environment script.
