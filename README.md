@@ -98,6 +98,10 @@ And, most importantly, you can plot rescaled uncertainty projections and show th
     </embed>
 </object>
 
+<p align="center">
+  <img src="./figs/projections_x_pi.pdf" width="350" title="projections_x_pi.pdf">
+</p>
+
 #
 
 Contact: matthew.mceneaney@duke.edu
