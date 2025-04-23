@@ -18,7 +18,7 @@ export RGA_DT_DIR="/cache/clas12/rg-a/production/recon/fall2018/torus-1/pass1/v1
 export RGC_DT_DIR="/cache/clas12/rg-c/production/fall22/pass1/NH3/dst/train/sidisdvcs/"
 export RGC_MC_DIR_22GeV="/work/cebaf24gev/sidis/reconstructed/polarized-plus-22GeV-proton/hipo/"
 
-# Set project HIPO data paths ffor CLAS12-Analysis #NOTE: CHANGE AS NEEDED
+# Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
 export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22GeV/dst"
 
