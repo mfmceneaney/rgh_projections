@@ -76,7 +76,7 @@ You can plot your bin schemes with average kinematics marked for each bin:
 
 Or plot ratios of, e.g. acceptance ratios between different detector configurations, for example excluding particles from sector 4 or not. 
 
-![figs/acceptance_ratios_x_pi.png](./figs/acceptance_ratios_x_pi.png)s
+![figs/acceptance_ratios_x_pi.png](./figs/acceptance_ratios_x_pi.png)
 
 And, most importantly, you can plot rescaled uncertainty projections and show the relevant kinematics distributions in the background.
 
