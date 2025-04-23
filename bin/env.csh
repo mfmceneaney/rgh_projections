@@ -37,11 +37,5 @@ setenv TPID_RGH_22GeV 2212
 # Set paths in yaml files for saga
 foreach file ($RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml)
     sed -i.bak "s;/RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
-    sed -i.bak "s;/RGH_PROJECTIONS_WORK_DIR;$RGH_PROJECTIONS_WORK_DIR;g" $file
     sed -i.bak "s;/RGH_PROJECTIONS_VOL_DIR;$RGH_PROJECTIONS_VOL_DIR;g" $file
-    sed -i.bak "s;/RGA_MC_DIR;$RGA_MC_DIR;g" $file
-    sed -i.bak "s;/RGC_MC_DIR;$RGC_MC_DIR;g" $file
-    sed -i.bak "s;/RGA_DT_DIR;$RGA_DT_DIR;g" $file
-    sed -i.bak "s;/RGC_DT_DIR;$RGC_DT_DIR;g" $file
-    sed -i.bak "s;/RGC_MC_DIR_22GeV;$RGC_MC_DIR_22GeV;g" $file
 end
