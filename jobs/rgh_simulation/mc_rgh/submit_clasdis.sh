@@ -29,7 +29,7 @@ if ((!$CLASDIS_GEN_PM)); then
     for file in *.dat
     do
         echo $file
-        export NEWFILENAME=`echo $file | sed "s;${PREFIX}clasdis;${PREFIX}${i}clasdis;g"`
+        export NEWFILENAME=`echo $file | sed "s;${PREFIX}clasdis;${PREFIX}_idx_${i}clasdis;g"`
         echo NEWFILENAME $NEWFILENAME
         mv $file $NEWFILENAME
         ((i++))
@@ -47,7 +47,7 @@ else
     for file in *.dat
     do
         echo $file
-        export NEWFILENAME=`echo $file | sed "s;${PREFIX}${CLASDIS_POL}_clasdis;${PREFIX}${CLASDIS_POL}${i}_clasdis;g" | sed "s;${PREFIX}-${CLASDIS_POL}_clasdis;${PREFIX}-${CLASDIS_POL}${i}_clasdis;g"`
+        export NEWFILENAME=`echo $file | sed "s;${PREFIX}${CLASDIS_POL}_clasdis;${PREFIX}${CLASDIS_POL}_idx_${i}_clasdis;g" | sed "s;${PREFIX}-${CLASDIS_POL}_clasdis;${PREFIX}-${CLASDIS_POL}_idx_${i}_clasdis;g"`
         echo NEWFILENAME $NEWFILENAME
         mv $file $NEWFILENAME
         ((i++))
