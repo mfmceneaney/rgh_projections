@@ -39,15 +39,15 @@ if ((!$CLASDIS_GEN_PM)); then
 else
 
     # Run clasdis event generation for both positive and negative polarization
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${PREFIX}${CLADIS_POL}_
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${PREFIX}-${CLADIS_POL}_
+    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${PREFIX}${CLASDIS_POL}_
+    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${PREFIX}-${CLASDIS_POL}_
 
     # Move files to numbered prefix names for ease of use
     i=1
     for file in *.dat
     do
         echo $file
-        export NEWFILENAME=`echo $file | sed "s;${PREFIX}${CLADIS_POL}_clasdis;${PREFIX}${CLADIS_POL}${i}_clasdis;g" | sed "s;${PREFIX}-${CLADIS_POL}_clasdis;${PREFIX}-${CLADIS_POL}${i}_clasdis;g"`
+        export NEWFILENAME=`echo $file | sed "s;${PREFIX}${CLASDIS_POL}_clasdis;${PREFIX}${CLASDIS_POL}${i}_clasdis;g" | sed "s;${PREFIX}-${CLASDIS_POL}_clasdis;${PREFIX}-${CLASDIS_POL}${i}_clasdis;g"`
         echo NEWFILENAME $NEWFILENAME
         mv $file $NEWFILENAME
         ((i++))
