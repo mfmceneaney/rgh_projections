@@ -6,10 +6,10 @@
 
 # Set job info
 export MCINDEX=0 #NOTE: This will be set by `setup.sh`.
-export PREFIX="rgh_out_NH3_" #NOTE: Make sure this matches what you have in `submit_clasdis.sh`.
+export PREFIX="out_tp_CLASDIS_POL_" #NOTE: This will be set by `setup.sh`.
 export BASENAME="${PREFIX}${MCINDEX}"
 export NEVENTS=100 #NOTE: This will be set by `setup.sh`.
-export GCARD="$RGH_SIM_HOME/rgh_physics.gcard"
+export GCARD="$RGH_SIM_HOME/rgh_physics.gcard" #NOTE: This will be set by `setup.sh`.
 export YAML="$RGH_SIM_HOME/rgh_physics.yaml"
 export OUTDIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh"
 
