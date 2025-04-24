@@ -5,10 +5,10 @@ setenv RGH_PROJECTIONS_HOME $PWD
 setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections" #NOTE: CHANGE AS NEEDED.
 
 # Set variables for rgh_simulation
-setenv RGH_SIM_HOME /volatile/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
+setenv RGH_SIM_HOME /work/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
 
 # Set variables for saga
-setenv SAGA_HOME "/volatile/clas12/users/$USER/saga" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/saga
+setenv SAGA_HOME "/work/clas12/users/$USER/saga" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/saga
 setenv SAGA_BUILD_DIR "$SAGA_HOME/build"
 
 # Set variables for clasdis
