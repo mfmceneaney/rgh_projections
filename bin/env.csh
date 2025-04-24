@@ -31,12 +31,21 @@ setenv TPID_RGC_22GeV 2212
 setenv BEAM_ENERGY_RGH_22GeV 22.0
 setenv TPID_RGH_22GeV 2212
 
+# Set target spin vectors for CLAS12-Analysis
+setenv TSPIN_RGC "0,0,1"
+setenv TSPIN_RGH "1,0,0"
+
+# Set path to target polarization csv for RGC data and CLAS12-analysis
+setenv RGC_TPOL_CSV "/work/clas12/users/gmat/RGC_Tpol_maxLikelihood_fall22_4_16_2025.csv"
+
 # Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 setenv RGA_MC_DIR "/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
-setenv RGC_MC_DIR "/work/cebaf24gev/sidis/reconstructed/polarized-plus-10.5GeV-proton/hipo/"
+setenv RGC_MC_DIR_TP1 "/work/cebaf24gev/sidis/reconstructed/polarized-plus-10.5GeV-proton/hipo/"
+setenv RGC_MC_DIR_TM1 "/work/cebaf24gev/sidis/reconstructed/polarized-minus-10.5GeV-proton/hipo/"
 setenv RGA_DT_DIR "/cache/clas12/rg-a/production/recon/fall2018/torus-1/pass1/v1/dst/train/nSidis/"
 setenv RGC_DT_DIR "/cache/clas12/rg-c/production/fall22/pass1/NH3/dst/train/sidisdvcs/"
-setenv RGC_MC_DIR_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-plus-22GeV-proton/hipo/"
+setenv RGC_MC_DIR_TP1_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-plus-22GeV-proton/hipo/"
+setenv RGC_MC_DIR_TM1_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-minus-22GeV-proton/hipo/"
 
 # Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
