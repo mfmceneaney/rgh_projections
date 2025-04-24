@@ -7,7 +7,7 @@
 # Set job info
 export MCINDEX=0 #NOTE: This will be set by `setup.sh`.
 export PREFIX="out_tp_CLASDIS_POL_" #NOTE: This will be set by `setup.sh`.
-export BASENAME="${PREFIX}${MCINDEX}"
+export BASENAME="${PREFIX}${MCINDEX}_"
 export NEVENTS=100 #NOTE: This will be set by `setup.sh`.
 export GCARD="$RGH_SIM_HOME/rgh_physics.gcard" #NOTE: This will be set by `setup.sh`.
 export YAML="$RGH_SIM_HOME/rgh_physics.yaml"
@@ -52,7 +52,7 @@ export LUNDFILE=$BASENAME #NOTE: This cannot be too long, otherwise clasdis will
 ls -lrth $OUTDIR_LUND/${BASENAME}*clasdis*.dat
 export LUND_TASK_STATUS=$?
 cd - #NOTE: cd back to wherever you were before clasdis
-export LUNDFILE=`ls $OUTDIR_LUND/${BASENAME}clasdis*.dat`
+export LUNDFILE=`ls $OUTDIR_LUND/${BASENAME}*clasdis*.dat`
 check_task_status "clasdis" $LUNDFILE $LUND_TASK_STATUS 1
 
 # Run GEMC detector simulation
