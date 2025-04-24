@@ -18,10 +18,8 @@ cp submit.sh submit$i.sh
 # Replace clasdis file prefix and gemc gcard depending on if the lund file has positive or negative target polarization
 if ((!$CLASDIS_GEN_PM || $i<$NITERATIONS_HALF)); then
     sed -i "s;out_tp_CLASDIS_POL_;out_tp_${CLASDIS_POL}_idx_;g" job$i.sh
-    sed -i "s;rgh_physics\.gcard;rgh_physics_tp_p1\.gcard;g" job$i.sh
 else
     sed -i "s;out_tp_CLASDIS_POL_;out_tp_-${CLASDIS_POL}_idx_;g" job$i.sh
-    sed -i "s;rgh_physics\.gcard;rgh_physics_tp_m1\.gcard;g" job$i.sh
 fi
 
 # Replace the other variables

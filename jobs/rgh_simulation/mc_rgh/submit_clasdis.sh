@@ -37,9 +37,9 @@ if ((!$CLASDIS_GEN_PM)); then
 # Positive and negative target polarization split
 else
 
-    # Run clasdis event generation for both positive and negative polarization
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
+    # Run clasdis event generation for both positive and negative polarization #NOTE: RUN POSITIVE POLARIZATION SECOND SO THAT IT IS LOOPED FIRST BELOW
     nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${CLASDIS_PREFIX}-${CLASDIS_POL}_
+    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
 
     # Move files to numbered prefix names for ease of use
     i=1
