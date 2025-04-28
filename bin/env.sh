@@ -37,7 +37,7 @@ export TPID_RGH_22GeV=2212
 
 # Set target spin vectors for CLAS12-Analysis
 export TSPIN_RGC="0 0 1"
-export TSPIN_RGH="1 0 0"
+export TSPIN_RGH="0 1 0"
 
 # Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 export RGA_MC_DIR="/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
