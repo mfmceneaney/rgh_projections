@@ -67,7 +67,7 @@ check_task_status "gemc" $GEMCFILE $GEMC_TASK_STATUS 2
 export OUTDIR_REC="${OUTDIR}/cooked"
 mkdir -p $OUTDIR_REC
 export RECFILE=$OUTDIR_REC/$BASENAME.hipo
-recon-util -i $GEMCFILE -o $RECFILE -n $NEVENTS -y $YAML
+$MYCLASDIRBIN/recon-util -i $GEMCFILE -o $RECFILE -n $NEVENTS -y $YAML
 export REC_TASK_STATUS=$?
 check_task_status "recon-util" $RECFILE $REC_TASK_STATUS 3
 
