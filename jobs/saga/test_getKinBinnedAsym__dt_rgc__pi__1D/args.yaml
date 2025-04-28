@@ -17,17 +17,20 @@ fbgasyms_xs_name: "fbgasyms_xs"
 fbgasyms_xs_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
 randvar_name: "randvar"
 xs_name: "XS"
+run_names: ["runnum"] #NOTE: These are the variable name used as keys for matching CSV column values to events in the ROOT files from `inpath`.
+csv_paths: ["/RGC_TPOL_CSV"] #NOTE: You can load additional data, e.g., run depedent target polarizations, from CSV.  These will only be loaded if you specify the CSV paths here.  The length of `run_names` and `col_names` must exactly match the length of this argument if any csv paths are specified.
+col_names: [["PbPt"]] #NOTE: You must specify the data to take from the CSV
+col_aliases: #NOTE: You can optionally specify aliases for the column names in the CSV to avoid potential naming conflicts with existing columns in the `ROOT::RDataFrame`.
 helicity_name: "heli"
-helicity_formula: "-helicity"
+helicity_formula: "(float)(helicity!=0 ? ((PbPt*helicity)>0 ? 1 : -1) : 0)" #NOTE: You just need the target spin here so multiply by beam helicity.
 helicity_states:
   plus: 1
   zero: 0
   minus: -1
 var_formulas: #NOTE: Variable definitions will be applied in order in case of dependencies, and they should follow the form [variable_name,formula].
   - ["phperp2_pi","(float)(phperp_pi*phperp_pi)"]
-  - ["sin_phi_h","(float)sin(phi_h_pi) "]
-  - ["gamma","(float)(2.0*0.9383*x/sqrt(Q2))"]
-  - ["epsilon","(float)((1-y-0.25*y*y*gamma*gamma)/(1-y+0.5*y*y+0.25*y*y*gamma*gamma))"]
+  - ["phi_s","(float)(heli>=0 ? phi_s_up : phi_s_dn)"] #NOTE: DEFINE THE RUN NUMBER DEPENDENT PHI_S 
+  - ["sin_phi_h","(float)sin(phi_h_pi-phi_s) "]
   - ["depol0","(float)(-(1-y)/(1-y+0.5*y*y))"] 
 binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
 binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_1d_bins_pi.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
