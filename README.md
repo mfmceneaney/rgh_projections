@@ -34,7 +34,7 @@ First you must produce RGH simulation HIPO files using the directories in `jobs/
 To submit the simulation jobs, cd into the relevant directory and run:
 ```bash
 touch jobs.txt
-sbatch submit_clasdis.sh >> jobs.txt
+sbatch clasdis_submit.sh >> jobs.txt
 ```
 Once this job has finished, run:
 ```bash
