@@ -50,6 +50,8 @@ touch jobs.txt
 ./setup.sh >> jobs.txt
 ```
 
+Configure yamls for jobs running [saga](https://github.com/mfmceneaney/saga.git) by running `$RGH_PROJECTIONS_HOME/bin/setup.sh`.
+
 Run kinematics jobs by going into each directory and manually submitting:
 ```bash
 for file in jobs/saga/test_getBinKinematics*; do
