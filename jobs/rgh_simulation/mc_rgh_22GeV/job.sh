@@ -6,10 +6,10 @@
 
 # Set job info
 export MCINDEX=0 #NOTE: This will be set by `setup.sh`.
-export PREFIX="rgh_out_NH3_" #NOTE: Make sure this matches what you have in `submit_clasdis.sh`.
-export BASENAME="${PREFIX}${MCINDEX}"
+export PREFIX="out_tp_CLASDIS_POL_" #NOTE: This will be set by `setup.sh`.
+export BASENAME="${PREFIX}${MCINDEX}_"
 export NEVENTS=100 #NOTE: This will be set by `setup.sh`.
-export GCARD="$RGH_SIM_HOME/rgh_physics.gcard"
+export GCARD="$RGH_SIM_HOME/rgh_physics_22GeV.gcard"
 export YAML="$RGH_SIM_HOME/rgh_physics.yaml"
 export OUTDIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV"
 
@@ -49,7 +49,7 @@ mkdir -p $OUTDIR_LUND
 cd $OUTDIR_LUND #NOTE: Since clasdis does not like long input path names and just truncates them just cd to here and use basename
 export LUNDFILE=$BASENAME #NOTE: This cannot be too long, otherwise clasdis will truncate it.
 #NOTE: This step is run separately in `submit_clasdis.sh` now: clasdis --beam $BEAM_ENERGY --targ $TARGET_TYPE --trig $NEVENTS --nmax $EVPFILE --path $LUNDFILE --x $XMIN $XMAX
-ls -lrth $OUTDIR_LUND/${BASENAME}*clasdis*.dat
+ls -lrth $OUTDIR_LUND/${BASENAME}clasdis*.dat
 export LUND_TASK_STATUS=$?
 cd - #NOTE: cd back to wherever you were before clasdis
 export LUNDFILE=`ls $OUTDIR_LUND/${BASENAME}clasdis*.dat`
@@ -67,7 +67,7 @@ check_task_status "gemc" $GEMCFILE $GEMC_TASK_STATUS 2
 export OUTDIR_REC="${OUTDIR}/cooked"
 mkdir -p $OUTDIR_REC
 export RECFILE=$OUTDIR_REC/$BASENAME.hipo
-recon-util -i $GEMCFILE -o $RECFILE -n $NEVENTS -y $YAML
+$MYCLASDIRBIN/recon-util -i $GEMCFILE -o $RECFILE -n $NEVENTS -y $YAML
 export REC_TASK_STATUS=$?
 check_task_status "recon-util" $RECFILE $REC_TASK_STATUS 3
 
