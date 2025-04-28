@@ -1,4 +1,4 @@
-#!/bin/binschemes_paths
+#!/bin/bash
 
 # Set paths in yaml files for saga
 for file in $RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml; do
