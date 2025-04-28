@@ -49,8 +49,8 @@ setenv RGC_MC_DIR_TP1_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-plus
 setenv RGC_MC_DIR_TM1_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-minus-22GeV-proton/hipo/"
 
 # Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
-setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
-setenv RGH_MC_DIR_22GeV "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22GeV/dst"
+setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"
+setenv RGH_MC_DIR_22GeV "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/dst"
 
 # Set path to target polarization csv for RGC data and saga
 setenv RGC_TPOL_CSV "/work/clas12/users/gmat/RGC_Tpol_maxLikelihood_fall22_4_16_2025.csv"
