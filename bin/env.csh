@@ -7,6 +7,10 @@ setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections" #N
 # Set variables for rgh_simulation
 setenv RGH_SIM_HOME /work/clas12/users/$USER/rgh_simulation #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
 
+# Set variables for coatjava==11.0.1
+setenv MYCLASDIRBIN "/work/clas12/users/$USER/coatjava/coatjava/bin"
+setenv CLAS12DIR "/work/clas12/users/$USER/coatjava/coatjava/bin"
+
 # Set variables for saga
 setenv SAGA_HOME "/work/clas12/users/$USER/saga" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/saga
 setenv SAGA_BUILD_DIR "$SAGA_HOME/build"
@@ -32,11 +36,8 @@ setenv BEAM_ENERGY_RGH_22GeV 22.0
 setenv TPID_RGH_22GeV 2212
 
 # Set target spin vectors for CLAS12-Analysis
-setenv TSPIN_RGC "0,0,1"
-setenv TSPIN_RGH "1,0,0"
-
-# Set path to target polarization csv for RGC data and CLAS12-analysis
-setenv RGC_TPOL_CSV "/work/clas12/users/gmat/RGC_Tpol_maxLikelihood_fall22_4_16_2025.csv"
+setenv TSPIN_RGC "0 0 1"
+setenv TSPIN_RGH "1 0 0"
 
 # Set prexisting HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 setenv RGA_MC_DIR "/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/torus-1/v1/bkg45nA_10604MeV/*.hipo"
@@ -51,8 +52,5 @@ setenv RGC_MC_DIR_TM1_22GeV "/work/cebaf24gev/sidis/reconstructed/polarized-minu
 setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc/dst"
 setenv RGH_MC_DIR_22GeV "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22GeV/dst"
 
-# Set paths in yaml files for saga
-foreach file ($RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml)
-    sed -i.bak "s;/RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
-    sed -i.bak "s;/RGH_PROJECTIONS_VOL_DIR;$RGH_PROJECTIONS_VOL_DIR;g" $file
-end
+# Set path to target polarization csv for RGC data and saga
+setenv RGC_TPOL_CSV "/work/clas12/users/gmat/RGC_Tpol_maxLikelihood_fall22_4_16_2025.csv"

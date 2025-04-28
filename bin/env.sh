@@ -54,9 +54,3 @@ export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/rgh_mc_22G
 
 # Set path to target polarization csv for RGC data and saga
 export RGC_TPOL_CSV="/work/clas12/users/gmat/RGC_Tpol_maxLikelihood_fall22_4_16_2025.csv"
-
-# Set paths in yaml files for saga
-for file in $RGH_PROJECTIONS_HOME/jobs/*/*/*.yaml; do
-    sed -i.bak "s;/RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
-    sed -i.bak "s;/RGH_PROJECTIONS_VOL_DIR;$RGH_PROJECTIONS_VOL_DIR;g" $file
-done
