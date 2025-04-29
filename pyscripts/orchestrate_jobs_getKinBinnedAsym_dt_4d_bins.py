@@ -1,5 +1,6 @@
 # Basic imports
 import sys
+import os
 
 # Import saga modules
 SAGA_HOME = os.environ['SAGA_HOME']
@@ -14,7 +15,7 @@ dry_run=True
 run_groups = ["dt_rgc"]
 channels = ["pi","pim","pipim"]
 base_dirs = [
-    f"test_getKinBinnedAsym__{rg}__{ch}/" for rg in run_groups for ch in channels
+    os.path.abspath(os.path.join(os.environ['RGH_PROJECTIONS_HOME'],"jobs/saga/",f"test_getKinBinnedAsym__{rg}__{ch}/")) for rg in run_groups for ch in channels
 ]
 
 # Loop base directories
@@ -29,9 +30,9 @@ for base_dir, yaml_path in zip(base_dirs,yaml_paths):
     ibatches = {"ibatch":[i for i in range(nbatch)]}
 
     # Set job file paths and configs
-    submit_path = base_dir+"submit.sh"
-    yaml_path   = base_dir+"args.yaml"
-    out_path    = base_dir+"jobs.txt"
+    submit_path =  os.path.join(base_dir,"submit.sh")
+    yaml_path   =  os.path.join(base_dir,"args.yaml")
+    out_path    =  os.path.join(base_dir,"jobs.txt")
     configs = dict(
         sgasyms,
         **nbatches,
