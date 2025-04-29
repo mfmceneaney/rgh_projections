@@ -34,7 +34,7 @@ for base_dir, yaml_path in zip(base_dirs,yaml_paths):
 
     # Split binschemes with aliases
     binschemes = sagas.load_yaml(yaml_path)
-    binschemes = {"binschemes":[el for el in binschemes]}
+    binschemes = {"binschemes":[{el:binschemes[el]} for el in binschemes]}
     aliases    = {"binschemes":{
                         str(el):list(el.keys())[0]+"_binscheme"
                         for el in binschemes["binschemes"]
