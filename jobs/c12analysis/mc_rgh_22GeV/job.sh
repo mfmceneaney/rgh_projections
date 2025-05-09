@@ -14,11 +14,11 @@ else
     export TSPIN_SIGN=1
 fi
 
-$C12ANALYSIS/bin/run.sh $INFILE -ch 211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_pi_tp_${TSPIN_SIGN}_${name}.root
-$C12ANALYSIS/bin/run.sh $INFILE -ch -211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_pim_tp_${TSPIN_SIGN}_${name}.root
-$C12ANALYSIS/bin/run.sh $INFILE -ch 211,-211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_pipim_tp_${TSPIN_SIGN}_${name}.root
-$C12ANALYSIS/bin/run.sh $INFILE -ch 321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_k_tp_${TSPIN_SIGN}_${name}.root
-$C12ANALYSIS/bin/run.sh $INFILE -ch -321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_km_tp_${TSPIN_SIGN}_${name}.root
-$C12ANALYSIS/bin/run.sh $INFILE -ch 321,-321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -f -out $OUTDIR/skim_kkm_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch 211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_pi_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch -211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_pim_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch 211,-211 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_pipim_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch 321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_k_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch -321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_km_tp_${TSPIN_SIGN}_${name}.root
+$C12ANALYSIS/bin/run.sh $INFILE -ch 321,-321 -be $BEAM_ENERGY_RGH_22GeV -tpid $TPID_RGH_22GeV -tspin $TSPIN_RGH -tspin_sign $TSPIN_SIGN -rn -en -ang -vtx -ik -ma -ak -f -out $OUTDIR/skim_kkm_tp_${TSPIN_SIGN}_${name}.root
 
 echo DONE
