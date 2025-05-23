@@ -19,7 +19,7 @@ base_dirs = [
 ]
 
 # Loop base directories
-for base_dir, yaml_path in zip(base_dirs,yaml_paths):
+for base_dir in zip(base_dirs):
 
     # Create job submission structure
     asyms    = [0.0]
