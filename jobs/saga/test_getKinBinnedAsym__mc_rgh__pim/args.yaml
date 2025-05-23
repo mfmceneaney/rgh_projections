@@ -71,18 +71,19 @@ var_formulas: #NOTE: Variable definitions will be applied in order in case of de
   - ["depol0_lt_mc","(float)(y_mc*(1-0.5*y_mc)/d_uu_mc)"]
   - ["depol1_lt","(float)(depol0_lu)"]
   - ["depol1_lt_mc","(float)(depol0_lu_mc)"]
+  - ["depol_y","y"]
 binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
 binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pim.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
 binvars: ["Q2","W","x","y","xF_pim","phperp2_pim","phperp_pim","z_pim","mx_pim"]
 binvar_titles: ["Q^{2} (GeV^{2})","W (GeV)","x","y","x_{F,#pi^{-}}","P^{2}_{#perp#pi^{-}} (GeV)","P_{#perp#pi^{-}} (GeV)","z_{#pi^{-}}","M_{X, #pi^{-}} (GeV)"]
 binvar_lims: [[1,11],[0,10],[0,1],[0,1],[-2,2],[0,1.6],[0,1.25],[0,1],[0.0,5]]
 binvar_bins: [16,16,16,16,16,16,16]
-depolvars: ["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
-depolvar_titles: ["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
-depolvar_lims: [[-4,0],[-1,0],[-2,0],[0,1]]
-depolvar_bins: [16,16,16,16]
-asymfitvars: ["phi_h_pim","phi_s"]
-asymfitvar_titles: ["#phi_{h,#pi^{-}}","#phi_{S}"]
+depolvars: ["depol_y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
+depolvar_titles: ["y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
+depolvar_lims: [[0,1]] #[[-4,0],[-1,0],[-2,0],[0,1]]
+depolvar_bins: [16] #[16,16,16,16]
+asymfitvars: ["phi_h_pi","phi_s"]
+asymfitvar_titles: ["#phi_{h,#pi^{+}}","#phi_{S}"]
 asymfitvar_lims: [[0.0,6.28],[0.0,6.28]]
 asymfitvar_bins: [16,16]
 massfitvars: []
@@ -91,8 +92,8 @@ massfitvar_lims: []
 massfitvar_bins: []
 bpol: 1.0 #NOTE: Beam helicity values will only be injected if the beam polarization is > 0.
 tpol: 1.0 #NOTE: Target spin values will only be injected if the target polarization is > 0.
-asymfit_formula_uu: "cos(x[0])*x[11]*x[2]+sin(x[0]+x[1])*x[12]*x[3]+sin(3.0*x[0]-x[1])*x[12]*x[4]+sin(x[1])*x[11]*x[5]-sin(2.0*x[0]-x[1])*x[11]*x[6]" #NOTE: Unpolarized AND transverse target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfit_formula_pu: "sin(x[0])*x[13]*x[7]+cos(x[0]-x[1])*x[14]*x[8]+cos(x[1])*x[13]*x[9]+cos(2.0*x[0]-x[1])*x[13]*x[10]" #NOTE: Beam helicity dependent asymmetries. Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_uu: "cos(x[0])*(-2*(2-x[11])*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[2]+sin(x[0]+x[1])*(-(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[3]+sin(3.0*x[0]-x[1])*(-(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[4]+sin(x[1])*(-2*(2-x[11])*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[5]-sin(2.0*x[0]-x[1])*(-2*(2-x[11])*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[6]" #NOTE: Unpolarized AND transverse target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_pu: "sin(x[0])*(-2*x[11]*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[7]+cos(x[0]-x[1])*(x[11]*(1-0.5*x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[8]+cos(x[1])*(-2*x[11]*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[9]+cos(2.0*x[0]-x[1])*(-2*x[11]*sqrt(1-x[11])/(1-x[11]+0.5*x[11]*x[11]))*x[10]" #NOTE: Beam helicity dependent asymmetries. Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
 asymfit_formula_up: "" #NOTE: Target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
 asymfit_formula_pp: "" #NOTE: Beam helicity and target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
 asymfitpar_inits: [0.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0, 0.0 ,0.0]
