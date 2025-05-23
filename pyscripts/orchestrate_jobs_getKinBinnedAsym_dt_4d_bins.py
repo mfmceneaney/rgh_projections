@@ -41,5 +41,5 @@ for base_dir in base_dirs:
     )
 
     # Create job directories and submit jobs
-    create_jobs(configs,base_dir,submit_path,yaml_path,aliases=aliases)
-    submit_jobs(configs,base_dir,submit_path,out_path,aliases=aliases,dry_run=dry_run)
+    create_jobs(configs,base_dir,submit_path,yaml_path)
+    submit_jobs(configs,base_dir,submit_path,out_path,dry_run=dry_run)
