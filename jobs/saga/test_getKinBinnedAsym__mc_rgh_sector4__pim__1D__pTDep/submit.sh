@@ -11,7 +11,7 @@
 #SBATCH --time=1:00:00
 
 export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/getKinBinnedAsym
-export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export OUTDIR=$RGH_PROJECTIONS_HOME/jobs/saga/test_getKinBinnedAsym__mc_rgh_sector4__pim__1D__pTDep
 export YAML=args.yaml
 
 echo $MYEXECUTABLE
