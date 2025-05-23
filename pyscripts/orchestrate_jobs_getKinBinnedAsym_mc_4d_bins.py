@@ -1,6 +1,7 @@
 # Basic imports
 import sys
 import os
+import numpy as np
 
 # Import saga modules
 SAGA_HOME = os.environ['SAGA_HOME']
