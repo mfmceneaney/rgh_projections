@@ -6,55 +6,91 @@ cuts: "Q2>1 && W>2 && y<0.75 && mx_pim>1.5 && sqrt(px_pim*px_pim+py_pim*py_pim+p
 inject_asym: true
 inject_seed: 2
 mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
-sgasyms: [0.1]
+sgasyms: [0.0,0.1,0.0,0.0,0.0,0.0]
 bgasyms: [0.0]
 particle_suffixes: ["_pim"]
 mc_sg_match_name: "mc_sg_match"
 mc_sg_match_formula: "(bool)(true)" #NOTE: dtheta and dphi variables are automatically defined for the given particle suffixes.
-fsgasyms_xs_name: "fsgasyms_xs"
-fsgasyms_xs_formula: "(float)((1.0+0.1*(phperp_pim-0.625)/1.25)*sin_phi_h*depol0*sgasyms[0])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
-fbgasyms_xs_name: "fbgasyms_xs"
-fbgasyms_xs_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
-randvar_name: "randvar"
-xs_name: "XS"
+phi_s_original_name: "" #NOTE: Make sure you specify this variable name here AND in the asymmetry fit variables if you are injecting a transverse target spin dependent asymmetry.
+phi_s_original_name_dn: "" #NOTE: You also need the phi of the negative spin vector
+phi_s_injected_name: "" #NOTE: The asymmetry fit variable with name `phi_s_original_name` will be renamed to this after injection if `phi_s_original_name`!=""
+fsgasyms_xs_uu_name: "fsgasyms_xs_uu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_uu_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(cos(phi_h_pim)*depol0_uu*sgasyms[0])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_pu_name: "fsgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_pu_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(sin(phi_h_pim)*depol0_lu*sgasyms[1])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_up_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
+fsgasyms_xs_up_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(sin(2.0*phi_h_pim)*depol0_ul*sgasyms[2]+sin(phi_h_pim)*depol1_ul*sgasyms[3])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
+fsgasyms_xs_pp_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(depol0_lu*sgasyms[4]+cos(phi_h_pim)*depol0_ll*sgasyms[5])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fbgasyms_xs_pu_name: "fbgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
+fbgasyms_xs_pu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+fbgasyms_xs_up_name: "fbgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
+fbgasyms_xs_up_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+fbgasyms_xs_pp_name: "fbgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
+fbgasyms_xs_pp_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+combined_spin_state: "ss"
+rdf_key_cols: ["run"] #NOTE: These are the variable name used as keys in the RDataFrame for matching CSV column values to events in the ROOT files from `inpath`.
+csv_paths: [] #NOTE: You can load additional data, e.g., run depedent target polarizations, from CSV.  These will only be loaded if you specify the CSV paths here.  The length of `run_names` and `col_names` must exactly match the length of this argument if any csv paths are specified.
+csv_key_cols: ["Run"] #NOTE: These are the variable name used as keys in the CSV for matching CSV column values to events in the ROOT files from `inpath`.
+col_names: [["PbPt"]] #NOTE: You must specify the data to take from the CSV
+col_aliases: {} #NOTE: You can optionally specify aliases for the column names in the CSV to avoid potential naming conflicts with existing columns in the `ROOT::RDataFrame`.
 helicity_name: "heli"
-helicity_formula: "-helicity"
+helicity_formula: "(float)helicity" #NOTE: You just need the target spin here so multiply by beam helicity.
 helicity_states:
+  plus: 1
+  zero: 0
+  minus: -1
+tspin_name: "tspin"
+tspin_formula: "(float)TMath::Sign(1.0,PbPt)"
+tspin_states:
+  plus: 1
+  zero: 0
+  minus: -1
+htspin_name: "htspin"
+htspin_states:
   plus: 1
   zero: 0
   minus: -1
 var_formulas: #NOTE: Variable definitions will be applied in order in case of dependencies, and they should follow the form [variable_name,formula].
   - ["phperp2_pim","(float)(phperp_pim*phperp_pim)"]
-  - ["sin_phi_h","(float)sin(phi_h_pim) "]
-  - ["sin_phi_h_mc","(float)sin(phi_h_pim_mc)"]
-  - ["gamma","(float)(2.0*0.9383*x/sqrt(Q2))"]
-  - ["gamma_mc","(float)(2.0*0.9383*x_mc/sqrt(Q2_mc))"]
-  - ["epsilon","(float)((1-y-0.25*y*y*gamma*gamma)/(1-y+0.5*y*y+0.25*y*y*gamma*gamma))"]
-  - ["epsilon_mc","(float)((1-y_mc-0.25*y_mc*y_mc*gamma_mc*gamma_mc)/(1-y_mc+0.5*y_mc*y_mc+0.25*y_mc*y_mc*gamma_mc*gamma_mc))"]
-  - ["depol0","(float)(-(1-y)/(1-y+0.5*y*y))"]
-  - ["depol0_mc","(float)(-(1-y_mc)/(1-y_mc+0.5*y_mc*y_mc))"]
+  - ["d_uu","(float)(1-y+0.5*y*y)"]
+  - ["d_uu_mc","(float)(1-y_mc+0.5*y_mc*y_mc)"]
+  - ["depol0_uu","(float)(-2*(2-y)*sqrt(1-y)/d_uu)"]
+  - ["depol0_uu_mc","(float)(-2*(2-y_mc)*sqrt(1-y_mc)/d_uu_mc)"]
+  - ["depol0_lu","(float)(-2*y*sqrt(1-y)/d_uu)"]
+  - ["depol0_lu_mc","(float)(-2*y_mc*sqrt(1-y_mc)/d_uu_mc)"]
+  - ["depol0_ul","(float)(-(1-y)/d_uu)"]
+  - ["depol0_ul_mc","(float)(-(1-y_mc)/d_uu_mc)"]
+  - ["depol1_ul","(float)(-depol0_uu)"]
+  - ["depol1_ul_mc","(float)(-depol0_uu_mc)"]
+  - ["depol0_ll","(float)(y*(1-0.5*y)/d_uu)"]
+  - ["depol0_ll_mc","(float)(y_mc*(1-0.5*y_mc)/d_uu_mc)"]
 binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
 binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pim.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
-binvars: ["Q2","x","phperp2_pim","phperp_pim","z_pim","mx_pim"]
-binvar_titles: ["Q^{2} (GeV^{2})","x","P^{2}_{#perp#pi^{-}} (GeV)","P_{#perp#pi^{-}} (GeV)","z_{#pi^{-}}","M_{X, #pi^{-}} (GeV)"]
-binvar_lims: [[1,11],[0,1],[0,1.6],[0,1.25],[0,1],[0.0,5]]
-binvar_bins: [16,16,16,16,16]
-depolvars: ["depol0"]
-depolvar_titles: ["depol0"]
-depolvar_lims: [[-1,1]]
-depolvar_bins: [16]
-asymfitvars: ["sin_phi_h"]
-asymfitvar_titles: ["sin(#phi_{h})"]
-asymfitvar_lims: [[-1,1]]
+binvars: ["Q2","W","x","y","xF_pim","phperp2_pim","phperp_pim","z_pim","mx_pim"]
+binvar_titles: ["Q^{2} (GeV^{2})","W (GeV)","x","y","x_{F,#pi^{-}}","P^{2}_{#perp#pi^{-}} (GeV)","P_{#perp#pi^{-}} (GeV)","z_{#pi^{-}}","M_{X, #pi^{-}} (GeV)"]
+binvar_lims: [[1,11],[0,10],[0,1],[0,1],[-2,2],[0,1.6],[0,1.25],[0,1],[0.0,5]]
+binvar_bins: [16,16,16,16,16,16,16]
+depolvars: ["depol0_uu","depol0_lu","depol0_ul","depol0_ll"]
+depolvar_titles: ["depol0_uu","depol0_lu","depol0_ul","depol0_ll"]
+depolvar_lims: [[-4,0],[-2,0],[-1,0],[0,1]]
+depolvar_bins: [16,16,16,16]
+asymfitvars: ["phi_h_pim"]
+asymfitvar_titles: ["#phi_{h,#pi^{-}}"]
+asymfitvar_lims: [[0.0,6.28]]
 asymfitvar_bins: [16]
 massfitvars: []
 massfitvar_titles: []
 massfitvar_lims: []
 massfitvar_bins: []
-pol: 1.0 #NOTE: 0.8922 Average Polarization for RGA Fall 2018 Outbending data runs >= 5331
-asymfit_formula: "x[0]*x[1]*x[2]" #NOTE: This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfitpar_inits: [0.0]
-asymfitpar_initlims: [[-0.5,0.5]]
+bpol: 1.0 #NOTE: Beam helicity values will only be injected if the beam polarization is > 0.
+tpol: 1.0 #NOTE: Target spin values will only be injected if the target polarization is > 0.
+asymfit_formula_uu: "cos(x[0])*x[7]*x[1]" #NOTE: Unpolarized AND transverse target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_pu: "sin(x[0])*x[8]*x[2]" #NOTE: Beam helicity dependent asymmetries. Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_up: "sin(2.0*x[0])*x[9]*x[3]-sin(x[0])*x[7]*x[4]" #NOTE: Target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_pp: "x[8]*x[5]+cos(x[0])*x[10]*x[6]" #NOTE: Beam helicity and target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfitpar_inits: [0.0, 0.0, 0.0, 0.0 ,0.0, 0.0]
+asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
 use_sumw2error: false
 use_average_depol: false
 use_extended_nll: false
@@ -71,3 +107,5 @@ massfit_bgcut: ""
 use_sb_subtraction: false
 use_binned_sb_weights: false
 logpath: "out.txt"
+dump_dataset: false
+dump_vars: ["heli","tspin","ss","phi_h_pim","depol0_uu","depol0_lu","depol0_ul","depol0_ll","Q2","W","x","y","xF_pim","phperp2_pim","phperp_pim","z_pim","mx_pim"]
