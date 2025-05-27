@@ -121,7 +121,7 @@ for base_dir, ch_sgasym_label in zip(base_dirs,ch_sgasym_labels):
 
         # Load the binschemes from the path specified in the job yaml assuming there is only one given path and it is an absolute path
         binschemes_paths_name = "binschemes_paths"
-        yaml_path = sagas.load_yaml(yaml_path)[binschemes_names][0]
+        yaml_path = sagas.load_yaml(yaml_path)[binschemes_paths_name][0]
         binschemes = sagas.load_yaml(yaml_path)
 
         # # Arguments for sagas.get_config_list() #NOTE: Set this above
@@ -156,7 +156,7 @@ for base_dir, ch_sgasym_label in zip(base_dirs,ch_sgasym_labels):
             'sgasyms':[], #NOTE: This will be set below for each configuration
             'sgasym_idx':ch_sgasym_label_asym_idx,
             'sgasym_labels':[ch_sgasym_label[el] for el in ch_sgasym_label],
-            'sg_colors':['blue','red','green','tab:orange',''],
+            'sg_colors':['blue','red','green','tab:pink', 'tab:purple', 'tab:gray', 'tab:orange', 'tab:cyan'],
             'bgasyms':[],
             'bgasym_labels':[],
             'bg_colors':[],
