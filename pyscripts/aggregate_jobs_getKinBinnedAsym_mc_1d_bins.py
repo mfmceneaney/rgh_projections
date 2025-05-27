@@ -154,7 +154,7 @@ for base_dir, ch_sgasym_label in zip(base_dirs,ch_sgasym_labels):
         plot_results_kwargs_base = {
             'ylims':[-1.0,1.0],
             'sgasyms':[], #NOTE: This will be set below for each configuration
-            'sgasym_idx':ch_sgasym_label_asym_idx,
+            'sgasym_idx':ch_sgasym_label_idx,
             'sgasym_labels':[ch_sgasym_label[el] for el in ch_sgasym_label],
             'sg_colors':['blue','red','green','tab:pink', 'tab:purple', 'tab:gray', 'tab:orange', 'tab:cyan'],
             'bgasyms':[],
