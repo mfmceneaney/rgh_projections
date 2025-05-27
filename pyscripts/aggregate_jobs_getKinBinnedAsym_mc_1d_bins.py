@@ -43,7 +43,7 @@ sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale th
 run_groups = ['mc_rgh','mc_rgh_sector4','mc_rgc']
 channels   = ['pi','pim'] #,'pipim']
 base_dirs  = [
-    os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__{rg}{sector4_label if 'rgh' in rg else ''}__{ch}__1D/')) for rg in run_groups for ch in channels
+    os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/')) for rg in run_groups for ch in channels
 ]
 
 # Set channel labels
