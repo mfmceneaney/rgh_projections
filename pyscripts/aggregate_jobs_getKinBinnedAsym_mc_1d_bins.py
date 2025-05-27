@@ -104,8 +104,11 @@ xlabel_map = {
     'z_pipim':'$z_{\pi^{+}\pi^{-}}$', 'mx_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\pi^{+}\pi^{-}, \perp}$ (GeV)', 'mass_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)',
 }
 
+# Set up list of run groups
+rgs = [ rg for rg in run_groups for ch in channels]
+
 # Loop base directories
-for base_dir, ch_sgasym_label in zip(base_dirs,ch_sgasym_labels):
+for rg, base_dir, ch_sgasym_label in zip(rgs,base_dirs,ch_sgasym_labels):
 
     # Now loop signal asymmetries
     for ch_sgasym_label_idx, result_name in enumerate(ch_sgasym_label):
@@ -260,7 +263,7 @@ for base_dir, ch_sgasym_label in zip(base_dirs,ch_sgasym_labels):
                 config_out_path = sagas.get_config_out_path(
                         base_dir,
                         aggregate_keys,
-                        binscheme_name+sep+rgh_mc_name+sep+result_name,
+                        binscheme_name+sep+rg+sep+result_name,
                         config,
                         sep=sep,
                         ext=ext,
