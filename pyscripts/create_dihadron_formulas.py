@@ -178,14 +178,17 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             if xs_uu_a != "":
                 xs_uu_a += "+"
-            asym_formula = f"{p_lm}*cos({m}*({phi_h}-{phi_r}))*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m!=0 else f"{p_lm}*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
-            asym_idx += 2
+            #NOTE: This is what you would use except that the F_XX,L terms are all zero. See: http://arxiv.org/abs/1408.5721.
+            # asym_formula= f"{p_lm}*cos({m}*({phi_h}-{phi_r}))*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m!=0 else f"{p_lm}*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
+            # asym_idx += 2
+            asym_formula = f"{p_lm}*cos({m}*({phi_h}-{phi_r}))*({asyms_name}[{asym_idx}])" if m!=0 else f"{p_lm}*({asyms_name}[{asym_idx}])"
+            asym_idx += 1
             xs_uu_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asym_name = f"A_UU,T^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_UU,T^[ P_({l},{m}) ]"
             asyms.append(asym_name)
-            asym_name = f"A_UU,L^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_UU,L^[ P_({l},{m}) ]"
-            asyms.append(asym_name)
+            # asym_name = f"A_UU,L^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_UU,L^[ P_({l},{m}) ]"
+            # asyms.append(asym_name)
 
     # Set the xs value
     xs_uu_a = f"{depol_a}*({xs_uu_a})"
@@ -198,12 +201,12 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_uu_b != "":
                 xs_uu_b += "+"
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==2 \
                             else f"{p_lm}*cos({2-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({2-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_uu_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UU^[ P_({l},{m}) cos({m} {phi_r}) ]" if m==2 \
@@ -222,12 +225,12 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_uu_v != "":
                 xs_uu_v += "+"
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                             else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_uu_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UU^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -242,44 +245,44 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
     xs_uu = f"{xs_uu_a} + {xs_uu_b} + {xs_uu_v}"
 
     # Clean up formulas
-    xs_uu = xs_uu.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_uu = xs_uu.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_uu, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
-lmax = 2
-asyms_name = 'sgasyms'
-asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
-xs_uu, depols_uu, asyms_uu, asym_formulas_uu = get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+# # Test the unpolarized formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_uu, depols_uu, asyms_uu, asym_formulas_uu = get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
 
-print("DEBUGGING: xs_uu = ",xs_uu)
-print("DEBUGGING: depols_uu = [")
-for depol in depols_uu:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_uu = [")
-for asym in asyms_uu:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_uu = {")
-for key in asym_formulas_uu:
-    print("DEBUGGING: \t"+key+" : [")
-    for el in asym_formulas_uu[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+# print("xs_uu = ",xs_uu)
+# print("depols_uu = [")
+# for depol in depols_uu:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_uu = [")
+# for asym in asyms_uu:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_uu = {")
+# for key in asym_formulas_uu:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_uu[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
 
 
 #----- Set the cross section functions LU -----#
@@ -303,12 +306,15 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             if xs_lu_c != "":
                 xs_lu_c += "+"
-            asym_formula = f"{p_lm}*sin({m}*({phi_h}-{phi_r}))*2*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
-            asym_idx += 2
+            #NOTE: This is what you would use except that the F_XX,L terms are all zero. See: http://arxiv.org/abs/1408.5721.
+            # asym_formula = f"{p_lm}*sin({m}*({phi_h}-{phi_r}))*2*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
+            # asym_idx += 2
+            asym_formula = f"{p_lm}*sin({m}*({phi_h}-{phi_r}))*2*({asyms_name}[{asym_idx}])"
+            asym_idx += 1
             xs_lu_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asyms.append(f"A_LU,T^[ P_({l},{m}) sin({m}({phi_h}-{phi_r})) ]")
-            asyms.append(f"A_LU,L^[ P_({l},{m}) sin({m}({phi_h}-{phi_r})) ]")
+            # asyms.append(f"A_LU,L^[ P_({l},{m}) sin({m}({phi_h}-{phi_r})) ]")
 
     # Set the xs value
     xs_lu_c = f"{depol_c}*({xs_lu_c})"
@@ -321,12 +327,12 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_lu_w != "":
                 xs_lu_w += "+"
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_lu_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LU^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -341,44 +347,44 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
     xs_lu = f"{xs_lu_c} + {xs_lu_w}"
 
     # Clean up formulas
-    xs_lu = xs_lu.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_lu = xs_lu.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_lu, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
-lmax = 2
-asyms_name = 'sgasyms'
-asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
-xs_lu, depols_lu, asyms_lu, asym_formulas_lu = get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+# # Test the UU formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_lu, depols_lu, asyms_lu, asym_formulas_lu = get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
 
-print("DEBUGGING: xs_lu = ",xs_lu)
-print("DEBUGGING: depols_lu = [")
-for depol in depols_lu:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_lu = [")
-for asym in asyms_lu:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_lu = {")
-for key in asym_formulas_lu:
-    print("DEBUGGING: \t"+key+" : [")
-    for el in asym_formulas_lu[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+# print("xs_lu = ",xs_lu)
+# print("depols_lu = [")
+# for depol in depols_lu:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_lu = [")
+# for asym in asyms_lu:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_lu = {")
+# for key in asym_formulas_lu:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_lu[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
 
 #----- Set the cross section functions UL -----#
 
@@ -400,10 +406,10 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(1, l+1): #NOTE: Start at m=1 because sin(0)=0
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ul_a != "":
                 xs_ul_a += "+"
             asym_formula = f"{p_lm}*sin(-{m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ul_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asyms.append(f"A_UL^[ P_({l},{m}) sin(-{m}{phi_h}+{m}{phi_r}) ]")
@@ -419,12 +425,12 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ul_b != "":
                 xs_ul_b += "+"
             asym_formula = f"{p_lm}*sin({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==2 \
                         else f"{p_lm}*sin({2-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({2-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ul_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UL^[ P_({l},{m}) sin({m}{phi_r}) ]" if m==2 \
@@ -443,12 +449,12 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ul_v != "":
                 xs_ul_v += "+"
             asym_formula = f"{p_lm}*sin({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*sin({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ul_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UL^[ P_({l},{m}) sin({m}{phi_r}) ]" if m==1 \
@@ -463,44 +469,44 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
     xs_ul = f"{xs_ul_a} + {xs_ul_b} + {xs_ul_v}"
 
     # Clean up formulas
-    xs_ul = xs_ul.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_ul = xs_ul.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_ul, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
-lmax = 2
-asyms_name = 'sgasyms'
-asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
-xs_ul, depols_ul, asyms_ul, asym_formulas_ul = get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+# # Test the UL formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_ul, depols_ul, asyms_ul, asym_formulas_ul = get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
 
-print("DEBUGGING: xs_ul = ",xs_ul)
-print("DEBUGGING: depols_ul = [")
-for depol in depols_ul:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_ul = [")
-for asym in asyms_ul:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_ul = {")
-for key in asym_formulas_ul:
-    print("DEBUGGING: \t"+key+" : [")
-    for el in asym_formulas_ul[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+# print("xs_ul = ",xs_ul)
+# print("depols_ul = [")
+# for depol in depols_ul:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_ul = [")
+# for asym in asyms_ul:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_ul = {")
+# for key in asym_formulas_ul:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_ul[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
 
 
 #----- Set the cross section functions LL -----#
@@ -522,10 +528,10 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(0, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ll_c != "":
                 xs_ll_c += "+"
             asym_formula = f"4*{p_lm}*cos({m}*({phi_h}-{phi_r}))*{asyms_name}[{asym_idx}]" if m!=0 else f"2*{p_lm}*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ll_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asym_name = f"A_LL^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_LL^[ P_({l},{m}) ]"
@@ -542,12 +548,12 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ll_w != "":
                 xs_ll_w += "+"
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ll_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LL^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -562,44 +568,44 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
     xs_ll = f"{xs_ll_c} + {xs_ll_w}"
 
     # Clean up formulas
-    xs_ll = xs_ll.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_ll = xs_ll.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_ll, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
-lmax = 2
-asyms_name = 'sgasyms'
-asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
-xs_ll, depols_ll, asyms_ll, asym_formulas_ll = get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+# # Test the LL formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_ll, depols_ll, asyms_ll, asym_formulas_ll = get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
 
-print("DEBUGGING: xs_ll = ",xs_ll)
-print("DEBUGGING: depols_ll = [")
-for depol in depols_ll:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_ll = [")
-for asym in asyms_ll:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_ll = {")
-for key in asym_formulas_ll:
-    print("DEBUGGING: \t"+key+" : [")
-    for el in asym_formulas_ll[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+# print("xs_ll = ",xs_ll)
+# print("depols_ll = [")
+# for depol in depols_ll:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_ll = [")
+# for asym in asyms_ll:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_ll = {")
+# for key in asym_formulas_ll:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_ll[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
 
 #----- Set the cross section functions UT -----#
 
@@ -621,22 +627,27 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
         # Loop m values
         for m in range(-l, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_ut_a != "":
                 xs_ut_a += "+"
-            asym_formula = f"{p_lm}*sin({m+1}*{phi_h}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m==0 \
-                        else f"{p_lm}*sin({m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m==-1 \
-                        else f"{p_lm}*sin({m+1}*{phi_h}-{m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
+            #NOTE: This is what you would use except that the F_XX,L terms are all zero. See: http://arxiv.org/abs/1408.5721.
+            # asym_formula = f"{p_lm}*sin({m+1}*{phi_h}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m==0 \
+            #             else f"{p_lm}*sin({m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])" if m==-1 \
+            #             else f"{p_lm}*sin({m+1}*{phi_h}-{m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}]+{e}*{asyms_name}[{asym_idx+1}])"
+            # asym_idx += 2
+            asym_formula = f"{p_lm}*sin({m+1}*{phi_h}-{phi_s})*({asyms_name}[{asym_idx}])" if m==0 \
+                        else f"{p_lm}*sin({m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}])" if m==-1 \
+                        else f"{p_lm}*sin({m+1}*{phi_h}-{m}*{phi_r}-{phi_s})*({asyms_name}[{asym_idx}])"
+            asym_idx += 1
             xs_ut_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asym_name = f"A_UT,T^[ P_({l},{m}) sin({m+1}{phi_h}-{phi_s}) ]" if m==0 \
                     else f"A_UT,T^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==-1 \
                     else f"A_UT,T^[ P_({l},{m}) sin({m+1}{phi_h}-{m}{phi_r}-{phi_s}) ]"
             asyms.append(asym_name)
-            asym_name = f"A_UT,L^[ P_({l},{m}) sin({m+1}{phi_h}-{phi_s}) ]" if m==0 \
-                    else f"A_UT,L^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==-1 \
-                    else f"A_UT,L^[ P_({l},{m}) sin({m+1}{phi_h}-{m}{phi_r}-{phi_s}) ]"
-            asyms.append(asym_name)
+            # asym_name = f"A_UT,L^[ P_({l},{m}) sin({m+1}{phi_h}-{phi_s}) ]" if m==0 \
+            #         else f"A_UT,L^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==-1 \
+            #         else f"A_UT,L^[ P_({l},{m}) sin({m+1}{phi_h}-{m}{phi_r}-{phi_s}) ]"
+            # asyms.append(asym_name)
 
     # Set the xs value
     xs_ut_a = f"{depol_a}*({xs_ut_a})"
@@ -651,12 +662,12 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
-            asym_idx += 1
             if xs_ut_b != "":
                 xs_ut_b += "+"
             asym_formula = f"{p_lm}*sin({m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ut_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}+{phi_s}) ]" if m==1 \
@@ -665,12 +676,12 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asyms.append(asym_name)
 
             # And second term
-            asym_idx += 1
             if xs_ut_b != "":
                 xs_ut_b += "+"
             asym_formula = f"{p_lm}*sin({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==3 \
                         else f"{p_lm}*sin({3-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({3-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ut_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==3 \
@@ -691,11 +702,11 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
-            asym_idx += 1
             if xs_ut_v != "":
                 xs_ut_v += "+"
             asym_formula = f"{p_lm}*sin({phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin(-{m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ut_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({phi_s}) ]" if m==0 \
@@ -703,12 +714,12 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asyms.append(asym_name)
 
             # And second term
-            asym_idx += 1
             if xs_ut_v != "":
                 xs_ut_v += "+"
             asym_formula = f"{p_lm}*sin({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==2 \
                         else f"{p_lm}*sin({2-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({2-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_ut_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==2 \
@@ -723,45 +734,45 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
     xs_ut = f"{xs_ut_a} + {xs_ut_b} + {xs_ut_v}"
 
     # Clean up formulas
-    xs_ut = xs_ut.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_ut = xs_ut.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_ut, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
-phi_s = 'phi_s'
-lmax = 2
-asyms_name = 'sgasyms'
-asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
-xs_ut, depols_ut, asyms_ut, asym_formulas_ut = get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+# # Test the UT formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# phi_s = 'phi_s'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_ut, depols_ut, asyms_ut, asym_formulas_ut = get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
 
-print("DEBUGGING: xs_ut = ",xs_ut)
-print("DEBUGGING: depols_ut = [")
-for depol in depols_ut:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_ut = [")
-for asym in asyms_ut:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_ut = {")
-for key in asym_formulas_ut:
-    print("DEBUGGING: \t"+key+" : [")
-    for el in asym_formulas_ut[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+# print("xs_ut = ",xs_ut)
+# print("depols_ut = [")
+# for depol in depols_ut:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_ut = [")
+# for asym in asyms_ut:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_ut = {")
+# for key in asym_formulas_ut:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_ut[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
 
 
 #----- Set the cross section functions LT -----#
@@ -783,12 +794,12 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
         # Loop m values
         for m in range(0, l+1):
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
-            asym_idx += 1
             if xs_lt_c != "":
                 xs_lt_c += "+"
             asym_formula = f"2*{p_lm}*cos({m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==1 \
                             else f"2*{p_lm}*cos({1-m}*{phi_h}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"2*{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_lt_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s})) ]" if m==1 \
@@ -809,11 +820,11 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
-            asym_idx += 1
             if xs_lt_w != "":
                 xs_lt_w += "+"
             asym_formula = f"{p_lm}*cos({phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos(-{m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_lt_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({phi_s}) ]" if m==0 \
@@ -821,12 +832,12 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asyms.append(asym_name)
 
             # And second term
-            asym_idx += 1
             if xs_lt_w != "":
                 xs_lt_w += "+"
             asym_formula = f"{p_lm}*cos({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==2 \
                             else f"{p_lm}*cos({2-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({2-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
+            asym_idx += 1
             xs_lt_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s}) ]" if m==2 \
@@ -841,42 +852,189 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
     xs_lt = f"{xs_lt_c} + {xs_lt_w}"
 
     # Clean up formulas
-    xs_lt = xs_lt.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+    xs_lt = xs_lt.replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for key in asym_formulas:
         for idx in range(len(asym_formulas[key])):
-            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(")
+            asym_formulas[key][idx] = asym_formulas[key][idx].replace("--","").replace("-+","-").replace("+-","-").replace("-1*","-").replace("+1*","+").replace("(1*","(").replace("*1*","*")
     for idx in range(len(asyms)):
         asyms[idx] = asyms[idx].replace("--","").replace("-+","-").replace("+-","-").replace(f"1{phi_h}",f"{phi_h}").replace(f"1{phi_r}",f"{phi_r}")
 
     return xs_lt, depols, asyms, asym_formulas
 
-# Test the unpolarized formula
-e = 'e'
-y = 'y'
-costheta = 'cos(theta)'
-phi_h = 'phi_h'
-phi_r = 'phi_r'
+# # Test the LT formula
+# e = 'e'
+# y = 'y'
+# costheta = 'cos(theta)'
+# phi_h = 'phi_h'
+# phi_r = 'phi_r'
+# phi_s = 'phi_s'
+# lmax = 2
+# asyms_name = 'sgasyms'
+# asym_idx = 0
+# cosine_sine_names = ['cos(theta)', 'sin(theta)']
+# xs_lt, depols_lt, asyms_lt, asym_formulas_lt = get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+
+
+# print("xs_lt = ",xs_lt)
+# print("depols_lt = [")
+# for depol in depols_lt:
+#     print(f"    {depol}")
+# print("]")
+# print("asyms_lt = [")
+# for asym in asyms_lt:
+#     print(f"    {asym}")
+# print("]")
+# print("asym_formulas_lt = {")
+# for key in asym_formulas_lt:
+#     print("\t"+key+" : [")
+#     for el in asym_formulas_lt[key]:
+#         print("\t\t"+el+",")
+#     print("]")
+# print("}")
+
+
+#---------- Get the RGC pi+pi- INJECTION formulas for UL and LU ----------#
+
+e = 'epsilon' #epsilon #epsilon_mc
+y = 'y' #y #y_mc
+costheta = 'cos(theta_p1_pipim)'
+phi_h = 'phi_h_pipim'
+phi_r = 'phi_rt_pipim'
 phi_s = 'phi_s'
 lmax = 2
 asyms_name = 'sgasyms'
 asym_idx = 0
-cosine_sine_names = ['cos(theta)', 'sin(theta)']
+cosine_sine_names = ['cos(theta_p1_pipim)', 'sin(theta_p1_pipim)']
+xs_ul, depols_ul, asyms_ul, asym_formulas_ul = get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+asym_idx = len(asyms_ul)
+xs_ll, depols_ll, asyms_ll, asym_formulas_ll = get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+
+# Test the UL formula
+print("xs_ul = ",xs_ul)
+print("depols_ul = [")
+for depol in depols_ul:
+    print(f"    {depol}")
+print("]")
+print("asyms_ul = [")
+for asym in asyms_ul:
+    print(f"    {asym}")
+print("]")
+print("asym_formulas_ul = {")
+for key in asym_formulas_ul:
+    print("\t"+key+" : [")
+    for el in asym_formulas_ul[key]:
+        print("\t\t"+el+",")
+    print("]")
+print("}")
+
+# Test the LL formula
+print("xs_ll = ",xs_ll)
+print("depols_ll = [")
+for depol in depols_ll:
+    print(f"    {depol}")
+print("]")
+print("asyms_ll = [")
+for asym in asyms_ll:
+    print(f"    {asym}")
+print("]")
+print("asym_formulas_ll = {")
+for key in asym_formulas_ll:
+    print("\t"+key+" : [")
+    for el in asym_formulas_ll[key]:
+        print("\t\t"+el+",")
+    print("]")
+print("}")
+
+#---------- Get the RGC pi+pi- FIT formulas for UL and LU ----------#
+nfitvars_rgc = 4
+e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgc-1}]' #epsilon #epsilon_mc
+y = 'y' #y #y_mc
+costheta = 'cos(x[0])' #theta_p1_pipim
+phi_h = 'x[1]' # phi_h_pipim
+phi_r = 'x[2]' # phi_rt_pipim
+phi_s = 'x[3]' # phi_s
+lmax = 2
+asyms_name = 'x'
+asym_idx = nfitvars_rgc
+cosine_sine_names = ['cos(x[0])', 'sin(x[0])']
+xs_ul, depols_ul, asyms_ul, asym_formulas_ul = get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+asym_idx = len(asyms_ul) + nfitvars_rgc
+xs_ll, depols_ll, asyms_ll, asym_formulas_ll = get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+
+# Print the UL and LL formulas
+print("xs_ul = ",xs_ul)
+print()
+print("xs_ll = ",xs_ll)
+
+#---------- Get the RGH pi+pi- INJECTION formulas for UT and LT ----------#
+
+e = 'epsilon' #epsilon #epsilon_mc
+y = 'y' #y #y_mc
+costheta = 'cos(theta_p1_pipim)'
+phi_h = 'phi_h_pipim'
+phi_r = 'phi_rt_pipim'
+phi_s = 'phi_s'
+lmax = 2
+asyms_name = 'sgasyms'
+asym_idx = 0
+cosine_sine_names = ['cos(theta_p1_pipim)', 'sin(theta_p1_pipim)']
+xs_ut, depols_ut, asyms_ut, asym_formulas_ut = get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+asym_idx = len(asyms_ut)
 xs_lt, depols_lt, asyms_lt, asym_formulas_lt = get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 
+# Test the UT formula
+print("xs_ut = ",xs_ut)
+print("depols_ut = [")
+for depol in depols_ut:
+    print(f"    {depol}")
+print("]")
+print("asyms_ut = [")
+for asym in asyms_ut:
+    print(f"    {asym}")
+print("]")
+print("asym_formulas_ut = {")
+for key in asym_formulas_ut:
+    print("\t"+key+" : [")
+    for el in asym_formulas_ut[key]:
+        print("\t\t"+el+",")
+    print("]")
+print("}")
 
-print("DEBUGGING: xs_lt = ",xs_lt)
-print("DEBUGGING: depols_lt = [")
+# Test the LT formula
+print("xs_lt = ",xs_lt)
+print("depols_lt = [")
 for depol in depols_lt:
-    print(f"DEBUGGING:     {depol}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asyms_lt = [")
+    print(f"    {depol}")
+print("]")
+print("asyms_lt = [")
 for asym in asyms_lt:
-    print(f"DEBUGGING:     {asym}")
-print("DEBUGGING: ]")
-print("DEBUGGING: asym_formulas_lt = {")
+    print(f"    {asym}")
+print("]")
+print("asym_formulas_lt = {")
 for key in asym_formulas_lt:
-    print("DEBUGGING: \t"+key+" : [")
+    print("\t"+key+" : [")
     for el in asym_formulas_lt[key]:
-        print("DEBUGGING: \t\t"+el+",")
-    print("DEBUGGING: ]")
-print("DEBUGGING: }")
+        print("\t\t"+el+",")
+    print("]")
+print("}")
+
+#---------- Get the RGH pi+pi- FIT formulas for UT and LT ----------#
+nfitvars_rgh = 4
+e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgh-1}]' #epsilon #epsilon_mc
+y = 'y' #y #y_mc
+costheta = 'cos(x[0])' #theta_p1_pipim
+phi_h = 'x[1]' # phi_h_pipim
+phi_r = 'x[2]' # phi_rt_pipim
+phi_s = 'x[3]' # phi_s
+lmax = 2
+asyms_name = 'x'
+asym_idx = nfitvars_rgh
+cosine_sine_names = ['cos(x[0])', 'sin(x[0])']
+xs_ut, depols_ut, asyms_ut, asym_formulas_ut = get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+asym_idx = len(asyms_ut) + nfitvars_rgh
+xs_lt, depols_lt, asyms_lt, asym_formulas_lt = get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
+
+# Print the UT and LT formulas
+print("xs_ut = ",xs_ut)
+print()
+print("xs_lt = ",xs_lt)
