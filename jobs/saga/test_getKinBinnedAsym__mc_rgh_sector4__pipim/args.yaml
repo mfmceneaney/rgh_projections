@@ -137,4 +137,4 @@ bgfrac_idx: 0 #NOTE: The index here refers to the formulation of the background 
 asymfitvar_binschemes: #NOTE: Structure for asymmetry fit variable bin schemes is { binscheme_name: { binvar_name: [binlimits] } }  #NOTE: binscheme_names MUST match those in the binschemes argument!
 logpath: "out.txt"
 dump_dataset: false
-dump_vars: ["heli","tspin","ss","phi_h_pim","phi_s_injected","depol0_uu","depol0_ut","depol0_lu","depol0_lt","Q2","W","x","y","xF_pim","phperp2_pim","phperp_pim","z_pim","mx_pim"]uuuu
+dump_vars: ["heli","tspin","ss","phi_h_pipim","phi_s_injected","depol_a","depol_b","depol_c","depol_v","depol_w","Q2","W","x","y","xF_pipim","phperp2_pipim","phperp_pipim","z_pipim","mx_pipim"]
