@@ -749,7 +749,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# phi_s = 'phi_s'
+# phi_s = 'phi_s_up'
 # lmax = 2
 # asyms_name = 'sgasyms'
 # asym_idx = 0
@@ -867,7 +867,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# phi_s = 'phi_s'
+# phi_s = 'phi_s_up'
 # lmax = 2
 # asyms_name = 'sgasyms'
 # asym_idx = 0
@@ -895,12 +895,12 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
 #---------- Get the RGC pi+pi- INJECTION formulas for UL and LU ----------#
 
-e = 'epsilon' #epsilon #epsilon_mc
-y = 'y' #y #y_mc
+e = '' #epsilon #epsilon_mc
+y = '' #y #y_mc
 costheta = 'cos(theta_p1_pipim)'
 phi_h = 'phi_h_pipim'
 phi_r = 'phi_rt_pipim'
-phi_s = 'phi_s'
+phi_s = 'phi_s_up'
 lmax = 2
 asyms_name = 'sgasyms'
 asym_idx = 0
@@ -968,12 +968,12 @@ print("xs_ll = ",xs_ll)
 
 #---------- Get the RGH pi+pi- INJECTION formulas for UT and LT ----------#
 
-e = 'epsilon' #epsilon #epsilon_mc
-y = 'y' #y #y_mc
+e = '' #epsilon #epsilon_mc
+y = '' #y #y_mc
 costheta = 'cos(theta_p1_pipim)'
 phi_h = 'phi_h_pipim'
 phi_r = 'phi_rt_pipim'
-phi_s = 'phi_s'
+phi_s = 'phi_s_up'
 lmax = 2
 asyms_name = 'sgasyms'
 asym_idx = 0
