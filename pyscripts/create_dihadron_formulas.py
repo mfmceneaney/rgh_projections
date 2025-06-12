@@ -180,7 +180,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             if xs_uu_a != "":
                 xs_uu_a += "+"
             asym_formula = f"{p_lm}*cos({m}*({phi_h}-{phi_r}))*{asyms_name}[{asym_idx}]" if m!=0 else f"{p_lm}*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_uu_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asym_name = f"A_UU^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_UU^[ P_({l},{m}) ]"
@@ -203,7 +203,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==2 \
                             else f"{p_lm}*cos({2-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({2-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_uu_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UU^[ P_({l},{m}) cos({m} {phi_r}) ]" if m==2 \
@@ -228,7 +228,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                             else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_uu_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UU^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -306,7 +306,7 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             if xs_lu_c != "":
                 xs_lu_c += "+"
             asym_formula = f"{p_lm}*sin({m}*({phi_h}-{phi_r}))*2*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_lu_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asyms.append(f"A_LU^[ P_({l},{m}) sin({m}({phi_h}-{phi_r})) ]")
@@ -328,7 +328,7 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_lu_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LU^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -406,7 +406,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             if xs_ul_a != "":
                 xs_ul_a += "+"
             asym_formula = f"{p_lm}*sin(-{m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ul_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asyms.append(f"A_UL^[ P_({l},{m}) sin(-{m}{phi_h}+{m}{phi_r}) ]")
@@ -428,7 +428,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*sin({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==2 \
                         else f"{p_lm}*sin({2-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({2-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ul_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UL^[ P_({l},{m}) sin({m}{phi_r}) ]" if m==2 \
@@ -453,7 +453,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*sin({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*sin({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ul_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UL^[ P_({l},{m}) sin({m}{phi_r}) ]" if m==1 \
@@ -531,7 +531,7 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             if xs_ll_c != "":
                 xs_ll_c += "+"
             asym_formula = f"4*{p_lm}*cos({m}*({phi_h}-{phi_r}))*{asyms_name}[{asym_idx}]" if m!=0 else f"2*{p_lm}*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ll_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asym_name = f"A_LL^[ P_({l},{m}) cos({m}({phi_h}-{phi_r})) ]" if m!=0 else f"A_LL^[ P_({l},{m}) ]"
@@ -554,7 +554,7 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
             asym_formula = f"{p_lm}*cos({m}*{phi_r})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*cos({1-m}*{phi_h})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ll_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LL^[ P_({l},{m}) cos({m}{phi_r}) ]" if m==1 \
@@ -634,7 +634,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"{p_lm}*sin({m+1}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==-1 \
                         else f"{p_lm}*sin({m+1}*{phi_h}-{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ut_a += asym_formula
             asym_formulas[depol_a].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m+1}{phi_h}-{phi_s}) ]" if m==0 \
@@ -661,7 +661,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"{p_lm}*sin({m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]" if m==1 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({1-m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ut_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}+{phi_s}) ]" if m==1 \
@@ -676,7 +676,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"{p_lm}*sin({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==3 \
                         else f"{p_lm}*sin({3-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({3-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ut_b += asym_formula
             asym_formulas[depol_b].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==3 \
@@ -700,11 +700,14 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_idx += 1
             if xs_ut_v != "":
                 xs_ut_v += "+"
-            asym_formula = f"{p_lm}*sin(-{m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            asym_formula = f"{p_lm}*sin({phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
+                        else f"{p_lm}*sin(-{m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ut_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
-            asyms.append(f"A_UT^[ P_({l},{m}) sin(-{m}{phi_h}+{m}{phi_r}+{phi_s}) ]")
+            asym_name = f"A_UT^[ P_({l},{m}) sin({phi_s}) ]" if m==0 \
+                    else f"A_UT^[ P_({l},{m}) sin(-{m}{phi_h}+{m}{phi_r}+{phi_s}) ]"
+            asyms.append(asym_name)
 
             # And second term
             asym_idx += 1
@@ -713,7 +716,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"{p_lm}*sin({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==2 \
                         else f"{p_lm}*sin({2-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                         else f"{p_lm}*sin({2-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_ut_v += asym_formula
             asym_formulas[depol_v].append(asym_formula)
             asym_name = f"A_UT^[ P_({l},{m}) sin({m}{phi_r}-{phi_s}) ]" if m==2 \
@@ -794,7 +797,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"2*{p_lm}*cos({m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==1 \
                             else f"2*{p_lm}*cos({1-m}*{phi_h}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"2*{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_lt_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s})) ]" if m==1 \
@@ -820,7 +823,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
                 xs_lt_w += "+"
             asym_formula = f"{p_lm}*cos({phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos(-{m}*{phi_h}+{m}*{phi_r}+{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_lt_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({phi_s}) ]" if m==0 \
@@ -834,7 +837,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             asym_formula = f"{p_lm}*cos({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==2 \
                             else f"{p_lm}*cos({2-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
                             else f"{p_lm}*cos({2-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
-            print("DEBUGGING: adding ",asym_formula)
+            #print("DEBUGGING: adding ",asym_formula)
             xs_lt_w += asym_formula
             asym_formulas[depol_w].append(asym_formula)
             asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s}) ]" if m==2 \
