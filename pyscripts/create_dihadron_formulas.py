@@ -175,7 +175,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(0, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_uu_a != "":
                 xs_uu_a += "+"
@@ -196,7 +196,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_uu_b != "":
                 xs_uu_b += "+"
@@ -221,7 +221,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_uu_v != "":
                 xs_uu_v += "+"
@@ -301,7 +301,7 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(1, l+1): #NOTE: Start at m=1 because sin(0)=0
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_lu_c != "":
                 xs_lu_c += "+"
@@ -321,7 +321,7 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_lu_w != "":
                 xs_lu_w += "+"
@@ -401,7 +401,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(1, l+1): #NOTE: Start at m=1 because sin(0)=0
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ul_a != "":
                 xs_ul_a += "+"
@@ -421,7 +421,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ul_b != "":
                 xs_ul_b += "+"
@@ -446,7 +446,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ul_v != "":
                 xs_ul_v += "+"
@@ -526,7 +526,7 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(0, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ll_c != "":
                 xs_ll_c += "+"
@@ -547,7 +547,7 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ll_w != "":
                 xs_ll_w += "+"
@@ -627,7 +627,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_ut_a != "":
                 xs_ut_a += "+"
@@ -652,7 +652,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
             asym_idx += 1
@@ -694,7 +694,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
             asym_idx += 1
@@ -790,7 +790,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
         # Loop m values
         for m in range(0, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             asym_idx += 1
             if xs_lt_c != "":
                 xs_lt_c += "+"
@@ -815,7 +815,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 
         # Loop m values
         for m in range(-l, l+1):
-            p_lm = get_associated_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
+            p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
 
             # First term
             asym_idx += 1
