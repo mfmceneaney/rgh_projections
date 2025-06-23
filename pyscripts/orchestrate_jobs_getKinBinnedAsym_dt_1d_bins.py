@@ -1,12 +1,9 @@
 # Basic imports
-import sys
 import os
 
 # Import saga modules
-SAGA_HOME = os.environ['SAGA_HOME']
-sys.path.append(os.path.abspath(os.path.join(SAGA_HOME,'py')))
 from saga.orchestrate import create_jobs, submit_jobs
-import saga.aggregate as sagas
+from saga.data import load_yaml
 
 # Set dry run to `False` once you are sure you want to submit.
 dry_run=True
@@ -33,7 +30,7 @@ for base_dir, yaml_path in zip(base_dirs,yaml_paths):
     seeds   = {"inject_seed":[2**i for i in range(1)]}
 
     # Split binschemes with aliases
-    binschemes = sagas.load_yaml(yaml_path)
+    binschemes = load_yaml(yaml_path)
     binschemes = {"binschemes":[{el:binschemes[el]} for el in binschemes]}
     aliases    = {"binschemes":{
                         str(el):list(el.keys())[0]+"_binscheme"

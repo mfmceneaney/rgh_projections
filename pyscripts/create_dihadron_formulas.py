@@ -260,7 +260,7 @@ def get_xs_uu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -362,7 +362,7 @@ def get_xs_lu(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -484,7 +484,7 @@ def get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -583,7 +583,7 @@ def get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=2, asyms_name='sgasyms', asym_i
 # costheta = 'cos(theta)'
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -750,7 +750,7 @@ def get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
 # phi_s = 'phi_s_up'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -868,7 +868,7 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
 # phi_h = 'phi_h'
 # phi_r = 'phi_r'
 # phi_s = 'phi_s_up'
-# lmax = 2
+# lmax = 0
 # asyms_name = 'sgasyms'
 # asym_idx = 0
 # cosine_sine_names = ['cos(theta)', 'sin(theta)']
@@ -946,17 +946,18 @@ for key in asym_formulas_ll:
 print("}")
 
 #---------- Get the RGC pi+pi- FIT formulas for UL and LU ----------#
-nfitvars_rgc = 4
-e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgc-1}]' #epsilon #epsilon_mc
+nfitvars_rgc = 2
+e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgc}]' #epsilon #epsilon_mc
+print("DEBUGGING: e = ",e)
 y = 'y' #y #y_mc
-costheta = 'cos(x[0])' #theta_p1_pipim
-phi_h = 'x[1]' # phi_h_pipim
-phi_r = 'x[2]' # phi_rt_pipim
-phi_s = 'x[3]' # phi_s
+costheta = 'cos(theta_p1_pipim)' #'cos(x[0])'
+phi_h = 'x[0]' # phi_h_pipim
+phi_r = 'x[1]' # phi_rt_pipim
+phi_s = '' # phi_s
 lmax = 2
 asyms_name = 'x'
 asym_idx = nfitvars_rgc
-cosine_sine_names = ['cos(x[0])', 'sin(x[0])']
+cosine_sine_names = ['cos(theta_p1_pipim)', 'sin(theta_p1_pipim)'] #['cos(x[0])', 'sin(x[0])']
 xs_ul, depols_ul, asyms_ul, asym_formulas_ul = get_xs_ul(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 asym_idx = len(asyms_ul) + nfitvars_rgc
 xs_ll, depols_ll, asyms_ll, asym_formulas_ll = get_xs_ll(e, y, costheta, phi_h, phi_r, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
@@ -1019,17 +1020,17 @@ for key in asym_formulas_lt:
 print("}")
 
 #---------- Get the RGH pi+pi- FIT formulas for UT and LT ----------#
-nfitvars_rgh = 4
-e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgh-1}]' #epsilon #epsilon_mc
+nfitvars_rgh = 3
+e = f'x[{len(asyms_ul)+len(asyms_ll)+nfitvars_rgh}]' #epsilon #epsilon_mc
 y = 'y' #y #y_mc
-costheta = 'cos(x[0])' #theta_p1_pipim
-phi_h = 'x[1]' # phi_h_pipim
-phi_r = 'x[2]' # phi_rt_pipim
-phi_s = 'x[3]' # phi_s
+costheta = 'cos(theta_p1_pipim)' #'cos(x[0])'
+phi_h = 'x[0]' # phi_h_pipim
+phi_r = 'x[1]' # phi_rt_pipim
+phi_s = 'x[2]' # phi_s
 lmax = 2
 asyms_name = 'x'
 asym_idx = nfitvars_rgh
-cosine_sine_names = ['cos(x[0])', 'sin(x[0])']
+cosine_sine_names = ['cos(theta_p1_pipim)','sin(theta_p1_pipim)'] #['cos(x[0])', 'sin(x[0])']
 xs_ut, depols_ut, asyms_ut, asym_formulas_ut = get_xs_ut(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)
 asym_idx = len(asyms_ut) + nfitvars_rgh
 xs_lt, depols_lt, asyms_lt, asym_formulas_lt = get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=lmax, asyms_name=asyms_name, asym_idx=asym_idx, cosine_sine_names=cosine_sine_names)

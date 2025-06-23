@@ -3,12 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import sys
 
 # Import saga modules
-SAGA_HOME = os.environ['SAGA_HOME']
-sys.path.append(os.path.abspath(os.path.join(SAGA_HOME,'py')))
-from saga.aggregate import set_default_plt_settings
+from saga.plot import set_default_plt_settings
 
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']

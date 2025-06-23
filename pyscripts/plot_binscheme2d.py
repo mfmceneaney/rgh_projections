@@ -7,9 +7,16 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 
 # Import saga modules
-SAGA_HOME = os.environ['SAGA_HOME']
-sys.path.append(os.path.abspath(os.path.join(SAGA_HOME,'py')))
-import saga.aggregate as sagas
+from saga.aggregate import get_binscheme_cuts_and_ids
+from saga.data import load_yaml, load_th1, load_csv
+from saga.plot import (
+    set_default_plt_settings,
+    plot_th2,
+    get_lims_coords,
+    plot_lines,
+    get_bin_centers,
+    plot_bin_ids,
+)
 
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
@@ -55,30 +62,30 @@ for ch in chs:
             id_key          = 'bin_id'
 
             # Read bin scheme from YAML
-            yaml_args = sagas.load_yaml(yaml_path)
+            yaml_args = load_yaml(yaml_path)
             binscheme = yaml_args[binscheme_name]
 
             # Load TH2 histogram with uproot
-            h2 = sagas.load_th1(hist_path,name=hist_name)
+            h2 = load_th1(hist_path,name=hist_name)
 
             # Set plt settings
-            sagas.set_default_plt_settings()
+            set_default_plt_settings()
 
             # Open the figure
             f, ax = plt.subplots(figsize=(16,10))
 
             # Plot the 2D distribution
-            sagas.plot_th2(h2, ax, norm=colors.LogNorm())
+            plot_th2(h2, ax, norm=colors.LogNorm())
             ax.set_xlabel(binvar_labels[binvars[0]],usetex=True)
             ax.set_ylabel(binvar_labels[binvars[1]],usetex=True)
             ax.set_title(f'${ch_labels[ch]}$ Bin Scheme',usetex=True)
 
             # Get the bin limit line coordinates and plot
-            lims_coords = sagas.get_lims_coords(binscheme, binvar_lims[binvars[0]], binvar_lims[binvars[1]], var_keys=var_keys)
-            sagas.plot_lines(ax, lims_coords, linecolor='red', linewidth=1)
+            lims_coords = get_lims_coords(binscheme, binvar_lims[binvars[0]], binvar_lims[binvars[1]], var_keys=var_keys)
+            plot_lines(ax, lims_coords, linecolor='red', linewidth=1)
 
             # Get bin scheme cuts and ids
-            cuts, _, _, _ = sagas.get_binscheme_cuts_and_ids(
+            cuts, _, _, _ = get_binscheme_cuts_and_ids(
                                                                 binscheme,
                                                                 start_idx=start_idx,
                                                                 id_key=id_key,
@@ -86,10 +93,10 @@ for ch in chs:
                                                             )
 
             # Get the bin centers
-            bin_centers, bin_widths = sagas.get_bin_centers(cuts,swap_axes=False)
+            bin_centers, bin_widths = get_bin_centers(cuts,swap_axes=False)
 
             # # Plot the bin ids
-            # sagas.plot_bin_ids(
+            # plot_bin_ids(
             #         ax,
             #         bin_centers, 
             #         bin_widths=bin_widths,
@@ -99,7 +106,7 @@ for ch in chs:
             #     )
 
             # Load average kinematics in each bin and plot
-            kinematics = sagas.load_csv(kinematics_path)
+            kinematics = load_csv(kinematics_path)
             bin_centers_x = [kinematics[binvars[0]][idx].item() for idx in bin_ids[id_key]]
             bin_centers_y = [kinematics[binvars[1]][idx].item() for idx in bin_ids[id_key]]
             ax.scatter(bin_centers_x, bin_centers_y, s=150, linewidth=4, color='black', marker='x',label='Bin Means')

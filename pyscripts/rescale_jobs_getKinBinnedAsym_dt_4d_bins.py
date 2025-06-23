@@ -1,12 +1,11 @@
 # Basic imports
 import numpy as np
 import os
-import sys
 
 # Import saga modules
-SAGA_HOME = os.environ['SAGA_HOME']
-sys.path.append(os.path.abspath(os.path.join(SAGA_HOME,'py')))
 import saga.aggregate as sagas
+from saga.data import load_yaml
+from saga.rescale import rescale_csv_data
 
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
@@ -47,7 +46,7 @@ for ch in channels:
     # Load the binscheme you want to use
     yaml_path = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'yamls/out_4d_bins_{ch}.yaml'))
     binscheme_name = 'binscheme'
-    yaml_args = sagas.load_yaml(yaml_path)
+    yaml_args = load_yaml(yaml_path)
     binscheme = yaml_args[binscheme_name]
 
     # Arguments for sagas.get_config_list()
@@ -103,7 +102,7 @@ for ch in channels:
 
         # Rescale results files
         for out_file_name in out_file_names:
-            sagas.rescale_csv_data(
+            rescale_csv_data(
                 out_file_name,
                 outpath = os.path.join(base_dir, out_file_name.replace('.csv','_rescaled.csv')),
                 config=config_list[config_idx],
