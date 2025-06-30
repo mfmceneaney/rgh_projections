@@ -116,8 +116,7 @@ asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-
 use_sumw2error: false
 use_average_depol: false #NOTE: Make sure your asymfit_formula_* arguments are correctly set for this option.
 use_extended_nll: false
-use_binned_fit: false
-massfit_yamlfile_map: #NOTE: You can specify a map of bin scheme (string) unique ids to yaml file paths specifying the remaining massfit arguments {`scheme_<scheme_name>_bin_<bin_idx>(__<asymfitvar_bin_idx>)` -> <YAML_PATH> }.
+use_binned_fit: false #massfit_yamlfile_map: #NOTE: You can specify a map of bin scheme (string) unique ids to yaml file paths specifying the remaining massfit arguments {`scheme_<scheme_name>_bin_<bin_idx>(__<asymfitvar_bin_idx>)` -> <YAML_PATH> }.
 massfit_pdf_name: "" #NOTE: A mass fit and background correction will only be used if this is not empty.
 massfit_formula_sg: "" #NOTE: This is parsed by RooGenericPdf using TFormula
 massfit_formula_bg: "" #NOTE: This is parsed by RooGenericPdf using TFormula
@@ -145,7 +144,7 @@ massfit_use_binned_fit: false
 use_splot: false
 massfit_sgcut: ""
 massfit_bgcut: ""
-use_sb_subtraction: true
+use_sb_subtraction: false
 use_binned_sb_bgfracs: false
 bgfracvar: "bgfracvar"
 bgfracvar_lims: [0.0,1.0]
