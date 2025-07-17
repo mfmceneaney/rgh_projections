@@ -46,7 +46,7 @@ csv_paths: [] #NOTE: You can load additional data, e.g., run depedent target pol
 csv_key_cols: ["Run"] #NOTE: These are the variable name used as keys in the CSV for matching CSV column values to events in the ROOT files from `inpath`.
 col_names: [["PbPt"]] #NOTE: You must specify the data to take from the CSV
 col_aliases: {} #NOTE: You can optionally specify aliases for the column names in the CSV to avoid potential naming conflicts with existing columns in the `ROOT::RDataFrame`.
-use_categories_as_float: true
+use_categories_as_float: false
 helicity_name: "heli"
 helicity_formula: "(float)helicity" #NOTE: You just need the target spin here so multiply by beam helicity.
 helicity_states:
