@@ -13,8 +13,8 @@ cuts: >-
 inject_asym: true
 inject_seed: 2
 mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
-sgasyms: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #NOTE: THESE ARE UP TO LMAX=2
-bgasyms: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+sgasyms: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #NOTE: THESE ARE UP TO LMAX=2
+bgasyms: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
 particle_suffixes: ["_pi","_pim"]
 mc_sg_match_name: "mc_sg_match"
 mc_sg_match_formula: "(bool)(true)" #NOTE: dtheta and dphi variables are automatically defined for the given particle suffixes.
@@ -32,8 +32,8 @@ fsgasyms_xs_up_formula: >-
   depol_v*(sin(phi_h_pipim)*sgasyms[7]+sin(2*phi_h_pipim-phi_rt_pipim)*sgasyms[8]+sin(phi_rt_pipim)*sgasyms[9]+sin(3*phi_h_pipim-2*phi_rt_pipim)*sgasyms[10]+sin(-phi_h_pipim+2*phi_rt_pipim)*sgasyms[11]))
 fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
 fsgasyms_xs_pp_formula: >-
-  (float)(depol_c*(sgasyms[12]+cos((phi_h_pipim-phi_rt_pipim))*sgasyms[13]+cos(2*(phi_h_pipim-phi_rt_pipim))*sgasyms[14]) + 
-  depol_w*(cos(phi_h_pipim)*sgasyms[15]+cos(2*phi_h_pipim-phi_rt_pipim)*sgasyms[16]+cos(phi_rt_pipim)*sgasyms[17]+cos(3*phi_h_pipim-2*phi_rt_pipim)*sgasyms[18]+cos(-phi_h_pipim+2*phi_rt_pipim)*sgasyms[19]))
+  (float)(depol_c*(cos((phi_h_pipim-phi_rt_pipim))*sgasyms[12]+cos(2*(phi_h_pipim-phi_rt_pipim))*sgasyms[13]) + 
+  depol_w*(cos(phi_h_pipim)*sgasyms[14]+cos(2*phi_h_pipim-phi_rt_pipim)*sgasyms[15]+cos(phi_rt_pipim)*sgasyms[16]+cos(3*phi_h_pipim-2*phi_rt_pipim)*sgasyms[17]+cos(-phi_h_pipim+2*phi_rt_pipim)*sgasyms[18]))
 fbgasyms_xs_pu_name: "fbgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
 fbgasyms_xs_pu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
 fbgasyms_xs_up_name: "fbgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
