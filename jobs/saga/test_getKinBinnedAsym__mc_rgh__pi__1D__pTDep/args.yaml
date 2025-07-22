@@ -41,7 +41,7 @@ helicity_states:
   zero: 0
   minus: -1
 tspin_name: "tspin"
-tspin_formula: "(float)TMath::Sign(1.0,PbPt)"
+tspin_formula: "(float)TMath::Sign(1.0,PbPt*heli)"
 tspin_states:
   plus: 1
   zero: 0
