@@ -2,72 +2,155 @@ baseoutpath: "out_" #NOTE: This will be prepended to the default output path lik
 inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pipim_*.root"
 tree: "t"
 nthreads: 1
-cuts: "Q2>1 && W>2 && y<0.8 && mx_pipim>1.5 && xF_pi>0.0 && xF_pim>0.0 && sector_pi!=4 && sector_pim!=4 && sector_e!=4 && TMath::Abs(TMath::ATan2(px_pi,pz_pi))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+cuts: >-
+  Q2>1 && W>2 && y<0.8 && mx_pipim>1.5 && xF_pi>0.0 && xF_pim>0.0 && 
+  sector_e!=4 && sector_pi!=4 && sector_pim!=4 && 
+  TMath::Abs(TMath::ATan2(px_pi,pz_pi))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0
 inject_asym: true
 inject_seed: 2
 mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
-sgasyms: [0.1]
-bgasyms: [0.0]
+sgasyms: [0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0] #NOTE: THESE ARE UP TO LMAX=2
+bgasyms: [0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0] 
 particle_suffixes: ["_pi","_pim"]
 mc_sg_match_name: "mc_sg_match"
 mc_sg_match_formula: "(bool)(true)" #NOTE: dtheta and dphi variables are automatically defined for the given particle suffixes.
-fsgasyms_xs_name: "fsgasyms_xs"
-fsgasyms_xs_formula: "(float)(sin_phi_sin_theta*depol0*sgasyms[0])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
-fbgasyms_xs_name: "fbgasyms_xs"
-fbgasyms_xs_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
-randvar_name: "randvar"
-xs_name: "XS"
+phi_s_original_name: "phi_s_up" #NOTE: Make sure you specify this variable name here AND in the asymmetry fit variables if you are injecting a transverse target spin dependent asymmetry.
+phi_s_original_name_dn: "phi_s_dn" #NOTE: You also need the phi of the negative spin vector
+phi_s_injected_name: "phi_s_injected" #NOTE: The asymmetry fit variable with name `phi_s_original_name` will be renamed to this after injection if `phi_s_original_name`!=""
+fsgasyms_xs_uu_name: "fsgasyms_xs_uu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_uu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_pu_name: "fsgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_pu_formula: >-
+  (float)(depol_a*(sin(phi_h_pipim-phi_s_up)*sgasyms[0]+sin(-phi_rt_pipim-phi_s_up)*sgasyms[1]+sin(2*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[2]+sin(-phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[3]+sin(3*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[4]) + 
+  depol_b*(sin(phi_h_pipim+phi_s_up)*sgasyms[5]+sin(3*phi_h_pipim-phi_s_up)*sgasyms[6]+sin(2*phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[7]+sin(4*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[8]+sin(phi_rt_pipim+phi_s_up)*sgasyms[9]+sin(2*phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[10]+sin(3*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[11]+sin(5*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[12]+sin(-phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[13]+sin(phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[14]) + 
+  depol_v*(sin(phi_s_up)*sgasyms[15]+sin(2*phi_h_pipim-phi_s_up)*sgasyms[16]+sin(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[17]+sin(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[18]+sin(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[19]+sin(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[20]+sin(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[21]+sin(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[22]+sin(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[23]+sin(2*phi_rt_pipim-phi_s_up)*sgasyms[24]))
+fsgasyms_xs_up_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
+fsgasyms_xs_up_formula: >-
+  (float)(depol_c*(cos(phi_h_pipim-phi_s_up))*sgasyms[25]+cos(phi_rt_pipim-phi_s_up))*sgasyms[26]+cos(-phi_h_pipim+2*phi_rt_pipim-phi_s_up))*sgasyms[27]) + 
+  depol_w*(cos(phi_s_up)*sgasyms[28]+cos(2*phi_h_pipim-phi_s_up)*sgasyms[29]+cos(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[30]+cos(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[31]+cos(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[32]+cos(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[33]+cos(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[34]+cos(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[35]+cos(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[36]+cos(2*phi_rt_pipim-phi_s_up)*sgasyms[37]))
+fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
+fsgasyms_xs_pp_formula: "(float)(0.0)" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+fbgasyms_xs_pu_name: "fbgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
+fbgasyms_xs_pu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+fbgasyms_xs_up_name: "fbgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
+fbgasyms_xs_up_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+fbgasyms_xs_pp_name: "fbgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
+fbgasyms_xs_pp_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
+combined_spin_state: "ss"
+rdf_key_cols: ["run"] #NOTE: These are the variable name used as keys in the RDataFrame for matching CSV column values to events in the ROOT files from `inpath`.
+csv_paths: [] #NOTE: You can load additional data, e.g., run depedent target polarizations, from CSV.  These will only be loaded if you specify the CSV paths here.  The length of `run_names` and `col_names` must exactly match the length of this argument if any csv paths are specified.
+csv_key_cols: ["Run"] #NOTE: These are the variable name used as keys in the CSV for matching CSV column values to events in the ROOT files from `inpath`.
+col_names: [["PbPt"]] #NOTE: You must specify the data to take from the CSV
+col_aliases: {} #NOTE: You can optionally specify aliases for the column names in the CSV to avoid potential naming conflicts with existing columns in the `ROOT::RDataFrame`.
+use_categories_as_float: false
 helicity_name: "heli"
-helicity_formula: "-helicity"
+helicity_formula: "(float)helicity" #NOTE: You just need the target spin here so multiply by beam helicity.
 helicity_states:
+  plus: 1
+  zero: 0
+  minus: -1
+tspin_name: "tspin"
+tspin_formula: "(float)TMath::Sign(1.0,PbPt*heli)"
+tspin_states:
+  plus: 1
+  zero: 0
+  minus: -1
+htspin_name: "htspin"
+htspin_states:
   plus: 1
   zero: 0
   minus: -1
 var_formulas: #NOTE: Variable definitions will be applied in order in case of dependencies, and they should follow the form [variable_name,formula].
   - ["phperp2_pipim","(float)(phperp_pipim*phperp_pipim)"]
-  - ["sin_phi_sin_theta","(float)(sin(phi_rt_pipim)*sintheta_p1_pipim)"]
-  - ["sin_phi_sin_theta_mc","(float)(sin(phi_rt_pipim_mc)*sintheta_p1_pipim_mc)"]
+  - ["theta_p1_pipim","(float)(asin(sintheta_p1_pipim))"]
+  - ["theta_p1_pipim_mc","(float)(asin(sintheta_p1_pipim_mc))"]
   - ["gamma","(float)(2.0*0.9383*x/sqrt(Q2))"]
   - ["gamma_mc","(float)(2.0*0.9383*x_mc/sqrt(Q2_mc))"]
   - ["epsilon","(float)((1-y-0.25*y*y*gamma*gamma)/(1-y+0.5*y*y+0.25*y*y*gamma*gamma))"]
   - ["epsilon_mc","(float)((1-y_mc-0.25*y_mc*y_mc*gamma_mc*gamma_mc)/(1-y_mc+0.5*y_mc*y_mc+0.25*y_mc*y_mc*gamma_mc*gamma_mc))"]
-  - ["depol0","(float)(-(1-y)/(1-y+0.5*y*y))"]
-  - ["depol0_mc","(float)(-(1-y_mc)/(1-y_mc+0.5*y_mc*y_mc))"]
+  - ["depol_a","(float)(1.0)"]
+  - ["depol_a_mc","(float)(1.0)"]
+  - ["depol_b","(float)(epsilon)"]
+  - ["depol_b_mc","(float)(epsilon_mc)"]
+  - ["depol_c","(float)(sqrt(1-epsilon*epsilon))"]
+  - ["depol_c_mc","(float)(sqrt(1-epsilon_mc*epsilon_mc))"]
+  - ["depol_v","(float)(sqrt(2*epsilon*(1+epsilon)))"]
+  - ["depol_v_mc","(float)(sqrt(2*epsilon_mc*(1+epsilon_mc)))"]
+  - ["depol_w","(float)(sqrt(2*epsilon*(1-epsilon)))"]
+  - ["depol_w_mc","(float)(sqrt(2*epsilon_mc*(1-epsilon_mc)))"]
 binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
 binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pipim.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
 binvars: ["Q2","y","x","mass_pipim","z_pipim","mx_pipim","phperp_pipim","phperp2_pipim"]
 binvar_titles: ["Q2","y","x","M_{#pi^{+}#pi^{-}} (GeV)","z_{#pi^{+}#pi^{-}}","M_{X, #pi^{+}#pi^{-}} (GeV)","P_{#pi^{+}#pi^{-},#perp} (GeV)","P^{2}_{#pi^{+}#pi^{-},#perp} (GeV)"]
 binvar_lims: [[1,11],[0,1],[0,1],[0,3],[0,1],[1.5,3.5],[0.0,1.25],[0.0,1.6]]
 binvar_bins: [16,16,16,16,16,16,16,16]
-depolvars: ["depol0"]
-depolvar_titles: ["depol0"]
-depolvar_lims: [[-1,1]]
+depolvars: ["epsilon"]
+depolvar_titles: ["#epsilon"]
+depolvar_lims: [[0,1]] #NOTE DOUBLE CHECK THESE LIMITS
 depolvar_bins: [16]
-asymfitvars: ["sin_phi_sin_theta"]
-asymfitvar_titles: ["sin(#phi_{R_{T}}) sin(#theta)"]
-asymfitvar_lims: [[-1,1]]
-asymfitvar_bins: [16]
+asymfitvars: ["phi_h_pipim","phi_rt_pipim","phi_s_up"]
+asymfitvar_titles: ["#phi_{#pi^{+}#pi^{-}}","#phi_{R#perp,#pi^{+}#pi^{-}}","#phi_{S}"]
+asymfitvar_lims: [[0.0,6.28],[0.0,6.28],[0.0,6.28]]
+asymfitvar_bins: [16,16,16]
 massfitvars: []
 massfitvar_titles: []
 massfitvar_lims: []
 massfitvar_bins: []
-pol: 1.0 #NOTE: 0.8922 Average Polarization for RGA Fall 2018 Outbending data runs >= 5331
-asymfit_formula: "x[0]*x[1]*x[2]" #NOTE: This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfitpar_inits: [0.0]
-asymfitpar_initlims: [[-0.5,0.5]]
+bpol: 1.0
+tpol: 1.0
+asymfit_formula_uu: ""
+asymfit_formula_pu: ""
+asymfit_formula_up: >-
+  (sin(x[0]-x[2])*x[3]+sin(-x[1]-x[2])*x[4]+sin(2*x[0]-x[1]-x[2])*x[5]+sin(-x[0]+2*x[1]-x[2])*x[6]+sin(3*x[0]-2*x[1]-x[2])*x[7]) + 
+  x[41]*(sin(x[0]+x[2])*x[8]+sin(3*x[0]-x[2])*x[9]+sin(2*x[0]-x[1]+x[2])*x[10]+sin(4*x[0]-x[1]-x[2])*x[11]+sin(x[1]+x[2])*x[12]+sin(2*x[0]+x[1]-x[2])*x[13]+sin(3*x[0]-2*x[1]+x[2])*x[14]+sin(5*x[0]-2*x[1]-x[2])*x[15]+sin(-x[0]+2*x[1]+x[2])*x[16]+sin(x[0]+2*x[1]-x[2])*x[17]) + 
+  sqrt(2*x[41]*(1+x[41]))*(sin(x[2])*x[18]+sin(2*x[0]-x[2])*x[19]+sin(+x[0]-x[1]+x[2])*x[20]+sin(3*x[0]-x[1]-x[2])*x[21]+sin(-x[0]+x[1]+x[2])*x[22]+sin(x[0]+x[1]-x[2])*x[23]+sin(+2*x[0]-2*x[1]+x[2])*x[24]+sin(4*x[0]-2*x[1]-x[2])*x[25]+sin(-2*x[0]+2*x[1]+x[2])*x[26]+sin(2*x[1]-x[2])*x[27])
+asymfit_formula_pp: >-
+  sqrt(1-x[41]*x[41])*(cos(x[0]-x[2]))*x[28]+cos(x[1]-x[2]))*x[29]+cos(-x[0]+2*x[1]-x[2]))*x[30]) + 
+  sqrt(2*x[41]*(1-x[41]))*(cos(x[2])*x[31]+cos(2*x[0]-x[2])*x[32]+cos(+x[0]-x[1]+x[2])*x[33]+cos(3*x[0]-x[1]-x[2])*x[34]+cos(-x[0]+x[1]+x[2])*x[35]+cos(x[0]+x[1]-x[2])*x[36]+cos(+2*x[0]-2*x[1]+x[2])*x[37]+cos(4*x[0]-2*x[1]-x[2])*x[38]+cos(-2*x[0]+2*x[1]+x[2])*x[39]+cos(2*x[1]-x[2])*x[40])
+asymfitpar_inits: [0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0]
+asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
 use_sumw2error: false
-use_average_depol: false
+use_average_depol: false #NOTE: Make sure your asymfit_formula_* arguments are correctly set for this option.
 use_extended_nll: false
-use_binned_fit: false
-massfit_nbins_conv: 1000
-massfit_sig_pdf_name: "" #NOTE: This must be one of ("gauss","landau","cb","landau_X_gauss","cb_X_gauss").  No mass fit will be applied if an empty string is passed.
-massfit_sg_region_min: 0.0
-massfit_sg_region_max: 0.0
-sgyield_name: "sgyield"
-bgYield_name: "bgyield"
+use_binned_fit: false #massfit_yamlfile_map: #NOTE: You can specify a map of bin scheme (string) unique ids to yaml file paths specifying the remaining massfit arguments {`scheme_<scheme_name>_bin_<bin_idx>(__<asymfitvar_bin_idx>)` -> <YAML_PATH> }.
+massfit_pdf_name: "" #NOTE: A mass fit and background correction will only be used if this is not empty.
+massfit_formula_sg: "" #NOTE: This is parsed by RooGenericPdf using TFormula
+massfit_formula_bg: "" #NOTE: This is parsed by RooGenericPdf using TFormula
+massfit_sgYield_name: "sgYield"
+massfit_bgYield_name: "bgYield"
+massfit_initsgfrac: 0.1
+massfit_parnames_sg: []
+massfit_partitles_sg: []
+massfit_parunits_sg: []
+massfit_parinits_sg: []
+massfit_parlims_sg: []
+massfit_parnames_bg: []
+massfit_partitles_bg: []
+massfit_parunits_bg: []
+massfit_parinits_bg: []
+massfit_parlims_bg: []
+massfit_sgregion_lims: []
+massfit_lg_text_size: 0.04
+massfit_lg_margin: 0.1
+massfit_lg_ncols: 1
+massfit_plot_bg_pars: false
+massfit_use_sumw2error: false
+massfit_use_extended_nll: true
+massfit_use_binned_fit: false
 use_splot: false
 massfit_sgcut: ""
 massfit_bgcut: ""
 use_sb_subtraction: false
-use_binned_sb_weights: false
+use_binned_sb_bgfracs: false
+bgfracvar: "bgfracvar"
+bgfracvar_lims: [0.0,1.0]
+bgfrac_idx: 0 #NOTE: The index here refers to the formulation of the background fraction from `saga::signal::setBinnedBGFracs()`.
+asymfitvar_binschemes: #NOTE: Structure for asymmetry fit variable bin schemes is { binscheme_name: { binvar_name: [binlimits] } }  #NOTE: binscheme_names MUST match those in the binschemes argument!
 logpath: "out.txt"
+dump_dataset: false
+dump_vars: ["heli","tspin","ss","phi_h_pipim","phi_rt_pipim","gamma","epsilon","depol_a","depol_b","depol_c","depol_v","depol_w","Q2","W","x","y","xF_pipim","phperp2_pipim","phperp_pipim","z_pipim","mx_pipim"]
