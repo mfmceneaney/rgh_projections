@@ -796,15 +796,15 @@ def get_xs_lt(e, y, costheta, phi_h, phi_r, phi_s, lmax=2, asyms_name='sgasyms',
             p_lm = get_legendre_polynomial(costheta, l, m, cosine_sine_names=cosine_sine_names)
             if xs_lt_c != "":
                 xs_lt_c += "+"
-            asym_formula = f"2*{p_lm}*cos({m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==1 \
-                            else f"2*{p_lm}*cos({1-m}*{phi_h}-{phi_s}))*{asyms_name}[{asym_idx}]" if m==0 \
-                            else f"2*{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r}-{phi_s}))*{asyms_name}[{asym_idx}]"
+            asym_formula = f"2*{p_lm}*cos({m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]" if m==1 \
+                            else f"2*{p_lm}*cos({1-m}*{phi_h}-{phi_s})*{asyms_name}[{asym_idx}]" if m==0 \
+                            else f"2*{p_lm}*cos({1-m}*{phi_h}+{m}*{phi_r}-{phi_s})*{asyms_name}[{asym_idx}]"
             asym_idx += 1
             xs_lt_c += asym_formula
             asym_formulas[depol_c].append(asym_formula)
-            asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s})) ]" if m==1 \
-                        else f"A_LT^[ P_({l},{m}) cos({1-m}{phi_h}-{phi_s})) ]" if m==0 \
-                        else f"A_LT^[ P_({l},{m}) cos({1-m}{phi_h}+{m}{phi_r}-{phi_s})) ]"
+            asym_name = f"A_LT^[ P_({l},{m}) cos({m}{phi_r}-{phi_s}) ]" if m==1 \
+                        else f"A_LT^[ P_({l},{m}) cos({1-m}{phi_h}-{phi_s}) ]" if m==0 \
+                        else f"A_LT^[ P_({l},{m}) cos({1-m}{phi_h}+{m}{phi_r}-{phi_s}) ]"
             asyms.append(asym_name)
 
     # Set the xs value
