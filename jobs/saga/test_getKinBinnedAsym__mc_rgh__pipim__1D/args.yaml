@@ -31,7 +31,7 @@ fsgasyms_xs_pu_formula: >-
   depol_v*(sin(phi_s_up)*sgasyms[15]+sin(2*phi_h_pipim-phi_s_up)*sgasyms[16]+sin(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[17]+sin(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[18]+sin(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[19]+sin(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[20]+sin(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[21]+sin(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[22]+sin(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[23]+sin(2*phi_rt_pipim-phi_s_up)*sgasyms[24]))
 fsgasyms_xs_up_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
 fsgasyms_xs_up_formula: >-
-  (float)(depol_c*(cos(phi_h_pipim-phi_s_up))*sgasyms[25]+cos(phi_rt_pipim-phi_s_up))*sgasyms[26]+cos(-phi_h_pipim+2*phi_rt_pipim-phi_s_up))*sgasyms[27]) + 
+  (float)(depol_c*(cos(phi_h_pipim-phi_s_up)*sgasyms[25]+cos(phi_rt_pipim-phi_s_up)*sgasyms[26]+cos(-phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[27]) + 
   depol_w*(cos(phi_s_up)*sgasyms[28]+cos(2*phi_h_pipim-phi_s_up)*sgasyms[29]+cos(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[30]+cos(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[31]+cos(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[32]+cos(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[33]+cos(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[34]+cos(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[35]+cos(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[36]+cos(2*phi_rt_pipim-phi_s_up)*sgasyms[37]))
 fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
 fsgasyms_xs_pp_formula: "(float)(0.0)" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
@@ -110,7 +110,7 @@ asymfit_formula_up: >-
   x[41]*(sin(x[0]+x[2])*x[8]+sin(3*x[0]-x[2])*x[9]+sin(2*x[0]-x[1]+x[2])*x[10]+sin(4*x[0]-x[1]-x[2])*x[11]+sin(x[1]+x[2])*x[12]+sin(2*x[0]+x[1]-x[2])*x[13]+sin(3*x[0]-2*x[1]+x[2])*x[14]+sin(5*x[0]-2*x[1]-x[2])*x[15]+sin(-x[0]+2*x[1]+x[2])*x[16]+sin(x[0]+2*x[1]-x[2])*x[17]) + 
   sqrt(2*x[41]*(1+x[41]))*(sin(x[2])*x[18]+sin(2*x[0]-x[2])*x[19]+sin(+x[0]-x[1]+x[2])*x[20]+sin(3*x[0]-x[1]-x[2])*x[21]+sin(-x[0]+x[1]+x[2])*x[22]+sin(x[0]+x[1]-x[2])*x[23]+sin(+2*x[0]-2*x[1]+x[2])*x[24]+sin(4*x[0]-2*x[1]-x[2])*x[25]+sin(-2*x[0]+2*x[1]+x[2])*x[26]+sin(2*x[1]-x[2])*x[27])
 asymfit_formula_pp: >-
-  sqrt(1-x[41]*x[41])*(cos(x[0]-x[2]))*x[28]+cos(x[1]-x[2]))*x[29]+cos(-x[0]+2*x[1]-x[2]))*x[30]) + 
+  sqrt(1-x[41]*x[41])*(cos(x[0]-x[2])*x[28]+cos(x[1]-x[2])*x[29]+cos(-x[0]+2*x[1]-x[2])*x[30]) + 
   sqrt(2*x[41]*(1-x[41]))*(cos(x[2])*x[31]+cos(2*x[0]-x[2])*x[32]+cos(+x[0]-x[1]+x[2])*x[33]+cos(3*x[0]-x[1]-x[2])*x[34]+cos(-x[0]+x[1]+x[2])*x[35]+cos(x[0]+x[1]-x[2])*x[36]+cos(+2*x[0]-2*x[1]+x[2])*x[37]+cos(4*x[0]-2*x[1]-x[2])*x[38]+cos(-2*x[0]+2*x[1]+x[2])*x[39]+cos(2*x[1]-x[2])*x[40])
 asymfitpar_inits: [0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0]
 asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
