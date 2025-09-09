@@ -22,17 +22,17 @@ mc_sg_match_formula: "(bool)(true)" #NOTE: dtheta and dphi variables are automat
 phi_s_original_name: "phi_s_up" #NOTE: Make sure you specify this variable name here AND in the asymmetry fit variables if you are injecting a transverse target spin dependent asymmetry.
 phi_s_original_name_dn: "phi_s_dn" #NOTE: You also need the phi of the negative spin vector
 phi_s_injected_name: "phi_s_injected" #NOTE: The asymmetry fit variable with name `phi_s_original_name` will be renamed to this after injection if `phi_s_original_name`!=""
-fsgasyms_xs_uu_name: "fsgasyms_xs_uu" #NOTE: Define beam helicity dependent asymmetry terms
-fsgasyms_xs_uu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
-fsgasyms_xs_pu_name: "fsgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
-fsgasyms_xs_pu_formula: >-
+fsgasyms_xs_uu_name: "fsgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_uu_formula: >-
   (float)(depol_a*(sin(phi_h_pipim-phi_s_up)*sgasyms[0]+sin(-phi_rt_pipim-phi_s_up)*sgasyms[1]+sin(2*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[2]+sin(-phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[3]+sin(3*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[4]) + 
   depol_b*(sin(phi_h_pipim+phi_s_up)*sgasyms[5]+sin(3*phi_h_pipim-phi_s_up)*sgasyms[6]+sin(2*phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[7]+sin(4*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[8]+sin(phi_rt_pipim+phi_s_up)*sgasyms[9]+sin(2*phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[10]+sin(3*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[11]+sin(5*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[12]+sin(-phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[13]+sin(phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[14]) + 
   depol_v*(sin(phi_s_up)*sgasyms[15]+sin(2*phi_h_pipim-phi_s_up)*sgasyms[16]+sin(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[17]+sin(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[18]+sin(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[19]+sin(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[20]+sin(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[21]+sin(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[22]+sin(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[23]+sin(2*phi_rt_pipim-phi_s_up)*sgasyms[24]))
-fsgasyms_xs_up_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
-fsgasyms_xs_up_formula: >-
+fsgasyms_xs_pu_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
+fsgasyms_xs_pu_formula: >-
   (float)(depol_c*(cos(phi_h_pipim-phi_s_up)*sgasyms[25]+cos(phi_rt_pipim-phi_s_up)*sgasyms[26]+cos(-phi_h_pipim+2*phi_rt_pipim-phi_s_up)*sgasyms[27]) + 
   depol_w*(cos(phi_s_up)*sgasyms[28]+cos(2*phi_h_pipim-phi_s_up)*sgasyms[29]+cos(+phi_h_pipim-phi_rt_pipim+phi_s_up)*sgasyms[30]+cos(3*phi_h_pipim-phi_rt_pipim-phi_s_up)*sgasyms[31]+cos(-phi_h_pipim+phi_rt_pipim+phi_s_up)*sgasyms[32]+cos(phi_h_pipim+phi_rt_pipim-phi_s_up)*sgasyms[33]+cos(+2*phi_h_pipim-2*phi_rt_pipim+phi_s_up)*sgasyms[34]+cos(4*phi_h_pipim-2*phi_rt_pipim-phi_s_up)*sgasyms[35]+cos(-2*phi_h_pipim+2*phi_rt_pipim+phi_s_up)*sgasyms[36]+cos(2*phi_rt_pipim-phi_s_up)*sgasyms[37]))
+fsgasyms_xs_up_name: "fsgasyms_xs_uu" #NOTE: Define beam helicity dependent asymmetry terms
+fsgasyms_xs_up_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
 fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
 fsgasyms_xs_pp_formula: "(float)(0.0)" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
 fbgasyms_xs_pu_name: "fbgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
@@ -103,15 +103,15 @@ massfitvar_lims: []
 massfitvar_bins: []
 bpol: 1.0
 tpol: 1.0
-asymfit_formula_uu: ""
-asymfit_formula_pu: ""
-asymfit_formula_up: >-
+asymfit_formula_uu: >-
   (sin(x[0]-x[2])*x[3]+sin(-x[1]-x[2])*x[4]+sin(2*x[0]-x[1]-x[2])*x[5]+sin(-x[0]+2*x[1]-x[2])*x[6]+sin(3*x[0]-2*x[1]-x[2])*x[7]) + 
   x[41]*(sin(x[0]+x[2])*x[8]+sin(3*x[0]-x[2])*x[9]+sin(2*x[0]-x[1]+x[2])*x[10]+sin(4*x[0]-x[1]-x[2])*x[11]+sin(x[1]+x[2])*x[12]+sin(2*x[0]+x[1]-x[2])*x[13]+sin(3*x[0]-2*x[1]+x[2])*x[14]+sin(5*x[0]-2*x[1]-x[2])*x[15]+sin(-x[0]+2*x[1]+x[2])*x[16]+sin(x[0]+2*x[1]-x[2])*x[17]) + 
   sqrt(2*x[41]*(1+x[41]))*(sin(x[2])*x[18]+sin(2*x[0]-x[2])*x[19]+sin(+x[0]-x[1]+x[2])*x[20]+sin(3*x[0]-x[1]-x[2])*x[21]+sin(-x[0]+x[1]+x[2])*x[22]+sin(x[0]+x[1]-x[2])*x[23]+sin(+2*x[0]-2*x[1]+x[2])*x[24]+sin(4*x[0]-2*x[1]-x[2])*x[25]+sin(-2*x[0]+2*x[1]+x[2])*x[26]+sin(2*x[1]-x[2])*x[27])
-asymfit_formula_pp: >-
+asymfit_formula_pu: >-
   sqrt(1-x[41]*x[41])*(cos(x[0]-x[2])*x[28]+cos(x[1]-x[2])*x[29]+cos(-x[0]+2*x[1]-x[2])*x[30]) + 
   sqrt(2*x[41]*(1-x[41]))*(cos(x[2])*x[31]+cos(2*x[0]-x[2])*x[32]+cos(+x[0]-x[1]+x[2])*x[33]+cos(3*x[0]-x[1]-x[2])*x[34]+cos(-x[0]+x[1]+x[2])*x[35]+cos(x[0]+x[1]-x[2])*x[36]+cos(+2*x[0]-2*x[1]+x[2])*x[37]+cos(4*x[0]-2*x[1]-x[2])*x[38]+cos(-2*x[0]+2*x[1]+x[2])*x[39]+cos(2*x[1]-x[2])*x[40])
+asymfit_formula_up: ""
+asymfit_formula_pp: ""
 asymfitpar_inits: [0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0,0.0, 0.0,0.0,0.0]
 asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
 use_sumw2error: false
