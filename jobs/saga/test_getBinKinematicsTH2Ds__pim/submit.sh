@@ -10,11 +10,9 @@
 #SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 
-export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/getBinKinematicsTH2Ds
 export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export YAML=args.yaml
 
-echo $MYEXECUTABLE
 echo $OUTDIR
 echo $YAML
 
@@ -23,15 +21,15 @@ ls -lrth
 pwd
 
 # Run full bin jobs
-$MYEXECUTABLE args_fullbin.yaml
-$MYEXECUTABLE args_px_py.yaml
-$MYEXECUTABLE args_px_py_sector4.yaml
-$MYEXECUTABLE args_px_py_nosector4.yaml
-$MYEXECUTABLE args_px_py_JUST_sector4.yaml
-$MYEXECUTABLE args_px_py_JUST_sector4_e.yaml
-$MYEXECUTABLE args_px_py_JUST_sector4_pim.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_fullbin.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_sector4.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_nosector4.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_e.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_pim.yaml
 
 # Run 4d jobs
-$MYEXECUTABLE args.yaml
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args.yaml
 
 echo DONE

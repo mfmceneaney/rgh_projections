@@ -10,18 +10,16 @@
 #SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 
-export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/getBinKinematicsTH2Ds
 export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export YAML=args_fullbin.yaml
 export YAML2=args.yaml
 
-echo $MYEXECUTABLE
 echo $OUTDIR
 echo $YAML
 
 cd $OUTDIR
 ls -lrth
 pwd
-$MYEXECUTABLE $YAML
-$MYEXECUTABLE $YAML2
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML
+$RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML2
 echo DONE
