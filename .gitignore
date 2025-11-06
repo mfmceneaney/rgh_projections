@@ -1,6 +1,12 @@
 env.txt
 *.bak
 *.txt
+*.pdf
+*.root
 **/*.bak
 **/*.txt
+**/*.pdf
+**/*.root
+*/**/*.csv
+*.pdf
 **/*~
