@@ -19,5 +19,5 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-$RGH_SAGA_COMMAND getBinKinematicsTH1Ds $YAML
+RGH_SAGA_COMMAND getBinKinematicsTH1Ds $YAML
 echo DONE

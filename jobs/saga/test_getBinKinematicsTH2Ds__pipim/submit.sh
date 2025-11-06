@@ -21,16 +21,16 @@ ls -lrth
 pwd
 
 # Run full bin jobs
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_fullbin.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_sector4.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_nosector4.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_e.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_pi.yaml
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_pim.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_fullbin.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_sector4.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_nosector4.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_e.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_pi.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args_px_py_JUST_sector4_pim.yaml
 
 # Run 4d jobs
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds args.yaml
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds args.yaml
 
 echo DONE

@@ -67,13 +67,13 @@ setenv RGH_PROJECTIONS_HOME "`pwd`"
 #----- DEPENDENT VARIABLES -----#
 
 setenv CLASDIS_PDF "$CLASDIS_HOME/pdf"
-setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/.clasdis"
+setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/clasdis"
 
 alias RGH_GEMC_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc \!*\""
 setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/recon-util"
 setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/hipo-utils"
 setenv RGH_C12ANALYSIS_COMMAND "apptainer run -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
-setenv RGH_SAGA_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash"
+alias RGH_SAGA_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash -c \"\!*\""
 
 # Set project HIPO data paths for CLAS12-Analysis
 setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"

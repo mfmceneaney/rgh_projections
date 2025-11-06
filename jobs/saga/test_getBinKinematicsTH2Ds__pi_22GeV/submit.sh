@@ -20,6 +20,6 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML
-$RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML2
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML
+RGH_SAGA_COMMAND getBinKinematicsTH2Ds $YAML2
 echo DONE
