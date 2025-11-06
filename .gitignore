@@ -3,10 +3,9 @@ env.txt
 *.txt
 *.pdf
 *.root
-**/*.bak
-**/*.txt
-**/*.pdf
-**/*.root
-*/**/*.csv
-*.pdf
+jobs/**/*.bak
+jobs/**/*.txt
+jobs/**/*.pdf
+jobs/**/*.root
+jobs/**/*.csv
 **/*~
