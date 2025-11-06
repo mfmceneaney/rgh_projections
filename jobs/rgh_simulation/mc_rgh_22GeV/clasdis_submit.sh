@@ -6,7 +6,7 @@
 #SBATCH --partition=production
 #SBATCH --account=clas12
 #SBATCH --mem-per-cpu=4000
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 #SBATCH --mail-user=%u@jlab.org
 
