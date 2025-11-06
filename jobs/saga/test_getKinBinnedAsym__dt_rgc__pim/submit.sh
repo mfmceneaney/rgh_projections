@@ -7,7 +7,7 @@
 #SBATCH --account=clas12
 #SBATCH -c 8
 #SBATCH --mem-per-cpu=2G
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 
 export OUTDIR=$RGH_PROJECTIONS_HOME/jobs/saga/test_getKinBinnedAsym__dt_rgc__pim

@@ -7,7 +7,7 @@
 #SBATCH --account=clas12
 #SBATCH -c 2
 #SBATCH --mem-per-cpu=2000
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=6:00:00
 
 $RGH_PROJECTIONS_HOME/jobs/c12analysis/dt_rgc/job.sh
