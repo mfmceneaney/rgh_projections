@@ -7,6 +7,7 @@ export CLASDIS_HOME="/work/clas12/users/$USER/clasdis"
 export CLASDIS_TARG=proton
 export CLASDIS_NMAX=10000
 export CLASDIS_TRIG=10000000
+export CLASDIS_TRIG_HALF=5000000
 export CLASDIS_POL=1
 export CLASDIS_PREFIX=out_tp_
 export CLASDIS_GEN_PM=1

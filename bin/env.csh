@@ -7,6 +7,7 @@ setenv CLASDIS_HOME "/work/clas12/users/$USER/clasdis"
 setenv CLASDIS_TARG proton
 setenv CLASDIS_NMAX 10000
 setenv CLASDIS_TRIG 10000000
+setenv CLASDIS_TRIG_HALF 5000000
 setenv CLASDIS_POL 1
 setenv CLASDIS_PREFIX out_tp_
 setenv CLASDIS_GEN_PM 1

@@ -11,7 +11,7 @@
 #SBATCH --mail-user=%u@jlab.org
 
 export OUTDIR=$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/lund
-export CLASDIS_TRIG_HALF=`echo "$CLASDIS_TRIG/2" | bc`
+# export CLASDIS_TRIG_HALF=`echo "$CLASDIS_TRIG/2" | bc`
 
 # Create output directory
 mkdir -p $OUTDIR
