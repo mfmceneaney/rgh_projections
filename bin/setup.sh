@@ -14,7 +14,7 @@ for file in $RGH_PROJECTIONS_HOME/jobs/saga/*/submit.sh; do
 done
 
 for file in $RGH_PROJECTIONS_HOME/jobs/*/*/*submit.sh; do
-    sed -i.bak "s;partition=production;partition=$RGH_PARTITION;g"
+    sed -i.bak "s;partition=production;partition=$RGH_PARTITION;g" $file
 done
 
 # Create output directories
