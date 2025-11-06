@@ -10,10 +10,10 @@ done
 # Fix for now so that job output directly can be set by saga python libraries
 for file in $RGH_PROJECTIONS_HOME/jobs/saga/*/submit.sh; do
     sed -i.bak "s;\$RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
-    sed -i.bak "s;/farm_out/%u;$RGH_PROJECTIONS_FARM_OUT;g" $file
 done
 
 for file in $RGH_PROJECTIONS_HOME/jobs/*/*/*submit.sh; do
+    sed -i.bak "s;/farm_out/%u;$RGH_PROJECTIONS_FARM_OUT;g" $file
     sed -i.bak "s;partition=production;partition=$RGH_HPC_PARTITION;g" $file
     if [ -z "$RGH_HPC_ACCOUNT" ]; then
         sed -i.bak "s;#SBATCH --account=;##SBATCH --account=;g" $file
