@@ -66,6 +66,19 @@ Install `saga`:
 apptainer pull saga.sif oras://ghcr.io/mfmceneaney/saga:latest
 ```
 
+For running the python scripts in [pyscripts](pyscripts),
+you will need the saga python modules.  Create a python virtual environment
+and install the remaining dependencies from [`requirements.txt`](requirements.txt),
+then clone the repository and install saga.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+git clone https://github.com/mfmceneaney/saga.git
+cd saga
+pip install -e .
+```
+
 # Installation
 
 Begin by cloning the repository:
@@ -75,7 +88,7 @@ git clone https://github.com/mfmceneaney/rgh_projections.git
 
 Update the paths and commands used in the environment script&mdash;[bin/env.sh](bin/env.sh) or [bin/env.csh](bin/env.csh)&mdash;by creating a file env.txt in the root of this repository.
 In this file you will need to manually set variables used in the environment script depending on your local installation paths and the paths for existing data and MC samples you wish to use:
-`RGH_PROJECTIONS_VOL_DIR`, `RGH_CLASDIS_HOME`, `RGH_SIM_HOME`,`RGH_IMG_*`, `RG?_MC_DIR*`, etc.
+`RGH_PROJECTIONS_VOL_DIR`, `CLASDIS_HOME`, `RGH_SIM_HOME`,`RGH_*_IMG`, `RG?_MC_DIR*`, etc.
 Yaml paths will be set based on the paths given in the environment script.
 
 After configuring your environment file, source the environment and run the setup script.
