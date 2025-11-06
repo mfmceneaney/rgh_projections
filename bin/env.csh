@@ -52,7 +52,8 @@ setenv RGH_PROJECTIONS_C12A_IMG "clas12-analysis.sif"
 setenv RGH_PROJECTIONS_SAGA_IMG "saga.sif"
 
 # Set the HPC partition on which you wish to run
-setenv RGH_PARTITION "production"
+setenv RGH_HPC_PARTITION "production"
+setenv RGH_HPC_ACCOUNT "clas12"
 
 #----- LOAD VARIABLES -----#
 # Load and overwrite variables from env.txt
