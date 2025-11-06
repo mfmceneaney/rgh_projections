@@ -71,7 +71,7 @@ export RGH_CLADIS_COMMAND="$CLASDIS_HOME/clasdis"
 
 # Set command for gemc
 RGH_GEMC_COMMAND() {
-    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c "module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc $@\"" -- "$@"
+    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c "module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc $@" -- "$@"
 }
 export -f RGH_GEMC_COMMAND
 
@@ -84,7 +84,7 @@ export RGH_C12ANALYSIS_COMMAND="apptainer run -B $RGH_PROJECTIONS_VOL_DIR,$RGH_P
 
 # Set variables for saga
 RGH_SAGA_COMMAND() {
-    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash -c "\"$@\"" -- "$@"
+    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash -c "$@" -- "$@"
 }
 export -f RGH_SAGA_COMMAND
 
