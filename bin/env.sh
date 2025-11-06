@@ -51,6 +51,9 @@ export RGH_PROJECTIONS_CCFA_IMG="analysis.sif"
 export RGH_PROJECTIONS_C12A_IMG="clas12-analysis.sif"
 export RGH_PROJECTIONS_SAGA_IMG="saga.sif"
 
+# Set the HPC partition on which you wish to run
+export RGH_PARTITION="production"
+
 #----- LOAD VARIABLES -----#
 
 # Load and overwrite variables from env.txt
