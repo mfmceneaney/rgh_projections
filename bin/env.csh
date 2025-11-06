@@ -1,7 +1,9 @@
 #!/bin/csh
 
 #----- SET DEFAULT VARIABLES -----#
+
 # Set variables for clasdis
+setenv CLASDIS_HOME "/work/clas12/users/$USER/clasdis"
 setenv CLASDIS_TARG proton
 setenv CLASDIS_NMAX 10000
 setenv CLASDIS_TRIG 10000000
@@ -51,8 +53,8 @@ setenv RGH_PROJECTIONS_SAGA_IMG "saga.sif"
 
 #----- LOAD VARIABLES -----#
 # Load and overwrite variables from env.txt
-if (-e myenv.txt) then
-    foreach line (`grep -v '^#' myenv.txt`)
+if (-e env.txt) then
+    foreach line (`grep -v '^#' env.txt`)
         set var = `echo $line | cut -d= -f1`
         set val = `echo $line | cut -d= -f2-`
         setenv $var "$val"
@@ -63,6 +65,10 @@ endif
 setenv RGH_PROJECTIONS_HOME "`pwd`"
 
 #----- DEPENDENT VARIABLES -----#
+
+setenv CLASDIS_PDF "$CLASDIS_HOME/pdf"
+setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/.clasdis"
+
 alias RGH_GEMC_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc \!*\""
 setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/recon-util"
 setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/hipo-utils"

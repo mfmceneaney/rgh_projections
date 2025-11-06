@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #----- SET DEFAULT VARIABLES -----#
+
 # Set variables for clasdis
+export CLASDIS_HOME="/work/clas12/users/$USER/clasdis"
 export CLASDIS_TARG=proton
 export CLASDIS_NMAX=10000
 export CLASDIS_TRIG=10000000
@@ -52,9 +54,9 @@ export RGH_PROJECTIONS_SAGA_IMG="saga.sif"
 #----- LOAD VARIABLES -----#
 
 # Load and overwrite variables from env.txt
-if [ -f myenv.txt ]; then
+if [ -f env.txt ]; then
     # ignore lines starting with # and blank lines
-    export $(grep -v '^#' myenv.txt | xargs)
+    export $(grep -v '^#' env.txt | xargs)
 fi
 
 #----- STATIC VARIABLES -----#
@@ -63,6 +65,9 @@ fi
 export RGH_PROJECTIONS_HOME="$PWD"
 
 #----- DEPENDENT VARIABLES -----#
+
+export CLASDIS_PDF="$CLASDIS_HOME/pdf"
+export RGH_CLADIS_COMMAND="$CLASDIS_HOME/.clasdis"
 
 # Set command for gemc
 export RGH_GEMC_COMMAND="apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc $@\""
