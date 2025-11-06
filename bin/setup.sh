@@ -12,3 +12,7 @@ for file in $RGH_PROJECTIONS_HOME/jobs/saga/*/submit.sh; do
     sed -i.bak "s;\$RGH_PROJECTIONS_HOME;$RGH_PROJECTIONS_HOME;g" $file
     sed -i.bak "s;/farm_out/%u;$RGH_PROJECTIONS_FARM_OUT;g" $file
 done
+
+# Create output directories
+mkdir -p $RGH_PROJECTIONS_FARM_OUT
+mkdir -p $RGH_PROJECTIONS_VOL_DIR
