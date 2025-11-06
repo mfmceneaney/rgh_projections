@@ -10,12 +10,10 @@
 #SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 
-export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/findBinLims
 export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export YAML=args_1d_bins.yaml
 export YAML2=args_4d_bins.yaml
 
-echo $MYEXECUTABLE
 echo $OUTDIR
 echo $YAML
 
