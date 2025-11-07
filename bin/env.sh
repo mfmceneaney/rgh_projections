@@ -5,9 +5,11 @@
 # Set variables for clasdis
 export CLASDIS_HOME="/work/clas12/users/$USER/clasdis"
 export CLASDIS_TARG=proton
-export CLASDIS_NMAX=10000
-export CLASDIS_TRIG=10000000
+export CLASDIS_NMAX=10000 #NOTE: Maximum number of MC events per file
+export CLASDIS_TRIG=10000000 #NOTE: Maximum number of MC events to trigger
 export CLASDIS_TRIG_HALF=5000000
+export CLASDIS_NJOBS=1000 #NOTE: This should be the trigger / nmax
+export CLASDIS_NJOBS_HALF=500
 export CLASDIS_POL=1
 export CLASDIS_PREFIX=out_tp_
 export CLASDIS_GEN_PM=1
