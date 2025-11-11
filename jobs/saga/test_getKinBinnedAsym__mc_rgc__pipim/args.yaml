@@ -72,16 +72,18 @@ var_formulas: #NOTE: Variable definitions will be applied in order in case of de
   - ["gamma_mc","(float)(2.0*0.9383*x_mc/sqrt(Q2_mc))"]
   - ["epsilon","(float)((1-y-0.25*y*y*gamma*gamma)/(1-y+0.5*y*y+0.25*y*y*gamma*gamma))"]
   - ["epsilon_mc","(float)((1-y_mc-0.25*y_mc*y_mc*gamma_mc*gamma_mc)/(1-y_mc+0.5*y_mc*y_mc+0.25*y_mc*y_mc*gamma_mc*gamma_mc))"]
-  - ["depol_a","(float)(1.0)"]
-  - ["depol_a_mc","(float)(1.0)"]
-  - ["depol_b","(float)(epsilon)"]
-  - ["depol_b_mc","(float)(epsilon_mc)"]
-  - ["depol_c","(float)(sqrt(1-epsilon*epsilon))"]
-  - ["depol_c_mc","(float)(sqrt(1-epsilon_mc*epsilon_mc))"]
-  - ["depol_v","(float)(sqrt(2*epsilon*(1+epsilon)))"]
-  - ["depol_v_mc","(float)(sqrt(2*epsilon_mc*(1+epsilon_mc)))"]
-  - ["depol_w","(float)(sqrt(2*epsilon*(1-epsilon)))"]
-  - ["depol_w_mc","(float)(sqrt(2*epsilon_mc*(1-epsilon_mc)))"]
+  - ["prefactor","(float)(y*y/(2.0*(1.0-epsilon)))"]
+  - ["prefactor_mc","(float)(y_mc*y_mc/(2.0*(1.0-epsilon_mc)))"]
+  - ["depol_a","(float)(prefactor*1.0)"]
+  - ["depol_a_mc","(float)(prefactor_mc*1.0)"]
+  - ["depol_b","(float)(prefactor*epsilon)"]
+  - ["depol_b_mc","(float)(prefactor_mc*epsilon_mc)"]
+  - ["depol_c","(float)(prefactor*sqrt(1-epsilon*epsilon))"]
+  - ["depol_c_mc","(float)(prefactor_mc*sqrt(1-epsilon_mc*epsilon_mc))"]
+  - ["depol_v","(float)(prefactor*sqrt(2*epsilon*(1+epsilon)))"]
+  - ["depol_v_mc","(float)(prefactor_mc*sqrt(2*epsilon_mc*(1+epsilon_mc)))"]
+  - ["depol_w","(float)(prefactor*sqrt(2*epsilon*(1-epsilon)))"]
+  - ["depol_w_mc","(float)(prefactor_mc*sqrt(2*epsilon_mc*(1-epsilon_mc)))"]
 binschemes: #NOTE: Structure for bin schemes is { binscheme_name: { binvar_name: [binlimits] } }
 binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pipim.yaml"] #NOTE: You can alternately load a bin scheme from another YAML file if you do not put a map under `binschemes` above.
 binvars: ["Q2","y","x","mass_pipim","z_pipim","mx_pipim","phperp_pipim","phperp2_pipim"]
@@ -92,9 +94,9 @@ depolvars: ["epsilon"]
 depolvar_titles: ["#epsilon"]
 depolvar_lims: [[0,1]] #NOTE DOUBLE CHECK THESE LIMITS
 depolvar_bins: [16]
-asymfitvars: ["phi_h_pipim","phi_rt_pipim"]
-asymfitvar_titles: ["#phi_{#pi^{+}#pi^{-}}","#phi_{R#perp,#pi^{+}#pi^{-}}"]
-asymfitvar_lims: [[0.0,6.28],[0.0,6.28]]
+asymfitvars: ["theta_p1_pipim","phi_rt_pipim"]
+asymfitvar_titles: ["#theta_{#pi^{+}#pi^{-}}","#phi_{R#perp,#pi^{+}#pi^{-}}"]
+asymfitvar_lims: [[-1.57,1.57],[0.0,6.28]]
 asymfitvar_bins: [16,16]
 massfitvars: []
 massfitvar_titles: []
@@ -105,14 +107,10 @@ tpol: 1.0
 asymfit_formula_uu: ""
 asymfit_formula_pu: ""
 asymfit_formula_up: >-
-  (sin(-x[0]+x[1])*x[2]+sin(-2*x[0]+2*x[1])*x[3]) + 
-  x[21]*(sin(2*x[0])*x[4]+sin(3*x[0]-x[1])*x[5]+sin(x[0]+x[1])*x[6]+sin(4*x[0]-2*x[1])*x[7]+sin(2*x[1])*x[8]) + 
-  sqrt(2*x[21]*(1+x[21]))*(sin(x[0])*x[9]+sin(2*x[0]-x[1])*x[10]+sin(x[1])*x[11]+sin(3*x[0]-2*x[1])*x[12]+sin(-x[0]+2*x[1])*x[13])
-asymfit_formula_pp: >-
-  sqrt(1-x[21]*x[21])*(cos((x[0]-x[1]))*x[14]+cos(2*(x[0]-x[1]))*x[15]) + 
-  sqrt(2*x[21]*(1-x[21]))*(cos(x[0])*x[16]+cos(2*x[0]-x[1])*x[17]+cos(x[1])*x[18]+cos(3*x[0]-2*x[1])*x[19]+cos(-x[0]+2*x[1])*x[20])
-asymfitpar_inits: [0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0, 0.0,0.0,0.0,0.0, 0.0,0.0,0.0]
-asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5], [-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
+  "sqrt(2*x[3]*(1+x[3]))*sin(x[0])*sin(x[1])*x[2]"
+asymfit_formula_pp: ""
+asymfitpar_inits: [0.0]
+asymfitpar_initlims: [[-0.5,0.5]]
 use_sumw2error: false
 use_average_depol: false #NOTE: Make sure your asymfit_formula_* arguments are correctly set for this option.
 use_extended_nll: false
@@ -152,4 +150,4 @@ bgfrac_idx: 0 #NOTE: The index here refers to the formulation of the background 
 asymfitvar_binschemes: #NOTE: Structure for asymmetry fit variable bin schemes is { binscheme_name: { binvar_name: [binlimits] } }  #NOTE: binscheme_names MUST match those in the binschemes argument!
 logpath: "out.txt"
 dump_dataset: false
-dump_vars: ["heli","tspin","ss","phi_h_pipim","phi_rt_pipim","gamma","epsilon","depol_a","depol_b","depol_c","depol_v","depol_w","Q2","W","x","y","xF_pipim","phperp2_pipim","phperp_pipim","z_pipim","mx_pipim"]
+dump_vars: ["heli","tspin","ss","theta_p1_pipim","phi_rt_pipim","gamma","epsilon","depol_a","depol_b","depol_c","depol_v","depol_w","Q2","W","x","y","xF_pipim","phperp2_pipim","phperp_pipim","z_pipim","mx_pipim"]
