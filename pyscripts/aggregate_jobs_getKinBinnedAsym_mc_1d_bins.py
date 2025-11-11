@@ -56,38 +56,44 @@ ch_labels = {
 ch_sgasym_labels = {
     'mc_rgh':{
         ch:{
-            'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
-            'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
-            'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
-            'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            'a0':'$\mathcal{A}_{UT}^{\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
+                '$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\\phi_{R}+\\phi_{S})}}$',
+            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
+            # 'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
+            # 'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
+            # 'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
         } for ch in channels
     },
     'mc_rgh_sector4':{ #NOTE: This should be identical to RGH
         ch:{
-            'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
-            'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
-            'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
-            'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            'a0':'$\mathcal{A}_{UT}^{\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
+                '$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\\phi_{R}+\\phi_{S})}}$',
+            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
+            # 'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
+            # 'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
+            # 'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
         } for ch in channels
     },
     'mc_rgc':{
         ch:{
-            'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            'a1':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            'a2':'$\mathcal{A}_{UL}^{sin(2\\phi_{'+ch_labels[ch]+'})}$',
-            'a3':'$\mathcal{A}_{UL}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            'a4':'$\mathcal{A}_{LL}^{Const}$',
-            'a5':'$\mathcal{A}_{LL}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            'a0':'$\mathcal{A}_{UL}^{\sin{\\phi_{'+ch_labels[ch]+'}}}$' if ch != 'pipim' else \
+                '$\mathcal{A}_{UL}^{\sin{\\theta}\sin{\\phi_{R}}}$',
+            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a2':'$\mathcal{A}_{UL}^{sin(2\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a3':'$\mathcal{A}_{UL}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a4':'$\mathcal{A}_{LL}^{Const}$',
+            # 'a5':'$\mathcal{A}_{LL}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
         } for ch in channels
     }
 }

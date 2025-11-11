@@ -45,9 +45,9 @@ chs = [ch for rg in run_groups for ch in channels]
 
 # Set channel label for each base directory
 ch_sgasym_labels = {
-    'pi':'$\mathcal{A}_{UT}^{\sin{\phi_{\pi^{+}}}}$',
-    'pim':'$\mathcal{A}_{UT}^{\sin{\phi_{\pi^{-}}}}$',
-    'pipim':'$\mathcal{A}_{UT}^{\sin{\phi_{R_{T}}}\sin{\\theta}}$',
+    'pi':'$\mathcal{A}_{UT}^{\sin{(\phi_{\pi^{+}}+\phi_{S})}}$',
+    'pim':'$\mathcal{A}_{UT}^{\sin{(\phi_{\pi^{-}}+\phi_{S})}}$',
+    'pipim':'$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\phi_{R}+\phi_{S})}}$',
 }
 ch_sgasym_labels = [ch_sgasym_labels[ch] for rg in run_groups for ch in channels]
 
