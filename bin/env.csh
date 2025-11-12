@@ -58,6 +58,9 @@ setenv RGH_PROJECTIONS_SAGA_IMG "saga.sif"
 setenv RGH_HPC_PARTITION "production"
 setenv RGH_HPC_ACCOUNT "clas12"
 
+# Set gemc version
+setenv RGH_GEMC_VERSION "5.10"
+
 #----- LOAD VARIABLES -----#
 # Load and overwrite variables from env.txt
 if (-e env.txt) then
@@ -76,11 +79,22 @@ setenv RGH_PROJECTIONS_HOME "`pwd`"
 setenv CLASDIS_PDF "$CLASDIS_HOME/pdf"
 setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/clasdis"
 
-alias RGH_GEMC_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.10; gemc \!*\""
-setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/recon-util"
-setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/hipo-utils"
-setenv RGH_C12ANALYSIS_COMMAND "apptainer run -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
-alias RGH_SAGA_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash -c \"\!*\""
+alias RGH_GEMC_COMMAND "apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG \
+bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/$RGH_GEMC_VERSION; \
+export GEMC_DATA_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/$RGH_GEMC_VERSION; \
+gemc \!*\""
+setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
+bash /opt/coatjava/bin/recon-util"
+setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
+bash /opt/coatjava/bin/hipo-utils"
+setenv RGH_C12ANALYSIS_COMMAND "apptainer run -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
+alias RGH_SAGA_COMMAND "apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG \
+bash -c \"\!*\""
 
 # Set project HIPO data paths for CLAS12-Analysis
 setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"

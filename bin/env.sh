@@ -58,6 +58,9 @@ export RGH_PROJECTIONS_SAGA_IMG="saga.sif"
 export RGH_HPC_PARTITION="production"
 export RGH_HPC_ACCOUNT="clas12"
 
+# Set gemc version
+export RGH_GEMC_VERSION="5.10"
+
 #----- LOAD VARIABLES -----#
 
 # Load and overwrite variables from env.txt
@@ -78,20 +81,30 @@ export RGH_CLADIS_COMMAND="$CLASDIS_HOME/clasdis"
 
 # Set command for gemc
 RGH_GEMC_COMMAND() {
-    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c "module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.10; gemc $@" -- "$@"
+    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG \
+    bash -c "module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; \
+    export GEMC_DATA_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/$RGH_GEMC_VERSION; \
+    module load gemc/$RGH_GEMC_VERSION; gemc $@" -- "$@"
 }
 export -f RGH_GEMC_COMMAND
 
 # Set variables for clas12 container forge analysis image
-export RGH_RECON_UTIL_COMMAND="apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/recon-util"
-export RGH_HIPO_UTILS_COMMAND="apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/hipo-utils"
+export RGH_RECON_UTIL_COMMAND="apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
+bash /opt/coatjava/bin/recon-util"
+export RGH_HIPO_UTILS_COMMAND="apptainer exec -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
+bash /opt/coatjava/bin/hipo-utils"
 
 # Set variables for clas12-analysis
-export RGH_C12ANALYSIS_COMMAND="apptainer run -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
+export RGH_C12ANALYSIS_COMMAND="apptainer run -B \
+$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
 
 # Set variables for saga
 RGH_SAGA_COMMAND() {
-    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG bash -c "$@" -- "$@"
+    apptainer exec -B \
+    $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG \
+    bash -c "$@" -- "$@"
 }
 export -f RGH_SAGA_COMMAND
 
