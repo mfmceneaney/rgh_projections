@@ -76,7 +76,7 @@ setenv RGH_PROJECTIONS_HOME "`pwd`"
 setenv CLASDIS_PDF "$CLASDIS_HOME/pdf"
 setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/clasdis"
 
-alias RGH_GEMC_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.11; gemc \!*\""
+alias RGH_GEMC_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG bash -c \"module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; module load gemc/5.10; gemc \!*\""
 setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/recon-util"
 setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG bash /opt/coatjava/bin/hipo-utils"
 setenv RGH_C12ANALYSIS_COMMAND "apptainer run -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"

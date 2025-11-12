@@ -45,9 +45,9 @@ apptainer shell gemc_dev-almalinux94/
 ```
 And inside the shell install gemc and check the intallation:
 ```bash
-/cvmfs/oasis.opensciencegrid.org/jlab/geant4/install/install_gemc 5.11
+/cvmfs/oasis.opensciencegrid.org/jlab/geant4/install/install_gemc 5.10
 module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules
-module load gemc/5.11
+module load gemc/5.10
 gemc --version
 ```
 
