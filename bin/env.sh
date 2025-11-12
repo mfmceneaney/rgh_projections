@@ -92,9 +92,12 @@ RGH_GEMC_COMMAND() {
 export -f RGH_GEMC_COMMAND
 
 # Set variables for clas12 container forge analysis image
-export RGH_RECON_UTIL_COMMAND="apptainer exec -B \
-$RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_CCFA_IMG \
-bash /opt/coatjava/bin/recon-util"
+RGH_RECON_UTIL_COMMAND() {
+    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_CCFA_IMG \
+    bash -c "export COAT_MAGFIELD_SOLENOIDMAP=$RGH_GEMC_FIELD_DIR/Full_transsolenoid_x321_y161_z321_March2021_April2024.dat; \
+    /opt/coatjava/bin/recon-util $@" -- "$@"
+}
+export -f RGH_RECON_UTIL_COMMAND
 export RGH_HIPO_UTILS_COMMAND="apptainer exec -B \
 $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
 bash /opt/coatjava/bin/hipo-utils"

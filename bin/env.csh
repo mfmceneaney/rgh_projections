@@ -87,9 +87,9 @@ alias RGH_GEMC_COMMAND "apptainer exec -B \
     export GEMC_DATA_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/$RGH_GEMC_VERSION; \
     export FIELD_DIR=$RGH_GEMC_FIELD_DIR; \
     gemc \!*\""
-setenv RGH_RECON_UTIL_COMMAND "apptainer exec -B \
-    $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_CCFA_IMG \
-    bash /opt/coatjava/bin/recon-util"
+alias RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_CCFA_IMG \
+    bash -c \"export COAT_MAGFIELD_SOLENOIDMAP=$RGH_GEMC_FIELD_DIR/Full_transsolenoid_x321_y161_z321_March2021_April2024.dat; \
+    /opt/coatjava/bin/recon-util \!*\""
 setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B \
     $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
     bash /opt/coatjava/bin/hipo-utils"
