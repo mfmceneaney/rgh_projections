@@ -93,7 +93,7 @@ tpol: 1.0
 asymfit_formula_uu: ""
 asymfit_formula_pu: ""
 asymfit_formula_up: >-
-  "sqrt(2*x[3]*(1+x[3]))*sin(x[0])*sin(x[1])*x[2]"
+  sqrt(2*x[3]*(1+x[3]))*sin(x[0])*sin(x[1])*x[2]
 asymfit_formula_pp: ""
 asymfitpar_inits: [0.0]
 asymfitpar_initlims: [[-0.5,0.5]]
