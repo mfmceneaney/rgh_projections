@@ -60,7 +60,6 @@ setenv RGH_HPC_ACCOUNT "clas12"
 
 # Set gemc variables
 setenv RGH_GEMC_VERSION "5.10"
-setenv RGH_GEMC_FIELD_DIR "$RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield"
 
 #----- LOAD VARIABLES -----#
 # Load and overwrite variables from env.txt
@@ -79,6 +78,7 @@ setenv RGH_PROJECTIONS_HOME "`pwd`"
 
 setenv CLASDIS_PDF "$CLASDIS_HOME/pdf"
 setenv RGH_CLADIS_COMMAND "$CLASDIS_HOME/clasdis"
+setenv RGH_GEMC_FIELD_DIR "$RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield"
 
 alias RGH_GEMC_COMMAND "apptainer exec -B \
     $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG \

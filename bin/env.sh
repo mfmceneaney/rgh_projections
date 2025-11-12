@@ -60,7 +60,6 @@ export RGH_HPC_ACCOUNT="clas12"
 
 # Set gemc variables
 export RGH_GEMC_VERSION="5.10"
-export RGH_GEMC_FIELD_DIR="$RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield"
 
 #----- LOAD VARIABLES -----#
 
@@ -79,6 +78,7 @@ export RGH_PROJECTIONS_HOME="$PWD"
 
 export CLASDIS_PDF="$CLASDIS_HOME/pdf"
 export RGH_CLADIS_COMMAND="$CLASDIS_HOME/clasdis"
+export RGH_GEMC_FIELD_DIR="$RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield"
 
 # Set command for gemc
 RGH_GEMC_COMMAND() {
