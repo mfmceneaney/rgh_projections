@@ -50,6 +50,10 @@ module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules
 module load gemc/5.10
 gemc --version
 ```
+While in this container shell you will also need to install the field maps into your `rgh_simulation` magnetic fields directory.
+```bash
+cp -r $FIELD_DIR/*.dat $RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield/
+```
 
 Install `clas12 container forge analysis`:
 ```bash
