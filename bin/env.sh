@@ -58,8 +58,9 @@ export RGH_PROJECTIONS_SAGA_IMG="saga.sif"
 export RGH_HPC_PARTITION="production"
 export RGH_HPC_ACCOUNT="clas12"
 
-# Set gemc version
+# Set gemc variables
 export RGH_GEMC_VERSION="5.10"
+export RGH_GEMC_FIELD_DIR="$RGH_SIM_HOME/mcontalb_GEMC_GCARD/magfield"
 
 #----- LOAD VARIABLES -----#
 
@@ -83,8 +84,10 @@ export RGH_CLADIS_COMMAND="$CLASDIS_HOME/clasdis"
 RGH_GEMC_COMMAND() {
     apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_GEMC_IMG \
     bash -c "module use /cvmfs/oasis.opensciencegrid.org/jlab/geant4/modules; \
+    module load gemc/$RGH_GEMC_VERSION; \
     export GEMC_DATA_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/$RGH_GEMC_VERSION; \
-    module load gemc/$RGH_GEMC_VERSION; gemc $@" -- "$@"
+    export FIELD_DIR=$RGH_GEMC_FIELD_DIR; \
+    gemc $@" -- "$@"
 }
 export -f RGH_GEMC_COMMAND
 
