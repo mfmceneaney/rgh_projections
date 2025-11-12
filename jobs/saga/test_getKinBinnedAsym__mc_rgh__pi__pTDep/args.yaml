@@ -86,7 +86,7 @@ binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pi.yaml"] #NOTE: You
 binvars: ["Q2","W","x","y","xF_pi","phperp2_pi","phperp_pi","z_pi","mx_pi"]
 binvar_titles: ["Q^{2} (GeV^{2})","W (GeV)","x","y","x_{F,#pi^{+}}","P^{2}_{#perp#pi^{+}} (GeV)","P_{#perp#pi^{+}} (GeV)","z_{#pi^{+}}","M_{X, #pi^{+}} (GeV)"]
 binvar_lims: [[1,11],[0,10],[0,1],[0,1],[-2,2],[0,1.6],[0,1.25],[0,1],[0.0,5]]
-binvar_bins: [16,16,16,16,16,16,16]
+binvar_bins: [16,16,16,16,16,16,16,16,16]
 depolvars: ["depol_y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
 depolvar_titles: ["y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
 depolvar_lims: [[0,1]] #[[-4,0],[-1,0],[-2,0],[0,1]]
