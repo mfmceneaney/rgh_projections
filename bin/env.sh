@@ -87,15 +87,14 @@ RGH_GEMC_COMMAND() {
     module load gemc/$RGH_GEMC_VERSION; \
     export GEMC_DATA_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/$RGH_GEMC_VERSION; \
     export FIELD_DIR=$RGH_GEMC_FIELD_DIR; \
-    gemc $@" -- "$@"
+    gemc $@"
 }
 export -f RGH_GEMC_COMMAND
 
 # Set variables for clas12 container forge analysis image
 RGH_RECON_UTIL_COMMAND() {
-    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME $RGH_PROJECTIONS_CCFA_IMG \
-    bash -c "export COAT_MAGFIELD_SOLENOIDMAP=$RGH_GEMC_FIELD_DIR/Full_transsolenoid_x321_y161_z321_April2024.dat; \
-    /opt/coatjava/bin/recon-util $@" -- "$@"
+    apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME,${RGH_GEMC_FIELD_DIR}:/opt/coatjava/etc/data/magfield $RGH_PROJECTIONS_CCFA_IMG \
+    bash -c "/opt/coatjava/bin/recon-util $@"
 }
 export -f RGH_RECON_UTIL_COMMAND
 export RGH_HIPO_UTILS_COMMAND="apptainer exec -B \
@@ -110,7 +109,7 @@ $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
 RGH_SAGA_COMMAND() {
     apptainer exec -B \
     $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_SAGA_IMG \
-    bash -c "$@" -- "$@"
+    bash -c "$@"
 }
 export -f RGH_SAGA_COMMAND
 
