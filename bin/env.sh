@@ -103,6 +103,7 @@ bash /opt/coatjava/bin/hipo-utils"
 
 # Set variables for clas12-analysis
 export RGH_C12ANALYSIS_COMMAND="apptainer run -B \
+$RGC_MC_DIR_TP1,$RGC_MC_DIR_TM1,$RGC_DT_DIR,$RGC_MC_DIR_TP1_22GeV,$RGC_MC_DIR_TM1_22GeV,\
 $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_C12A_IMG"
 
 # Set variables for saga
