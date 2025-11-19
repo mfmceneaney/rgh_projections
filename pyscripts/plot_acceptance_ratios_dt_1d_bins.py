@@ -25,8 +25,18 @@ ylims = [0.0,1.1]
 
 # Set input directories
 rgh_mc_names = ['_sector4',''] #NOTE: ORDER IS OLD/DENOMINATOR (Sector4) , NEW/NUMERATOR (No Sector4)
-dir_old = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'))
-dir_new = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'))
+dir_old = os.path.abspath(
+    os.path.join(
+        RGH_PROJECTIONS_HOME,
+        'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'
+    )
+)
+dir_new = os.path.abspath(
+    os.path.join(
+        RGH_PROJECTIONS_HOME,
+        'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'
+    )
+)
 
 # Set channels and labels
 channels = ['pi', 'pim', 'pipim']
