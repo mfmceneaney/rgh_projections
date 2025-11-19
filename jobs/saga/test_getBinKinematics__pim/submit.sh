@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=saga_getBinKinematics
+#SBATCH --job-name=saga_getBinKinematics_pim
 #SBATCH --output=/farm_out/%u/%x-%j-%N.out
 #SBATCH --error=/farm_out/%u/%x-%j-%N.err
 #SBATCH --partition=production
@@ -11,17 +11,35 @@
 #SBATCH --time=8:00:00
 
 export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-export YAML=args.yaml
-export YAML2=args_x_Q2.yaml
-export YAML3=args_z_pT.yaml
 
 echo $OUTDIR
-echo $YAML
 
 cd $OUTDIR
 ls -lrth
 pwd
-RGH_SAGA_COMMAND "getBinKinematics $YAML"
-RGH_SAGA_COMMAND "getBinKinematics $YAML2"
-RGH_SAGA_COMMAND "getBinKinematics $YAML3"
+
+# DT RGC Kinematics
+RGH_SAGA_COMMAND "getBinKinematics args_dt_rgc_1d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_dt_rgc_2d_bins_x_Q2.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_dt_rgc_2d_bins_z_pT.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_dt_rgc_4d_bins.yaml"
+
+# MC RGC Kinematics
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgc_1d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgc_2d_bins_x_Q2.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgc_2d_bins_z_pT.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgc_4d_bins.yaml"
+
+# MC RGH Kinematics
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_1d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_x_Q2.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_z_pT.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_4d_bins.yaml"
+
+# MC RGH Kinematics with sector 4
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_1d_bins_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_x_Q2_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_z_pT_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_4d_bins_sector4.yaml"
+
 echo DONE
