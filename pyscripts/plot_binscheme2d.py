@@ -22,13 +22,16 @@ from saga.plot import (
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set channels and beam suffixes to loop
-chs = ['pi','pim','pipim','k','km']
+chs = ['pi','pim','pipim']#,'k','km']
 ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
-beam_suffixes = ['','_22GeV']
+beam_suffixes = ['']#,'_22GeV']
+rgs = ['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
+rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 
-# Loop channels and beam suffixes
-for ch in chs:
-    for beam_suffix in beam_suffixes:
+# Loop run groups, channels, and beam suffixes
+for rg in rgs:
+    for ch in chs:
+        for beam_suffix in beam_suffixes:
 
         # Set bin variable labels and limits inside loop since they depend on channel and energy
         binvar_labels = {
@@ -50,13 +53,30 @@ for ch in chs:
         for binvars, binvars_simple in zip(binvars_pairs, binvars_pairs_simple):
 
             # Setup, modify these as needed for your specific binning scheme
-            sep             = '_'
-            kinematics_path = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematics__{ch}{beam_suffix}/out_{sep.join(binvars_simple)}_binscheme_kinematics.csv'))
-            yaml_path       = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'yamls/out_2d_bins_{ch}_{sep.join(binvars_simple)}{beam_suffix}.yaml'))
-            hist_path       = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH2Ds__{ch}{beam_suffix}/out_{rg}{beam_suffix}_fullbin_kinematics.root'))
+            sep = '_'
+            kinematics_path = os.path.abspath(
+                os.path.join(
+                    RGH_PROJECTIONS_HOME,
+                    f'jobs/saga/test_getBinKinematics__{ch}{beam_suffix}/',
+                    f'out_{rg}_2d_bins_{sep.join(binvars_simple)}_binscheme_kinematics.csv'
+                )
+            )
+            yaml_path = os.path.abspath(
+                os.path.join(
+                    RGH_PROJECTIONS_HOME,
+                    f'yamls/out_2d_bins_{ch}_{sep.join(binvars_simple)}{beam_suffix}.yaml'
+                )
+            )
+            hist_path = os.path.abspath(
+                os.path.join(
+                    RGH_PROJECTIONS_HOME,
+                    f'jobs/saga/test_getBinKinematicsTH2Ds__{ch}{beam_suffix}/',
+                    f'out_{rg}{beam_suffix}_fullbin_kinematics.root'
+                )
+            )
             hist_name       = 'h2_bin0_'+sep.join(binvars)
             binscheme_name  = 'binscheme' #NOTE: Use `binscheme_grid` in the example yaml to plot some grid bin scheme limits.
-            outpath         = f'binscheme2d_{binvars[0]}_{binvars[1]}_{ch}{beam_suffix}.pdf'
+            outpath         = f'binscheme2d_{binvars[0]}_{binvars[1]}_{rg}_{ch}{beam_suffix}.pdf'
             var_keys        = binvars #NOTE: This should only be set in the case of a 2D grid scheme.
             start_idx       = 0
             id_key          = 'bin_id'
@@ -78,7 +98,7 @@ for ch in chs:
             plot_th2(h2, ax, norm=colors.LogNorm())
             ax.set_xlabel(binvar_labels[binvars[0]],usetex=True)
             ax.set_ylabel(binvar_labels[binvars[1]],usetex=True)
-            ax.set_title(f'${ch_labels[ch]}$ Bin Scheme',usetex=True)
+            ax.set_title(f'{rg_labels[rg]} ${ch_labels[ch]}$ Bin Scheme',usetex=True)
 
             # Get the bin limit line coordinates and plot
             lims_coords = get_lims_coords(binscheme, binvar_lims[binvars[0]], binvar_lims[binvars[1]], var_keys=var_keys)
