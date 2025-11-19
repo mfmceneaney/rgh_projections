@@ -20,6 +20,6 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-RGH_SAGA_COMMAND findBinLims $YAML
-RGH_SAGA_COMMAND findBinLims $YAML2
+RGH_SAGA_COMMAND "findBinLims $YAML"
+RGH_SAGA_COMMAND "findBinLims $YAML2"
 echo DONE

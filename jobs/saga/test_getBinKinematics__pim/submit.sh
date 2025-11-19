@@ -21,7 +21,7 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-RGH_SAGA_COMMAND getBinKinematics $YAML
-RGH_SAGA_COMMAND getBinKinematics $YAML2
-RGH_SAGA_COMMAND getBinKinematics $YAML3
+RGH_SAGA_COMMAND "getBinKinematics $YAML"
+RGH_SAGA_COMMAND "getBinKinematics $YAML2"
+RGH_SAGA_COMMAND "getBinKinematics $YAML3"
 echo DONE
