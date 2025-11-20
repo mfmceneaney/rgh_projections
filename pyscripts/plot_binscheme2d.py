@@ -35,8 +35,11 @@ for rg in rgs:
 
         # Set bin variable labels and limits inside loop since they depend on channel and energy
         binvar_labels = {
-            'x':'$x$','Q2':'$Q^{2}$ (GeV)$^{2}$',
-            f'z_{ch}':'$z_{'+ch_labels[ch]+'}$',f'phperp_{ch}':'$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',f'phperp2_{ch}':'$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)'
+            'x':'$x$',
+            'Q2':'$Q^{2}$ (GeV)$^{2}$',
+            f'z_{ch}':'$z_{'+ch_labels[ch]+'}$',
+            f'phperp_{ch}':'$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',
+            f'phperp2_{ch}':'$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)'
         }
         binvar_lims = {
             'x':[0.0,1.0],
@@ -48,7 +51,7 @@ for rg in rgs:
 
         # Set bin scheme variable pairs to loop
         binvars_pairs = [['x','Q2'],[f'z_{ch}', f'phperp_{ch}']]
-        binvars_pairs_simple = [['x','Q2'],[f'z', 'pT']]
+        binvars_pairs_simple = [['x','Q2'],['z', 'pT']]
 
         for binvars, binvars_simple in zip(binvars_pairs, binvars_pairs_simple):
 
