@@ -61,18 +61,19 @@ for rg in rgs:
                 hist_path = os.path.abspath(
                     os.path.join(
                         RGH_PROJECTIONS_HOME,
-                        f'jobs/saga/test_getBinKinematicsTH2Ds__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.root'
+                        f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.root'
                     )
                 )
 
                 # Set kinematic variable pairs to plot
-                kinvars_pairs = [[f'z_{ch}', f'phperp2_{ch}']]
+                kinvars = binvars.copy()
+                kinvars.extend(['x', 'Q2'])
+                kinvars.remove(binvar)
 
                 # Loop kinematic variable pairs
-                for kinvars in kinvars_pairs:
+                for kinvar_x in kinvars:
 
                     # Grab kinematic variables and set related info
-                    kinvar_x, kinvar_y = kinvars
                     xlabels = {
                         'x'        : 'x',
                         'Q2'       : 'Q^{2} (GeV$^{2}$)',
@@ -117,12 +118,12 @@ for rg in rgs:
                     graph_array = [{} for j in range(len(bin_ids))]
                     plot_results_kwargs_array = [
                             {
-                                'hist_keys':[f'h2_bin{bin_id}_'+kinvar_x+'_'+kinvar_y],
+                                'hist_keys':[f'h1_bin{bin_id}_'+kinvar_x],
                                 'title':sagap.get_bin_kinematics_title(bin_id,df,cols=cols,col_titles=col_titles),
                                 'xlims':xlims[kinvar_x],
                                 'xlabel':xlabels[kinvar_x],
-                                'ylims':xlims[kinvar_y],
-                                'ylabel':xlabels[kinvar_y],
+                                'ylims':ylims,
+                                'ylabel':ylabel,
                             }
                             for bin_id in bin_ids
                     ]
@@ -151,13 +152,13 @@ for rg in rgs:
                         'watermark':'CLAS12 Preliminary',
                         'hist_density':False,
                         'axlinewidth':0,
-                        'hist_dim':2,
-                        'legend_loc':None #NOTE: Do not plot a legend if you are using 2d hists.
+                        'hist_dim':1,
+                        'legend_loc':'best' #NOTE: Do not plot a legend if you are using 2d hists.
                     }
 
                     # Set additional kwargs
                     figsize = (16*grid_shape[1],10*grid_shape[0])
-                    outpath = f'plot_TH2Ds__{rg}{beam_suffix}__{ch}__2d_{kinvar_x}_{kinvar_y}__1d_{binvar}.pdf'
+                    outpath = f'plot_TH1Ds__{rg}{beam_suffix}__{ch}__1d_{kinvar_x}__1d_{binvar}.pdf'
                     use_default_plt_settings = True
                     use_grid_titles = False
                     use_grid_xlabels = True
