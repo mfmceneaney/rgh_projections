@@ -50,12 +50,6 @@ create_dihadron_formulas.py
 create_theta_integrated_dihadron_formulas.py
 ```
 
-
-
-
-README.md
-rescale_jobs_getKinBinnedAsym_dt_4d_bins.py
-
 #
 
 Contact: matthew.mceneaney@duke.edu
