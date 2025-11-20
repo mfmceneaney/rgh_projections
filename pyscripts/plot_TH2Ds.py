@@ -25,10 +25,28 @@ for rg in rgs:
 
             # Set binvars
             if ch=='pipim':
-                binvars = ['x', 'z', 'phperp', 'mx', 'mass']
+                binvars = ['x', 'mass', 'mx', 'z']
             else:
-                binvars = ['x', 'z', 'phperp', 'mx']
+                binvars = ['x', 'mx', 'phperp', 'z']
             binvars = [el+f'_{ch}' for el in binvars]
+
+            # Set binvar titles
+            binvar_titles = {
+                'x'        : 'x',
+                'Q2'       : 'Q^{2}',
+                'mx'       : 'M_{X '+ch_labels[ch]+'}',
+                'phperp'   : 'P_{\\perp, '+ch_labels[ch]+'}',
+                'mass'     : 'M_{'+ch_labels[ch]+'}',
+                'z'        : 'z_{'+ch_labels[ch]+'}',
+            }
+            binvar_unit_titles = {
+                'x'        : '',
+                'Q2'       : ' (GeV$^{2}$)',
+                'mx'       : ' (GeV)',
+                'phperp'   : ' (GeV)',
+                'mass'     : ' (GeV)',
+                'z'        : '',
+            }
 
             # Loop 1D bin variables
             for binvar in binvars:
@@ -67,6 +85,14 @@ for rg in rgs:
                     f'z_{ch}'       : ['tab:orange'],
                 }
 
+                # Only add bin variable values above plots for now
+                cols = [
+                    binvar,
+                ]
+                col_titles = {
+                    binvar:binvar_titles[binvar],
+                }
+
                 # Load kinematics CSV
                 df = pd.read_csv(csv_path)
                 bin_ids = df['bin'].unique().tolist()
@@ -76,7 +102,7 @@ for rg in rgs:
                 plot_results_kwargs_array = [
                         {
                             'hist_keys':[f'h2_bin{bin_id}_'+kinvar_x+'_'+kinvar_y],
-                            'title':sagap.get_bin_kinematics_title(bin_id,df),
+                            'title':sagap.get_bin_kinematics_title(bin_id,df,cols=cols,col_titles=col_titles),
                             'xlims':xlims[kinvar_x],
                             'xlabel':xlabels[kinvar_x],
                             'ylims':xlims[kinvar_y],
