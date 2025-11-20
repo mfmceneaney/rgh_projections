@@ -1,5 +1,5 @@
 baseoutpath: "out_dt_rgc_1d_" #NOTE: This will be prepended to the default output path like so: `<baseoutpath><binscheme_name>.csv`.
-inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/dt_rgh/skim_pi_*.root"
+inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgh/skim_pi_*.root"
 tree: "t"
 nthreads: 8
 cuts: >-
