@@ -22,13 +22,13 @@ pwd
 
 # Run full bin jobs
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_sector4_fullbin.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgc_fullbin.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_dt_rgc_fullbin.yaml"
 
 # Run 1D jobs
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_1d_bins_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_sector4_1d_bins.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgc_1d_bins.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_dt_rgc_1d_bins.yaml"
 

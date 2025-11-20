@@ -37,9 +37,9 @@ RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_z_pT.yaml"
 RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_4d_bins.yaml"
 
 # MC RGH Kinematics with sector 4
-RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_1d_bins_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_x_Q2_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_2d_bins_z_pT_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_4d_bins_sector4.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_sector4_1d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_sector4_2d_bins_x_Q2.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_sector4_2d_bins_z_pT.yaml"
+RGH_SAGA_COMMAND "getBinKinematics args_mc_rgh_sector4_4d_bins.yaml"
 
 echo DONE

@@ -31,6 +31,11 @@ RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_onlysector4_e.
 RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_4d_bins.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_fullbin.yaml"
 
+# Run MC RGH Sector4 jobs
+RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_1d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_4d_bins.yaml"
+RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_fullbin.yaml"
+
 # Run MC RGC jobs
 RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_1d_bins.yaml"
 RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py.yaml"
