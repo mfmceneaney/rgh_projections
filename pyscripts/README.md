@@ -2,7 +2,7 @@
 
 To run the following scripts source your virtual environment after installing saga.
 
-First run the 1d asymmetry injection jobs with the orchestration scripts.
+First run the 1d asymmetry injection jobs with the orchestration scripts.  Set `dry_run=False` within the scripts if you actually wish to submit the jobs.
 ```
 orchestrate_jobs_getKinBinnedAsym_dt_1d_bins.py
 orchestrate_jobs_getKinBinnedAsym_mc_1d_bins.py
@@ -13,7 +13,7 @@ aggregate_jobs_getKinBinnedAsym_dt_1d_bins.py
 aggregate_jobs_getKinBinnedAsym_mc_1d_bins.py
 ```
 
-Similarly, for the 4d asymmetries, use the following two scripts to orchestrate jobs.
+Similarly, for the 4d asymmetries, use the following two scripts to orchestrate jobs.  Set `dry_run=False` within the scripts if you actually wish to submit the jobs.
 ```
 orchestrate_jobs_getKinBinnedAsym_mc_4d_bins.py
 orchestrate_jobs_getKinBinnedAsym_dt_4d_bins.py

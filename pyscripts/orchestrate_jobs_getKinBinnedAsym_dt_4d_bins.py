@@ -9,7 +9,7 @@ dry_run=True
 
 # Set base directories
 run_groups = ["dt_rgc"]
-channels = ["pi","pim"] #,"pipim"]
+channels = ["pi","pim","pipim"]
 base_dirs = [
     os.path.abspath(os.path.join(os.environ['RGH_PROJECTIONS_HOME'],"jobs/saga/",f"test_getKinBinnedAsym__{rg}__{ch}/")) for rg in run_groups for ch in channels
 ]
