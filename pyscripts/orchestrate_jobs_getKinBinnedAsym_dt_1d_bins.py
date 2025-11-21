@@ -25,8 +25,8 @@ yaml_paths = [
 for base_dir, yaml_path in zip(base_dirs,yaml_paths):
 
     # Create job submission structure
-    asyms   = [0.0]
-    sgasyms = {"sgasyms":[[a1,a2,a3,a4,a5,a6,a7,a8,a9] for a1 in asyms for a2 in asyms for a3 in asyms for a4 in asyms for a5 in asyms for a6 in asyms for a7 in asyms for a8 in asyms for a9 in asyms]}
+    asyms   = [-0.1,0.0,0.1]
+    sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
     seeds   = {"inject_seed":[2**i for i in range(1)]}
 
     # Split binschemes with aliases

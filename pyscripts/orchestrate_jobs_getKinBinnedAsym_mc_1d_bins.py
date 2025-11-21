@@ -20,12 +20,13 @@ for base_dir in base_dirs:
 
     # Create job submission structure #NOTE: RGC HAS 6 ASYMMETRIES, RGH HAS 9 so just filter the states that inject up to 3 asymmetries
     asyms = [-0.1,0.0,0.1]
-    sgasyms = {"sgasyms":[[a1,a2,a3,a4,a5,a6,a7,a8,a9] for a1 in asyms for a2 in asyms for a3 in asyms for a4 in asyms for a5 in asyms for a6 in asyms for a7 in asyms for a8 in asyms for a9 in asyms]}
-    newsgasyms = {"sgasyms":[]}
-    for sgasym in sgasyms["sgasyms"]:
-        if np.sum(np.abs(sgasym))<0.3:
-            newsgasyms["sgasyms"].append(sgasym)
-    sgasyms = newsgasyms
+    sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
+    #NOTE: Only use following block if injecting many simultaneous asymmetries
+    # newsgasyms = {"sgasyms":[]}
+    # for sgasym in sgasyms["sgasyms"]:
+    #     if np.sum(np.abs(sgasym))<0.3:
+    #         newsgasyms["sgasyms"].append(sgasym)
+    # sgasyms = newsgasyms
     seeds   = {"inject_seed":[2**i for i in range(1)]}
 
     # Set job file paths and configs

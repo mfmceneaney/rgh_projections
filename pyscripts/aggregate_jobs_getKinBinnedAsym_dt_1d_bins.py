@@ -37,7 +37,12 @@ sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale th
 run_groups = ['dt_rgc']
 channels   = ['pi','pim','pipim']
 base_dirs  = [
-    os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/')) for rg in run_groups for ch in channels
+    os.path.abspath(
+        os.path.join(
+                RGH_PROJECTIONS_HOME,
+                f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/'
+            )
+        ) for rg in run_groups for ch in channels
 ]
 
 # Set list of channels for each base directory
@@ -105,10 +110,10 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     # Arguments for saga.plot.plot_results()
     plot_results_kwargs_base = {
         'ylims':[-0.05,0.2],
-        'sgasyms':[0.0,0.1,0.0],
+        'sgasyms':[0.0],
         'sgasym_idx':0,
         'sgasym_labels':[ch_sgasym_label],
-        'sg_colors':['blue','red','green'],
+        'sg_colors':['blue'],
         'bgasyms':[],
         'bgasym_labels':[],
         'bg_colors':[],
@@ -125,6 +130,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             'RGC MC',
             'RGC Data',
         ],
+        'watermark':'CLAS12 Preliminary',
         'hist_clone_axis':True,
         'hist_ylims':[0.0,0.06],
         'old_dat_path':None
@@ -136,7 +142,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     use_default_plt_settings = True
 
     # If you want to rescale your results using results from other base directories set the following arguments
-    rescale = False
+    rescale = True
     if rescale:
         plot_results_kwargs_base = dict(
             plot_results_kwargs_base,
