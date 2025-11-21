@@ -10,7 +10,7 @@
 ##SBATCH --gres=disk:1000
 #SBATCH --time=1:00:00
 
-export OUTDIR=$RGH_PROJECTIONS_HOME/jobs/saga/test_getKinBinnedAsym__mc_rgh_sector4__pim
+export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getKinBinnedAsym__mc_rgh_sector4__pim"
 export YAML=args.yaml
 
 echo $OUTDIR

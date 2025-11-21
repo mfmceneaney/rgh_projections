@@ -10,7 +10,7 @@
 ##SBATCH --gres=disk:1000
 #SBATCH --time=4:00:00
 
-export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getBinKinematicsTH1Ds__km_22GeV"
 export YAML=args.yaml
 
 echo $OUTDIR
