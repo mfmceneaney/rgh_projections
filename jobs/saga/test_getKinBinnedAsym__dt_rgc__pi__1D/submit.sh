@@ -5,7 +5,7 @@
 #SBATCH --error=/farm_out/%u/%x-%j-%N.err
 #SBATCH --partition=production
 #SBATCH --account=clas12
-#SBATCH -c 8
+#SBATCH -c 16
 #SBATCH --mem-per-cpu=2G
 ##SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
