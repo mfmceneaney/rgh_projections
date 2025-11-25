@@ -90,6 +90,7 @@ alias RGH_GEMC_COMMAND "apptainer exec -B \
 alias RGH_RECON_UTIL_COMMAND "apptainer exec -B $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME,$RGH_SIM_HOME,${RGH_GEMC_FIELD_DIR}:/opt/coatjava/etc/data/magfield $RGH_PROJECTIONS_CCFA_IMG \
     bash -c \"/opt/coatjava/bin/recon-util \!*\""
 setenv RGH_HIPO_UTILS_COMMAND "apptainer exec -B \
+    $RGC_MC_DIR_TP1,$RGC_MC_DIR_TM1,$RGC_DT_DIR,$RGC_MC_DIR_TP1_22GeV,$RGC_MC_DIR_TM1_22GeV,\
     $RGH_PROJECTIONS_VOL_DIR,$RGH_PROJECTIONS_HOME $RGH_PROJECTIONS_CCFA_IMG \
     bash /opt/coatjava/bin/hipo-utils"
 setenv RGH_C12ANALYSIS_COMMAND "apptainer run -B \
