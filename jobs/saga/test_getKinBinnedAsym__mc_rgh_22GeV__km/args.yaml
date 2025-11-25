@@ -62,8 +62,6 @@ htspin_states:
   minus: -1
 var_formulas: #NOTE: Variable definitions will be applied in order in case of dependencies, and they should follow the form [variable_name,formula].
   - ["phperp2_km","(float)(phperp_km*phperp_km)"]
-  - ["phi_s","phi_s_up"]
-  - ["phi_s_mc","phi_s_up_mc"]
   - ["d_uu","(float)(1-y+0.5*y*y)"]
   - ["d_uu_mc","(float)(1-y_mc+0.5*y_mc*y_mc)"]
   - ["depol0_uu","(float)(-2*(2-y)*sqrt(1-y)/d_uu)"]
@@ -91,7 +89,7 @@ depolvars: ["depol_y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
 depolvar_titles: ["y"] #["depol0_uu","depol0_ut","depol0_lu","depol0_lt"]
 depolvar_lims: [[0,1]] #[[-4,0],[-1,0],[-2,0],[0,1]]
 depolvar_bins: [16] #[16,16,16,16]
-asymfitvars: ["phi_h_km","phi_s"]
+asymfitvars: ["phi_h_km","phi_s_up"]
 asymfitvar_titles: ["#phi_{h, K^{-}}","#phi_{S}"]
 asymfitvar_lims: [[0.0,6.28],[0.0,6.28]]
 asymfitvar_bins: [16,16]
