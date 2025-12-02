@@ -43,10 +43,10 @@ for rg in rgs:
             }
             binvar_lims = {
                 'x':[0.0,1.0],
-                'Q2':[1.0,22.0] if beam_suffx=='_22GeV' else [1.0,11.0],
+                'Q2':[1.0,22.0] if beam_suffix=='_22GeV' else [1.0,11.0],
                 f'z_{ch}':[0.0,1.0],
-                f'phperp_{ch}':[0.0,2.25] if beam_suffx=='_22GeV' else [0.0,1.25],
-                f'phperp2_{ch}':[0.0,5.0] if beam_suffx=='_22GeV' else [0.0,1.6],
+                f'phperp_{ch}':[0.0,2.25] if beam_suffix=='_22GeV' else [0.0,1.25],
+                f'phperp2_{ch}':[0.0,5.0] if beam_suffix=='_22GeV' else [0.0,1.6],
             }
 
             # Set bin scheme variable pairs to loop
