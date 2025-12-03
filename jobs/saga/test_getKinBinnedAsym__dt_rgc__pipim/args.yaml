@@ -4,11 +4,11 @@ tree: "t"
 nthreads: 1
 cuts: >-
   Q2>1 && W>2 && y<0.8 && mx_pipim>1.5 && xF_pi>0.0 && xF_pim>0.0 && 
-  TMath::Abs(TMath::ATan2(px_pi,pz_pi))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(px_pi,pz_pi))<25.0*TMath::Pi()/180.0 && 
   TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0 && 
-  TMath::Abs(TMath::ATan2(px_pim,pz_pim))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(px_pim,pz_pim))<25.0*TMath::Pi()/180.0 && 
   TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && 
-  TMath::Abs(TMath::ATan2(px_e,pz_e))<30.0*TMath::Pi()/180.0 && 
+  TMath::Abs(TMath::ATan2(px_e,pz_e))<25.0*TMath::Pi()/180.0 && 
   TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0
 inject_asym: false
 inject_seed: 2
