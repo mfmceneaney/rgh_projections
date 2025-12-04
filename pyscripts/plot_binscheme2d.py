@@ -38,8 +38,8 @@ for rg in rgs:
                 'x':'$x$',
                 'Q2':'$Q^{2}$ (GeV)$^{2}$',
                 f'z_{ch}':'$z_{'+ch_labels[ch]+'}$',
-                f'phperp_{ch}':'$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',
-                f'phperp2_{ch}':'$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)'
+                f'phperp_{ch}':'$P_{'+ch_labels[ch]+'\\perp}$ (GeV)',
+                f'phperp2_{ch}':'$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)'
             }
             binvar_lims = {
                 'x':[0.0,1.0],

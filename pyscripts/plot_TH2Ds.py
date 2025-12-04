@@ -35,7 +35,7 @@ for rg in rgs:
                 'x'        : 'x',
                 'Q2'       : 'Q^{2}',
                 'mx'       : 'M_{X '+ch_labels[ch]+'}',
-                'phperp'   : 'P_{\\perp, '+ch_labels[ch]+'}',
+                'phperp'   : 'P_{'+ch_labels[ch]+'\\perp}',
                 'mass'     : 'M_{'+ch_labels[ch]+'}',
                 'z'        : 'z_{'+ch_labels[ch]+'}',
             }
@@ -55,7 +55,7 @@ for rg in rgs:
                 csv_path = os.path.abspath(
                     os.path.join(
                         RGH_PROJECTIONS_HOME,
-                        f'jobs/saga/test_getBinKinematics/test_getBinKinematics__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.csv'
+                        f'jobs/saga/test_getBinKinematics__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.csv'
                     )
                 )
                 hist_path = os.path.abspath(
@@ -77,8 +77,8 @@ for rg in rgs:
                         'x'        : 'x',
                         'Q2'       : 'Q^{2} (GeV$^{2}$)',
                         f'mx_{ch}' : '$M_{X, '+ch_labels[ch]+'}$ (GeV)',
-                        f'phperp_{ch}'  : '$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',
-                        f'phperp2_{ch}' : '$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)',
+                        f'phperp_{ch}'  : '$P_{'+ch_labels[ch]+'\\perp}$ (GeV)',
+                        f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
                     }                    
@@ -95,7 +95,7 @@ for rg in rgs:
                         'x'        : ['tab:purple'],
                         'Q2'       : ['tab:cyan'],
                         f'mx_{ch}' : ['tab:olive'],
-                        f'mass_{ch}'.   : ['tab:blue'],
+                        f'mass_{ch}'    : ['tab:blue'],
                         f'phperp_{ch}'  : ['tab:red'],
                         f'phperp2_{ch}' : ['tab:green'],
                         f'z_{ch}'       : ['tab:orange'],

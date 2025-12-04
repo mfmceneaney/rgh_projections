@@ -16,6 +16,7 @@ from saga.plot import (
     plot_lines,
     get_bin_centers,
     plot_bin_ids,
+    plot_watermark,
 )
 
 # Set base directory from environment
@@ -38,8 +39,8 @@ for rg in rgs:
                 'x':'$x$',
                 'Q2':'$Q^{2}$ (GeV)$^{2}$',
                 f'z_{ch}':'$z_{'+ch_labels[ch]+'}$',
-                f'phperp_{ch}':'$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',
-                f'phperp2_{ch}':'$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)'
+                f'phperp_{ch}':'$P_{'+ch_labels[ch]+'\\perp}$ (GeV)',
+                f'phperp2_{ch}':'$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)'
             }
             binvar_lims = {
                 'x':[0.0,1.0],
@@ -102,6 +103,17 @@ for rg in rgs:
                 ax.set_xlabel(binvar_labels[binvars[0]],usetex=True)
                 ax.set_ylabel(binvar_labels[binvars[1]],usetex=True)
                 ax.set_title(f'{rg_labels[rg]} ${ch_labels[ch]}$',usetex=True)
+
+                # Plot watermark
+                if "dt" in rg:
+                    watermark = "CLAS12 Preliminary"
+                    plot_watermark(
+                        watermark,
+                        size=75,
+                        rotation=25.0,
+                        color="gray",
+                        alpha=0.5,
+                    )
 
                 # # Get the bin limit line coordinates and plot
                 # lims_coords = get_lims_coords(binscheme, binvar_lims[binvars[0]], binvar_lims[binvars[1]], var_keys=var_keys)

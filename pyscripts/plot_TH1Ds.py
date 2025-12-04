@@ -18,34 +18,45 @@ beam_suffixes = ['']#,'_22GeV']
 rgs = ['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 binvars = None
+ylims_by_rg = {
+    'dt_rgc': (0.0, 10000.0),
+    'mc_rgc': (0.0, 1000.0),
+    'mc_rgh': (0.0, 1000.0),
+    'mc_rgh_sector4': (0.0, 1000.0),
+}
 # Loop run groups, channels, and beam suffixes
 for rg in rgs:
     for ch in chs:
         for beam_suffix in beam_suffixes:
+
+            # Set y limits
+            ylims = ylims_by_rg[rg]
 
             # Set binvars
             if ch=='pipim':
                 binvars = ['x', 'mass', 'mx', 'z']
             else:
                 binvars = ['x', 'mx', 'phperp', 'z']
-            binvars = [el+f'_{ch}' for el in binvars]
+            binvars = [el+(f'_{ch}' if el!='x' else '') for el in binvars]
 
             # Set binvar titles
             binvar_titles = {
-                'x'        : 'x',
-                'Q2'       : 'Q^{2}',
-                'mx'       : 'M_{X '+ch_labels[ch]+'}',
-                'phperp'   : 'P_{\\perp, '+ch_labels[ch]+'}',
-                'mass'     : 'M_{'+ch_labels[ch]+'}',
-                'z'        : 'z_{'+ch_labels[ch]+'}',
+                'x'            : 'x',
+                'Q2'           : 'Q^{2}',
+                f'mx__{ch}'    : 'M_{X '+ch_labels[ch]+'}',
+                f'phperp_{ch}' : 'P_{'+ch_labels[ch]+'\\perp}',
+                f'mass_{ch}'   : 'M_{'+ch_labels[ch]+'}',
+                f'mx_{ch}'     : 'M_{X '+ch_labels[ch]+'}',
+                f'z_{ch}'      : 'z_{'+ch_labels[ch]+'}',
             }
             binvar_unit_titles = {
-                'x'        : '',
-                'Q2'       : ' (GeV$^{2}$)',
-                'mx'       : ' (GeV)',
-                'phperp'   : ' (GeV)',
-                'mass'     : ' (GeV)',
-                'z'        : '',
+                'x'            : '',
+                'Q2'           : ' (GeV$^{2}$)',
+                f'mx_{ch}'     : ' (GeV)',
+                f'phperp_{ch}' : ' (GeV)',
+                f'mass_{ch}'   : ' (GeV)',
+                f'mx_{ch}'     : ' (GeV)',
+                f'z_{ch}'      : '',
             }
 
             # Loop 1D bin variables
@@ -55,7 +66,7 @@ for rg in rgs:
                 csv_path = os.path.abspath(
                     os.path.join(
                         RGH_PROJECTIONS_HOME,
-                        f'jobs/saga/test_getBinKinematics/test_getBinKinematics__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.csv'
+                        f'jobs/saga/test_getBinKinematics__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.csv'
                     )
                 )
                 hist_path = os.path.abspath(
@@ -64,6 +75,8 @@ for rg in rgs:
                         f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_{rg}_1d_bins_{binvar}_kinematics.root'
                     )
                 )
+                print(f"INFO: csv_path: {csv_path}")
+                print(f"INFO: hist_path: {csv_path}")
 
                 # Set kinematic variable pairs to plot
                 kinvars = binvars.copy()
@@ -78,8 +91,8 @@ for rg in rgs:
                         'x'        : 'x',
                         'Q2'       : 'Q^{2} (GeV$^{2}$)',
                         f'mx_{ch}' : '$M_{X, '+ch_labels[ch]+'}$ (GeV)',
-                        f'phperp_{ch}'  : '$P_{\\perp, '+ch_labels[ch]+'}$ (GeV)',
-                        f'phperp2_{ch}' : '$P^{2}_{\\perp, '+ch_labels[ch]+'}$ (GeV$^{2}$)',
+                        f'phperp_{ch}'  : '$P_{'+ch_labels[ch]+'\\perp}$ (GeV)',
+                        f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
                     }                    
@@ -96,7 +109,7 @@ for rg in rgs:
                         'x'        : ['tab:purple'],
                         'Q2'       : ['tab:cyan'],
                         f'mx_{ch}' : ['tab:olive'],
-                        f'mass_{ch}'.   : ['tab:blue'],
+                        f'mass_{ch}'    : ['tab:blue'],
                         f'phperp_{ch}'  : ['tab:red'],
                         f'phperp2_{ch}' : ['tab:green'],
                         f'z_{ch}'       : ['tab:orange'],
@@ -123,7 +136,7 @@ for rg in rgs:
                                 'xlims':xlims[kinvar_x],
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
-                                'ylabel':ylabel,
+                                'ylabel':binvar_titles[kinvar_x],
                             }
                             for bin_id in bin_ids
                     ]
@@ -142,6 +155,7 @@ for rg in rgs:
                     graph_array = reshape_grid(graph_array, grid_shape)
                     plot_results_kwargs_array = reshape_grid(plot_results_kwargs_array, grid_shape)
                     print("INFO: graph_array = ",graph_array)
+                    print("INFO: plot_results_kwargs_array = ", plot_results_kwargs_array)
 
                     # Set base kwargs
                     plot_results_kwargs_base = {
