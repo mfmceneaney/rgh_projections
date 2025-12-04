@@ -23,7 +23,7 @@ RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set channels and beam suffixes to loop
 chs = ['pi','pim','pipim']#,'k','km']
-ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
+ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
 beam_suffixes = ['']#,'_22GeV']
 rgs = ['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
@@ -74,7 +74,7 @@ for rg in rgs:
                     os.path.join(
                         RGH_PROJECTIONS_HOME,
                         f'jobs/saga/test_getBinKinematicsTH2Ds__{ch}{beam_suffix}/',
-                        f'out_{rg}{beam_suffix}_fullbin_kinematics.root'
+                        f'out_{rg}{beam_suffix}_fullbin_binscheme_kinematics.root'
                     )
                 )
                 hist_name       = 'h2_bin0_'+sep.join(binvars)
@@ -108,7 +108,7 @@ for rg in rgs:
                 plot_lines(ax, lims_coords, linecolor='red', linewidth=1)
 
                 # Get bin scheme cuts and ids
-                cuts, _, _, _ = get_binscheme_cuts_and_ids(
+                cuts, _, bin_ids, _ = get_binscheme_cuts_and_ids(
                                                                     binscheme,
                                                                     start_idx=start_idx,
                                                                     id_key=id_key,
