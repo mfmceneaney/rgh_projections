@@ -41,13 +41,13 @@ for rg in rgs:
 
             # Set binvar titles
             binvar_titles = {
-                'x'            : 'x',
-                'Q2'           : 'Q^{2}',
-                f'mx__{ch}'    : 'M_{X '+ch_labels[ch]+'}',
-                f'phperp_{ch}' : 'P_{'+ch_labels[ch]+'\\perp}',
-                f'mass_{ch}'   : 'M_{'+ch_labels[ch]+'}',
-                f'mx_{ch}'     : 'M_{X '+ch_labels[ch]+'}',
-                f'z_{ch}'      : 'z_{'+ch_labels[ch]+'}',
+                'x'            : '$x$',
+                'Q2'           : '$Q^{2}$',
+                f'mx__{ch}'    : '$M_{X '+ch_labels[ch]+'}$',
+                f'phperp_{ch}' : '$P_{'+ch_labels[ch]+'\\perp}$',
+                f'mass_{ch}'   : '$M_{'+ch_labels[ch]+'}$',
+                f'mx_{ch}'     : '$M_{X '+ch_labels[ch]+'}$',
+                f'z_{ch}'      : '$z_{'+ch_labels[ch]+'}$',
             }
             binvar_unit_titles = {
                 'x'            : '',
@@ -88,27 +88,27 @@ for rg in rgs:
 
                     # Grab kinematic variables and set related info
                     xlabels = {
-                        'x'        : 'x',
-                        'Q2'       : 'Q^{2} (GeV$^{2}$)',
-                        f'mx_{ch}' : '$M_{X, '+ch_labels[ch]+'}$ (GeV)',
+                        'x'             : '$x$',
+                        'Q2'            : '$Q^{2}$ (GeV$^{2}$)',
+                        f'mx_{ch}'      : '$M_{X '+ch_labels[ch]+'}$ (GeV)',
                         f'phperp_{ch}'  : '$P_{'+ch_labels[ch]+'\\perp}$ (GeV)',
                         f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
                     }                    
                     xlims = {
-                        'x'        : [0.0,1.0],
-                        'Q2'       : [1.0,20.0] if beam_suffix=='_22GeV' else [1.0,10.0],
-                        f'mx_{ch}' : [0.0,5.0],
+                        'x'             : [0.0,1.0],
+                        'Q2'            : [1.0,20.0] if beam_suffix=='_22GeV' else [1.0,10.0],
+                        f'mx_{ch}'      : [0.0,5.0],
                         f'mass_{ch}'    : [0.0,3.0],
                         f'phperp_{ch}'  : [0.0,2.25] if beam_suffix=='_22GeV' else [0.0,1.25],
-                        f'phperp2_{ch}' : [0.0,5.0] if beam_suffix=='_22GeV' else [0.0,1.6],
+                        f'phperp2_{ch}' : [0.0,5.0]  if beam_suffix=='_22GeV' else [0.0,1.6],
                         f'z_{ch}'       : [0.0,1.0],
                     }
                     hist_colors = {
-                        'x'        : ['tab:purple'],
-                        'Q2'       : ['tab:cyan'],
-                        f'mx_{ch}' : ['tab:olive'],
+                        'x'             : ['tab:purple'],
+                        'Q2'            : ['tab:cyan'],
+                        f'mx_{ch}'      : ['tab:olive'],
                         f'mass_{ch}'    : ['tab:blue'],
                         f'phperp_{ch}'  : ['tab:red'],
                         f'phperp2_{ch}' : ['tab:green'],
@@ -136,7 +136,7 @@ for rg in rgs:
                                 'xlims':xlims[kinvar_x],
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
-                                'ylabel':binvar_titles[kinvar_x],
+                                'ylabel':'Counts',
                             }
                             for bin_id in bin_ids
                     ]
