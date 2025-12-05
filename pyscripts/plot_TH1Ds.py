@@ -41,13 +41,13 @@ for rg in rgs:
 
             # Set binvar titles
             binvar_titles = {
-                'x'            : '$x$',
-                'Q2'           : '$Q^{2}$',
-                f'mx__{ch}'    : '$M_{X '+ch_labels[ch]+'}$',
-                f'phperp_{ch}' : '$P_{'+ch_labels[ch]+'\\perp}$',
-                f'mass_{ch}'   : '$M_{'+ch_labels[ch]+'}$',
-                f'mx_{ch}'     : '$M_{X '+ch_labels[ch]+'}$',
-                f'z_{ch}'      : '$z_{'+ch_labels[ch]+'}$',
+                'x'            : 'x',
+                'Q2'           : 'Q^{2}',
+                f'mx__{ch}'    : 'M_{X '+ch_labels[ch]+'}',
+                f'phperp_{ch}' : 'P_{'+ch_labels[ch]+'\\perp}',
+                f'mass_{ch}'   : 'M_{'+ch_labels[ch]+'}',
+                f'mx_{ch}'     : 'M_{X '+ch_labels[ch]+'}',
+                f'z_{ch}'      : 'z_{'+ch_labels[ch]+'}',
             }
             binvar_unit_titles = {
                 'x'            : '',
@@ -131,7 +131,12 @@ for rg in rgs:
                     plot_results_kwargs_array = [
                             {
                                 'hist_keys':[f'h1_bin{bin_id}_'+kinvar_x],
-                                'title':sagap.get_bin_kinematics_title(bin_id,df,cols=cols,col_titles=col_titles),
+                                'title':sagap.get_bin_kinematics_title(
+                                        bin_id,df,
+                                        cols=cols,
+                                        col_titles=col_titles,
+                                        col_unit_titles=col_unit_titles
+                                    ),
                                 'xlims':xlims[kinvar_x],
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
