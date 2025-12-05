@@ -11,8 +11,7 @@
 #SBATCH --time=24:00:00
 
 export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_findBinLims__pim"
-export YAML=args_1d_bins.yaml
-export YAML2=args_4d_bins.yaml
+export YAML="args.yaml"
 
 echo $OUTDIR
 echo $YAML
@@ -21,5 +20,4 @@ cd $OUTDIR
 ls -lrth
 pwd
 RGH_SAGA_COMMAND "findBinLims $YAML"
-RGH_SAGA_COMMAND "findBinLims $YAML2"
 echo DONE

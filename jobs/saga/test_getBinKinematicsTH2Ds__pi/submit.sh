@@ -11,7 +11,7 @@
 #SBATCH --time=48:00:00
 
 export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getBinKinematicsTH2Ds__pi"
-export YAML=args.yaml
+export YAML="args.yaml"
 
 echo $OUTDIR
 echo $YAML
@@ -19,43 +19,5 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-
-# Run MC RGH jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_sector4_any.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_onlysector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_onlysector4_pi.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_2d_bins_px_py_onlysector4_e.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_4d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_fullbin.yaml"
-
-# Run MC RGH Sector4 jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_4d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgh_sector4_fullbin.yaml"
-
-# Run MC RGC jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py_sector4_any.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py_onlysector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py_onlysector4_pi.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_2d_bins_px_py_onlysector4_e.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_4d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_mc_rgc_fullbin.yaml"
-
-# Run DT RGC jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py_sector4_any.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py_onlysector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py_onlysector4_pi.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_2d_bins_px_py_onlysector4_e.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_4d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH2Ds args_dt_rgc_fullbin.yaml"
-
+RGH_SAGA_COMMAND "getBinKinematicsTH2Ds $YAML"
 echo DONE

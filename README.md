@@ -131,13 +131,25 @@ touch jobs.txt
 
 Configure yamls for jobs running [`saga`](https://github.com/mfmceneaney/saga.git) by running `$RGH_PROJECTIONS_HOME/bin/setup.sh`.
 
+Run bin limits jobs by going into each directory and manually submitting:
+```bash
+for file in jobs/saga/test_findBinLims*; do
+    echo $file
+    cd $file
+    touch jobs.txt
+    ./setup.sh >> jobs.txt
+    cd -
+    echo
+done
+```
+
 Run kinematics jobs by going into each directory and manually submitting:
 ```bash
 for file in jobs/saga/test_getBinKinematics*; do
     echo $file
     cd $file
     touch jobs.txt
-    sbatch $PWD/submit.sh >> jobs.txt
+    ./setup.sh >> jobs.txt
     cd -
     echo
 done

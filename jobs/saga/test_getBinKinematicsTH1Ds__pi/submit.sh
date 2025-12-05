@@ -11,7 +11,7 @@
 #SBATCH --time=24:00:00
 
 export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getBinKinematicsTH1Ds__pi"
-export YAML=args.yaml
+export YAML="args.yaml"
 
 echo $OUTDIR
 echo $YAML
@@ -19,25 +19,5 @@ echo $YAML
 cd $OUTDIR
 ls -lrth
 pwd
-
-# Run full bin jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_sector4_fullbin.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgc_fullbin.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_dt_rgc_fullbin.yaml"
-
-# Run 1D jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_sector4_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgc_1d_bins.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_dt_rgc_1d_bins.yaml"
-
-# Run delta phi jobs
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi_nosector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi_JUST_sector4.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi_JUST_sector4_e.yaml"
-RGH_SAGA_COMMAND "getBinKinematicsTH1Ds args_mc_rgh_fullbin_dphi_JUST_sector4_pi.yaml"
-
+RGH_SAGA_COMMAND "getBinKinematicsTH1Ds $YAML"
 echo DONE
