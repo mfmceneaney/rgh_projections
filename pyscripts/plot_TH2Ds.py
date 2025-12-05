@@ -110,6 +110,9 @@ for rg in rgs:
                     col_titles = {
                         binvar:binvar_titles[binvar],
                     }
+                    col_unit_titles = {
+                        binvar:binvar_unit_titles[binvar],
+                    }
 
                     # Load kinematics CSV
                     df = pd.read_csv(csv_path)
