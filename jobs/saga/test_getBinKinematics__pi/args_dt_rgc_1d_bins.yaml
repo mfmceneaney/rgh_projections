@@ -4,6 +4,8 @@ tree: "t"
 nthreads: 8
 cuts: >-
   Q2>1 && W>2 && y<0.75 && mx_pi>1.5
+  && sqrt(px_pi*px_pi+py_pi*py_pi+pz_pi*pz_pi)>1.25
+  && sqrt(px_pi*px_pi+py_pi*py_pi+pz_pi*pz_pi)<5.0
   && TMath::Abs(TMath::ATan2(px_pi,pz_pi))<25.0*TMath::Pi()/180.0
   && TMath::Abs(TMath::ATan2(py_pi,pz_pi))<25.0*TMath::Pi()/180.0
   && TMath::Abs(TMath::ATan2(px_e,pz_e))<25.0*TMath::Pi()/180.0
