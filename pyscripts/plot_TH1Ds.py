@@ -80,7 +80,6 @@ for rg in rgs:
 
                 # Set kinematic variable pairs to plot
                 kinvars = binvars.copy()
-                kinvars.extend(['x', 'Q2'])
                 kinvars.remove(binvar)
 
                 # Loop kinematic variable pairs
