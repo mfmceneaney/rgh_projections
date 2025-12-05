@@ -195,3 +195,6 @@ for rg in rgs:
                         use_grid_titles = use_grid_titles,
                         use_grid_xlabels = use_grid_xlabels, #NOTE: Since you plot different x-axis variables in each row make sure that the labels are not dropped for rows below the top row.
                     )
+
+                    # Close the figures to conserve memory
+                    plt.close('all')
