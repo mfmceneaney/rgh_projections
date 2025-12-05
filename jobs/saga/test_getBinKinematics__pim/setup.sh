@@ -1,6 +1,6 @@
 #!/bin/bash
 i=1
-for file in *.yaml;
+for file in args*.yaml;
 do
 echo "$i > $file"
 echo
