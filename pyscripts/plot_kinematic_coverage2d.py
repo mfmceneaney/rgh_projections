@@ -5,6 +5,7 @@ import sys
 import uproot as ur
 import matplotlib.pyplot as plt
 from matplotlib import colors
+import argparse
 
 # Import saga modules
 from saga.aggregate import get_binscheme_cuts_and_ids
@@ -19,14 +20,20 @@ from saga.plot import (
     plot_watermark,
 )
 
+parser = argparse.ArgumentParser(description='Script to plot 2d kinematic coverage in x vs. Q2 and x vs. W from `getBinKinematicsTH2Ds` jobs for RGC and RGH single and dipion data.')
+parser.add_argument('--watermark', action="store_true", help='Plot watermark on plots')
+parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4'])
+parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=['pi','pim','pipim','k','km'])
+args = parser.parse_args()
+
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set channels and beam suffixes to loop
-chs = ['pi','pim','pipim']#,'k','km']
+chs = args.chs #['pi','pim','pipim']#,'k','km']
 ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
 beam_suffixes = ['']#,'_22GeV']
-rgs = ['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
+rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 
 # Loop run groups, channels, and beam suffixes
@@ -105,7 +112,7 @@ for rg in rgs:
                 ax.set_title(f'{rg_labels[rg]} ${ch_labels[ch]}$',usetex=True)
 
                 # Plot watermark
-                if "dt" in rg:
+                if args.watermark:
                     watermark = "CLAS12 Preliminary"
                     plot_watermark(
                         watermark,
@@ -115,37 +122,8 @@ for rg in rgs:
                         alpha=0.5,
                     )
 
-                # # Get the bin limit line coordinates and plot
-                # lims_coords = get_lims_coords(binscheme, binvar_lims[binvars[0]], binvar_lims[binvars[1]], var_keys=var_keys)
-                # plot_lines(ax, lims_coords, linecolor='red', linewidth=1)
-
-                # # Get bin scheme cuts and ids
-                # cuts, _, bin_ids, _ = get_binscheme_cuts_and_ids(
-                #                                                     binscheme,
-                #                                                     start_idx=start_idx,
-                #                                                     id_key=id_key,
-                #                                                     binvar_titles=None,
-                #                                                 )
-
-                # # Get the bin centers
-                # bin_centers, bin_widths = get_bin_centers(cuts,swap_axes=False)
-
-                # # Plot the bin ids
-                # plot_bin_ids(
-                #         ax,
-                #         bin_centers, 
-                #         bin_widths=bin_widths,
-                #         size=25,
-                #         color='red',
-                #         alpha=1.0,
-                #     )
-
-                # # Load average kinematics in each bin and plot
-                # kinematics = load_csv(kinematics_path)
-                # bin_centers_x = [kinematics[binvars[0]][idx].item() for idx in bin_ids[id_key]]
-                # bin_centers_y = [kinematics[binvars[1]][idx].item() for idx in bin_ids[id_key]]
-                # ax.scatter(bin_centers_x, bin_centers_y, s=150, linewidth=4, color='black', marker='x',label='Bin Means')
-                # ax.legend(loc='upper left' if binvars[0] == 'x' else 'upper right')
-
                 # Save the figure
                 f.savefig(outpath)
+
+                # Close the plots
+                plt.close('all')

@@ -4,20 +4,33 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import sys
+import argparse
 
 # Import saga modules
 import saga.plot as sagap
+
+parser = argparse.ArgumentParser(description='Script to plot 2D kinematic distributions from `getBinKinematicsTH2Ds` jobs on RGC and RGH single and dipion data.')
+parser.add_argument('--watermark', action="store_true", help='Plot watermark on plots')
+parser.add_argument('--rgs', default=["dt_rga"], help='Run group', nargs="+", choices=['dt_rgc','mc_rgc','mc_rgh','mc_rgh_sector4'])
+parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=['pi','pim','pipim','k','km'])
+parser.add_argument('--binvars', default=["x"], help='Bin variables', nargs="+", choices=['Q2','W','y','x','xF_ppim','z_ppim'])
+parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
+parser.add_argument('--grid_shape', default=(5,1), help='Grid shape', nargs=2, type=int)
+args = parser.parse_args()
 
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set channels and beam suffixes to loop
-chs = ['pi','pim','pipim']#,'k','km']
+chs = args.chs #['pi','pim','pipim']#,'k','km']
 ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
 beam_suffixes = ['']#,'_22GeV']
-rgs = ['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
+rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
-binvars = None
+binvars = args.binvars
+hist_density = args.hist_density
+grid_shape = args.grid_shape #(8,1)
+
 # Loop run groups, channels, and beam suffixes
 for rg in rgs:
     for ch in chs:
@@ -25,10 +38,12 @@ for rg in rgs:
 
             # Set binvars
             if ch=='pipim':
-                binvars = ['x', 'mass', 'mx', 'z']
+                allowed_binvars = ['x', 'mass', 'mx', 'z']
+                binvars = [el for el in args.binvars if el in allowed_binvars]
             else:
-                binvars = ['x', 'mx', 'phperp', 'z']
-            binvars = [el+f'_{ch}' for el in binvars]
+                allowed_binvars = ['x', 'mx', 'phperp', 'z']
+                binvars = [el for el in args.binvars if el in allowed_binvars]
+            binvars = [el+(f'_{ch}' if el!='x' else '') for el in binvars]
 
             # Set binvar titles
             binvar_titles = {
@@ -147,7 +162,6 @@ for rg in rgs:
                             reshaped_grid.append(el)
                         return reshaped_grid
 
-                    grid_shape = (2,7)
                     graph_array = reshape_grid(graph_array, grid_shape)
                     plot_results_kwargs_array = reshape_grid(plot_results_kwargs_array, grid_shape)
                     print("INFO: graph_array = ",graph_array)
@@ -158,8 +172,8 @@ for rg in rgs:
                         'hist_clone_axis':False,
                         'hist_paths':[hist_path],
                         'hist_labels':[f'{rg_labels[rg]}'],
-                        'watermark':'CLAS12 Preliminary',
-                        'hist_density':False,
+                        'watermark':'CLAS12 Preliminary' if args.watermark else '',
+                        'hist_density':hist_density,
                         'axlinewidth':0,
                         'hist_dim':2,
                         'legend_loc':None #NOTE: Do not plot a legend if you are using 2d hists.
