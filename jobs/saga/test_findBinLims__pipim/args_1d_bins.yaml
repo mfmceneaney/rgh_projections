@@ -10,7 +10,7 @@ cuts: >-
   && TMath::Abs(TMath::ATan2(px_e,pz_e))<25.0*TMath::Pi()/180.0 
   && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0
 outpath: "out_1d_bins_pipim.yaml"
-binvars: ["x","Q2","phperp_pipim","z_pipim"]
-nbins_list: [8,8,8,8]
+binvars: ["x","Q2","phperp_pipim","z_pipim","mx_pipim","mass_pipim"]
+nbins_list: [8,8,8,8,8,8]
 var_formulas:
   - ["testvar", "(float)1.0"]
