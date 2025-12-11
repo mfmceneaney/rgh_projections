@@ -15,7 +15,7 @@ parser.add_argument('--rgs', default=["dt_rga"], help='Run group', nargs="+", ch
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=['pi','pim','pipim','k','km'])
 parser.add_argument('--binvars', default=["x"], help='Bin variables', nargs="+", choices=['Q2','W','y','x','xF_ppim','z_ppim'])
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
-parser.add_argument('--grid_shape', default=(5,1), help='Grid shape', nargs=2, type=int)
+parser.add_argument('--grid_shape', default=(2,5), help='Grid shape', nargs=2, type=int)
 args = parser.parse_args()
 
 # Set base directory from environment
@@ -29,7 +29,7 @@ rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 binvars = args.binvars
 hist_density = args.hist_density
-grid_shape = args.grid_shape #(8,1)
+grid_shape = args.grid_shape #(2,5)
 
 # Loop run groups, channels, and beam suffixes
 for rg in rgs:

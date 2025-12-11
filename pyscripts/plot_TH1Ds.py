@@ -16,7 +16,7 @@ parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices
 parser.add_argument('--binvars', default=["x"], help='Bin variables', nargs="+", choices=['mass', 'mx', 'phperp', 'z', 'x'])
 parser.add_argument('--ylims', default=(0.0,1000.0), help='Vertical plot limits', nargs=2, type=float)
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
-parser.add_argument('--grid_shape', default=(8,1), help='Grid shape', nargs=2, type=int)
+parser.add_argument('--grid_shape', default=(2,5), help='Grid shape', nargs=2, type=int)
 args = parser.parse_args()
 
 # Set base directory from environment
@@ -31,7 +31,7 @@ rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sec
 binvars = args.binvars
 ylims = args.ylims
 hist_density = args.hist_density#False
-grid_shape = args.grid_shape #(8,1)
+grid_shape = args.grid_shape #(2,5)
 
 # Loop run groups, channels, and beam suffixes
 for rg in rgs:
