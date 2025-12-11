@@ -19,7 +19,7 @@ def format_sigfigs(value, sigfigs):
     
     # Handle zero separately (Decimal cannot quantize 0 directly by sig figs)
     if d == 0:
-        return "0." + "0"*(sigfigs-1)
+        return "0." + "0"*(sigfigs)
 
     # Determine exponent = floor(log10(|d|))
     exponent = d.adjusted()
@@ -77,7 +77,7 @@ def main():
     header = ["bin"]
     for entry in keys_obj:
         if entry in bins_dict:
-            header.extend([f"{entry.split('_')[0]}lo", f"{entry.split('_')[0]}hi"])
+            header.extend([f"{entry.split('_')[0]}binlo", f"{entry.split('_')[0]}binhi"])
 
     rows = []
 
