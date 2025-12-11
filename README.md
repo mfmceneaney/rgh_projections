@@ -72,13 +72,16 @@ apptainer pull saga.sif oras://ghcr.io/mfmceneaney/saga:latest
 
 For running the python scripts in [pyscripts](pyscripts),
 you will need the saga python modules.  Create a python virtual environment,
-then clone the repository and install saga.
+then clone the repository and install saga. Finally, go back to the project
+root directory and install the remaining python dependencies.
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 git clone https://github.com/mfmceneaney/saga.git
 cd saga
 pip install -e .
+cd ..
+pip install -r requirements.txt
 ```
 
 # Installation

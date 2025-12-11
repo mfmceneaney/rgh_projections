@@ -1,6 +1,5 @@
 env.txt
 *.bak
-*.txt
 *.pdf
 *.root
 jobs/**/*.bak

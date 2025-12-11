@@ -1,6 +1,6 @@
 # Python scripts
 
-To run the following scripts source your virtual environment after installing saga.
+To run the following scripts source your virtual environment with the `saga` python modules installed as well as additional dependencies from `../requirements.txt`.'
 
 First run the 1d asymmetry injection jobs with the orchestration scripts.  Set `dry_run=False` within the scripts if you actually wish to submit the jobs.
 ```
