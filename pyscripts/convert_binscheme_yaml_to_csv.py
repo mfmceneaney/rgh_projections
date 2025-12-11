@@ -3,6 +3,36 @@ import argparse
 import yaml
 import csv
 import sys
+import math
+from decimal import Decimal
+
+def format_sigfigs(value, sigfigs):
+    """Format number to N significant figures and KEEP trailing zeros."""
+    if value == "" or value is None:
+        return value
+
+    try:
+        # Convert using Decimal for precise representation
+        d = Decimal(str(value))
+    except Exception:
+        return value
+    
+    # Handle zero separately (Decimal cannot quantize 0 directly by sig figs)
+    if d == 0:
+        return "0." + "0"*(sigfigs-1)
+
+    # Determine exponent = floor(log10(|d|))
+    exponent = d.adjusted()
+
+    # Number of decimals to keep
+    places = sigfigs - exponent - 1
+
+    # Quantize to the desired number of decimal places
+    quant = Decimal("1e{}".format(-places))
+    d_q = d.quantize(quant)
+
+    # Convert to string (Decimal keeps trailing zeros)
+    return format(d_q, "f") if exponent >= -6 else format(d_q, "E")
 
 def main():
     parser = argparse.ArgumentParser(description="Convert YAML 1D bin definitions to CSV.")
@@ -10,6 +40,8 @@ def main():
     parser.add_argument("--csv_file", default=None, help="Output CSV file")
     parser.add_argument("--entries", nargs="+", default=None,
                         help="Top-level YAML entries to extract (e.g. --entries x y z)")
+    parser.add_argument("--sigfigs", type=int, default=None,
+                        help="Number of significant figures for numeric CSV output")
     args = parser.parse_args()
 
     # Load YAML
@@ -60,6 +92,12 @@ def main():
                 else:
                     low = ""
                     high = ""
+
+                # Apply sigfig formatting if requested
+                if args.sigfigs is not None:
+                    low = format_sigfigs(low, args.sigfigs)
+                    high = format_sigfigs(high, args.sigfigs)
+
                 row.extend([low, high])
         rows.append(row)
 
