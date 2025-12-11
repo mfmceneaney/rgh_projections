@@ -28,9 +28,10 @@ To plot acceptance ratios in 1d bin schemes for RGH run the following script aft
 plot_acceptance_ratios_dt_1d_bins.py
 ```
 
-To plot the 2d binschemes in $x$ and $Q^2$ and $z$ and $p_{T}$, run the following script after running the `getBinKinematicsTH2Ds` jobs.
+To plot the 2d binschemes in $x$ and $Q^2$ and $z$ and $p_{T}$ or just the kinematic coverage in these variables, run the following scripts after running the `getBinKinematicsTH2Ds` jobs.
 ```
 plot_binscheme2d.py
+plot_kinematic_coverage2d.py
 ```
 
 To plot select 1d and 2d kinematic distributions after running the `getBinKinematics`, `getBinKinematicsTH1Ds`, and `getBinKinematicsTH2Ds` jobs, run the following scripts.
