@@ -16,6 +16,7 @@ parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices
 parser.add_argument('--binvars', default=["x"], help='Bin variables', nargs="+", choices=['mass', 'mx', 'phperp', 'z', 'x'])
 parser.add_argument('--ylims', default=(0.0,1000.0), help='Vertical plot limits', nargs=2, type=float)
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
+parser.add_argument('--hist_linewidth', default=5, help='Histogram linewidth', nargs=1, type=int)
 parser.add_argument('--grid_shape', default=(2,5), help='Grid shape', nargs=2, type=int)
 args = parser.parse_args()
 
@@ -30,7 +31,8 @@ rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 binvars = args.binvars
 ylims = args.ylims
-hist_density = args.hist_density#False
+hist_density = args.hist_density #False
+hist_linewidth = args.hist_linewidth #5
 grid_shape = args.grid_shape #(2,5)
 
 # Loop run groups, channels, and beam suffixes
@@ -152,6 +154,7 @@ for rg in rgs:
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
                                 'ylabel':'Counts',
+                                'hist_linewidth':histlinewidth,
                             }
                             for bin_id in bin_ids
                     ]
