@@ -22,6 +22,8 @@ parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ra
 parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties')
 parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for rescaling uncertainties', type=float)
 parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
+parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
+parser.add_argument('--hist_linewidth', default=2, help='Histogram linewidth', nargs=1, type=int)
 args = parser.parse_args()
 
 # Set configuration
@@ -34,6 +36,8 @@ lumi_ratio   = args.lumi_ratio # 100/13.2 * 5/40, # <- RGC NH3 FALL 22, RGC NH3 
 graph_yvalue = args.graph_yvalue # 0.1
 tpol_factor  = args.tpol_factor # 0.85
 tdil_factor  = args.tdil_factor # 3/17
+hist_density = args.hist_density # True
+hist_linewidth = args.hist_linewidth # 2
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
@@ -165,6 +169,8 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         'watermark':'CLAS12 Preliminary',
         'hist_clone_axis':True,
         'hist_ylims':hist_ylims,
+        'hist_density':hist_density,
+        'hist_linewidth':hist_linewidth,
         'old_dat_path':None
     }
 
@@ -207,6 +213,16 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_{binscheme_name}_kinematics.root')),
         ]
         plot_results_kwargs_base['hist_keys'] = ['h1_bin0_'+binscheme_name for i in range(len(plot_results_kwargs_base['hist_paths']))]
+
+        if verbose:
+            print("INFO: hist_paths = [")
+            for hist_path in plot_results_kwargs_base['hist_paths']:
+                print(f"INFO: \t{hist_path}")
+            print("INFO: ]")
+            print("INFO: hist_keys = [")
+            for hist_key in plot_results_kwargs_base['hist_keys']:
+                print(f"INFO: \t{hist_key}")
+            print("INFO: ]")
 
         # Get the bin migration path
         bin_mig_path = sagas.get_out_file_name(
