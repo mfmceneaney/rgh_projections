@@ -257,7 +257,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             config_out_path = sagas.get_config_out_path(
                     base_dir,
                     aggregate_keys,
-                    binscheme_name+sep+rgh_mc_name+sep+result_name,
+                    binscheme_name+sep+mc_rgh_name+sep+result_name,
                     config,
                     sep=sep,
                     ext=ext,
