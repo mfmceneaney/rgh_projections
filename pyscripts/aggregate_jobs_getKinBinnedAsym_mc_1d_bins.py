@@ -337,3 +337,6 @@ for rg, base_dir, ch_sgasym_label in zip(rgs,base_dirs,ch_sgasym_labels):
 
                 # Save the graph
                 f.savefig(config_out_path)
+
+                # Close the figure to save memory
+                plt.close('all')
