@@ -55,6 +55,7 @@ chain_configs = dict(
 
 # Set sector4 label
 sector4_label = '_sector4' if args.use_sector4 else '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+mc_rgh_name = 'mc_rgh' + sector4_label
 
 # Set base directories to aggregate
 base_dirs  = [
