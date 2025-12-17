@@ -2,17 +2,39 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import argparse
 
 # Import saga modules
 import saga.aggregate as sagas
 from saga.data import load_yaml, load_csv, save_bin_mig_mat_to_csv
 from saga.plot import set_default_plt_settings, plot_results
 
-# Set base directory from environment
+# Parse arguments
+parser = argparse.ArgumentParser(description='Script to aggregate and rescale `getKinBinnedAsym` jobs on RGH and RGC single and dipion data and MC')
+parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=["dt_rgc"])
+parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
+parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
+parser.add_argument('--hist_ylims', default=[0.0,0.06], help='Normalized histogram y-axis limits', nargs=2, type=float)
+parser.add_argument('--xs_ratio', default=7.908/9.194, help='Cross-section ratio (new/old) for rescaling uncertainties', type=float)
+parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ratio (new/old) for rescaling uncertainties', type=float)
+parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties')
+parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for rescaling uncertainties', type=float)
+parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
+args = parser.parse_args()
+
+# Set configuration
+run_groups = args.rgs # ["dt_rgc"]
+channels = args.chs # ["pi","pim","pipim"]
+asyms = args.asyms # [-0.1,0.0,0.1]
+hist_ylims = args.hist_ylims #[0.0,0.06]
+xs_ratio     = args.xs_ratio # 7.908/9.194
+lumi_ratio   = args.lumi_ratio # 100/13.2 * 5/40, # <- RGC NH3 FALL 22, RGC NH3 SUMMER 22 -> 100/17.7 * 5/20, #NOTE: L_integrated = T * L_instant.
+graph_yvalue = args.graph_yvalue # 0.1
+tpol_factor  = args.tpol_factor # 0.85
+tdil_factor  = args.tdil_factor # 3/17
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Setup configuration dictionary
-asyms = [-0.1,0.0,0.1]
 sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
 seeds   = {"inject_seed":[2**i for i in range(1)]}
 configs = dict(
@@ -34,8 +56,6 @@ chain_configs = dict(
 sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
 
 # Set base directories to aggregate
-run_groups = ['dt_rgc']
-channels   = ['pi','pim','pipim']
 base_dirs  = [
     os.path.abspath(
         os.path.join(
@@ -50,18 +70,18 @@ chs = [ch for rg in run_groups for ch in channels]
 
 # Set channel label for each base directory
 ch_sgasym_labels = {
-    'pi':'$\mathcal{A}_{UT}^{\sin{(\phi_{\pi^{+}}+\phi_{S})}}$',
-    'pim':'$\mathcal{A}_{UT}^{\sin{(\phi_{\pi^{-}}+\phi_{S})}}$',
-    'pipim':'$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\phi_{R}+\phi_{S})}}$',
+    'pi':'$A_{UT}^{\\sin{(\\phi_{\\pi^{+}}+\\phi_{S})}}$',
+    'pim':'$A_{UT}^{\\sin{(\\phi_{\\pi^{-}}+\\phi_{S})}}$',
+    'pipim':'$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R}+\\phi_{S})}}$',
 }
 ch_sgasym_labels = [ch_sgasym_labels[ch] for rg in run_groups for ch in channels]
 
 # Set x-axis labels for kinematic variables in all channels
 xlabel_map = {
     'Q2':'$Q^{2}$ (GeV$^{2}$)', 'W':'$W$ (GeV)', 'x':'$x$', 'y':'$y$',
-    'z_pi':'$z_{\pi^{+}}$', 'mx_pi':'$M_{X, \pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\pi^{+}, \perp}$ (GeV)',
-    'z_pim':'$z_{\pi^{-}}$', 'mx_pim':'$M_{X, \pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\pi^{-}, \perp}$ (GeV)',
-    'z_pipim':'$z_{\pi^{+}\pi^{-}}$', 'mx_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\pi^{+}\pi^{-}, \perp}$ (GeV)', 'mass_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)',
+    'z_pi':'$z_{\\pi^{+}}$', 'mx_pi':'$M_{X, \\pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\\pi^{+}, \\perp}$ (GeV)',
+    'z_pim':'$z_{\\pi^{-}}$', 'mx_pim':'$M_{X, \\pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\\pi^{-}, \\perp}$ (GeV)',
+    'z_pipim':'$z_{\\pi^{+}\\pi^{-}}$', 'mx_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\\pi^{+}\\pi^{-}, \\perp}$ (GeV)', 'mass_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)',
 }
 
 # Loop base directories
@@ -132,7 +152,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         ],
         'watermark':'CLAS12 Preliminary',
         'hist_clone_axis':True,
-        'hist_ylims':[0.0,0.06],
+        'hist_ylims':hist_ylims,
         'old_dat_path':None
     }
 
@@ -152,11 +172,11 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                 'old_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/')),
                 'count_key':'count',
                 'yerr_key':'',
-                'xs_ratio': 7.908/9.194,
-                'lumi_ratio':100/13.2 * 5/40, # <- RGC NH3 FALL 22, RGC NH3 SUMMER 22 -> 100/17.7 * 5/20, #NOTE: L_integrated = T * L_instant.
-                'graph_yvalue':0.1,
-                'tpol_factor':0.85,
-                'tdil_factor':3/17, 
+                'xs_ratio': xs_ratio,
+                'lumi_ratio':lumi_ratio,
+                'graph_yvalue':graph_yvalue,
+                'tpol_factor':tpol_factor,
+                'tdil_factor':tdil_factor, 
             },
         )
 

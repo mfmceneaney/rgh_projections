@@ -2,17 +2,27 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import argparse
 
 # Import saga modules
 import saga.aggregate as sagas
 from saga.data import load_yaml, load_csv, save_bin_mig_mat_to_csv
 from saga.plot import set_default_plt_settings, plot_results
 
-# Set base directory from environment
+# Parse arguments
+parser = argparse.ArgumentParser(description='Script to aggregate `getKinBinnedAsym` jobs on RGC single and dipion MC')
+parser.add_argument('--rgs', default=["mc_rgc"], help='Run group', nargs="+", choices=['mc_rgh','mc_rgh_sector4','mc_rgc'])
+parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
+parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
+args = parser.parse_args()
+
+# Set configuration
+run_groups = args.rgs # ["dt_rgc"]
+channels = args.chs # ["pi","pim","pipim"]
+asyms = args.asyms # [-0.1,0.0,0.1]
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Setup configuration dictionary #NOTE: RGC HAS 6 ASYMMETRIES, RGH HAS 9 so just filter the states that inject up to 3 asymmetries
-asyms = [-0.1,0.0,0.1]
 sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
 #NOTE: Only use following block if injecting many simultaneous asymmetries
 # newsgasyms = {"sgasyms":[]}
@@ -40,61 +50,59 @@ chain_configs = dict(
 sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
 
 # Set base directories to aggregate
-run_groups = ['mc_rgh','mc_rgh_sector4','mc_rgc']
-channels   = ['pi','pim'] #,'pipim']
 base_dirs  = [
     os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/')) for rg in run_groups for ch in channels
 ]
 
 # Set channel labels
 ch_labels = {
-    'pi':'\pi^{+}',
-    'pim':'\pi^{-}',
-    'pipim':'\pi^{+}\pi^{-}',
+    'pi':'\\pi^{+}',
+    'pim':'\\pi^{-}',
+    'pipim':'\\pi^{+}\\pi^{-}',
 }
 
 # Set maps of asymmetry names to labels for each run group
 ch_sgasym_labels = {
     'mc_rgh':{
         ch:{
-            'a0':'$\mathcal{A}_{UT}^{\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
-                '$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\\phi_{R}+\\phi_{S})}}$',
-            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
-            # 'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
-            # 'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
-            # 'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            'a0':'$A_{UT}^{\\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
+                '$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R}+\\phi_{S})}}$',
+            # 'a0':'$A_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$A_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
+            # 'a2':'$A_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a3':'$A_{UT}^{sin(\\phi_{S})}$',
+            # 'a4':'$A_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a5':'$A_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a6':'$A_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a7':'$A_{LT}^{cos(\\phi_{S})}$',
+            # 'a8':'$A_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
         } for ch in channels
     },
     'mc_rgh_sector4':{ #NOTE: This should be identical to RGH
         ch:{
-            'a0':'$\mathcal{A}_{UT}^{\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
-                '$\mathcal{A}_{UT}^{\sin{\\theta}\sin{(\\phi_{R}+\\phi_{S})}}$',
-            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a1':'$\mathcal{A}_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
-            # 'a2':'$\mathcal{A}_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a3':'$\mathcal{A}_{UT}^{sin(\\phi_{S})}$',
-            # 'a4':'$\mathcal{A}_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a5':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a6':'$\mathcal{A}_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
-            # 'a7':'$\mathcal{A}_{LT}^{cos(\\phi_{S})}$',
-            # 'a8':'$\mathcal{A}_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            'a0':'$A_{UT}^{\\sin{(\\phi_{'+ch_labels[ch]+'+\\phi_{S}})}}$' if ch != 'pipim' else \
+                '$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R}+\\phi_{S})}}$',
+            # 'a0':'$A_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$A_{UT}^{sin(\\phi_{'+ch_labels[ch]+'}+\\phi_{S})}$',
+            # 'a2':'$A_{UT}^{sin(3\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a3':'$A_{UT}^{sin(\\phi_{S})}$',
+            # 'a4':'$A_{UT}^{sin(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a5':'$A_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a6':'$A_{LT}^{cos(\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
+            # 'a7':'$A_{LT}^{cos(\\phi_{S})}$',
+            # 'a8':'$A_{LT}^{cos(2\\phi_{'+ch_labels[ch]+'}-\\phi_{S})}$',
         } for ch in channels
     },
     'mc_rgc':{
         ch:{
-            'a0':'$\mathcal{A}_{UL}^{\sin{\\phi_{'+ch_labels[ch]+'}}}$' if ch != 'pipim' else \
-                '$\mathcal{A}_{UL}^{\sin{\\theta}\sin{\\phi_{R}}}$',
-            # 'a0':'$\mathcal{A}_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a1':'$\mathcal{A}_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a2':'$\mathcal{A}_{UL}^{sin(2\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a3':'$\mathcal{A}_{UL}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
-            # 'a4':'$\mathcal{A}_{LL}^{Const}$',
-            # 'a5':'$\mathcal{A}_{LL}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            'a0':'$A_{UL}^{\\sin{\\phi_{'+ch_labels[ch]+'}}}$' if ch != 'pipim' else \
+                '$A_{UL}^{\\sin{\\theta}\\sin{\\phi_{R}}}$',
+            # 'a0':'$A_{UU}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a1':'$A_{LU}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a2':'$A_{UL}^{sin(2\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a3':'$A_{UL}^{sin(\\phi_{'+ch_labels[ch]+'})}$',
+            # 'a4':'$A_{LL}^{Const}$',
+            # 'a5':'$A_{LL}^{cos(\\phi_{'+ch_labels[ch]+'})}$',
         } for ch in channels
     }
 }
@@ -105,9 +113,9 @@ ch_sgasym_labels = [ch_sgasym_labels[rg][ch] for rg in run_groups for ch in chan
 # Set x-axis labels for kinematic variables in all channels
 xlabel_map = {
     'Q2':'$Q^{2}$ (GeV$^{2}$)', 'W':'$W$ (GeV)', 'x':'$x$', 'y':'$y$',
-    'z_pi':'$z_{\pi^{+}}$', 'mx_pi':'$M_{X, \pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\pi^{+}, \perp}$ (GeV)',
-    'z_pim':'$z_{\pi^{-}}$', 'mx_pim':'$M_{X, \pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\pi^{-}, \perp}$ (GeV)',
-    'z_pipim':'$z_{\pi^{+}\pi^{-}}$', 'mx_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\pi^{+}\pi^{-}, \perp}$ (GeV)', 'mass_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)',
+    'z_pi':'$z_{\\pi^{+}}$', 'mx_pi':'$M_{X, \\pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\\pi^{+}, \\perp}$ (GeV)',
+    'z_pim':'$z_{\\pi^{-}}$', 'mx_pim':'$M_{X, \\pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\\pi^{-}, \\perp}$ (GeV)',
+    'z_pipim':'$z_{\\pi^{+}\\pi^{-}}$', 'mx_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\\pi^{+}\\pi^{-}, \\perp}$ (GeV)', 'mass_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)',
 }
 
 # Set up list of run groups
