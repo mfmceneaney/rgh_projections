@@ -104,9 +104,10 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     binschemes = load_yaml(yaml_path)
 
     # Set aliases
+    new_binschemes = {"binschemes":[{el:binschemes[el]} for el in binschemes]}
     aliases = {"binschemes":{
                         str(el):list(el.keys())[0]+"_binscheme"
-                        for el in binschemes["binschemes"]
+                        for el in new_binschemes["binschemes"]
                     }
                 }
 
