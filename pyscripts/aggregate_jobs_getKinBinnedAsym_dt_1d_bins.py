@@ -209,9 +209,9 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         plot_results_kwargs_base['xlabel'] = xlabel_map[binscheme_name]
         plot_results_kwargs_base['binlims'] = binlims
         plot_results_kwargs_base['hist_paths'] = [
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins{sector4_label}_{binscheme_name}_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_1d_bins_{binscheme_name}_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_{binscheme_name}_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh{sector4_label}_full_bin_{binscheme_name}_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_full_bin_{binscheme_name}_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_full_bin_{binscheme_name}_kinematics.root')),
         ]
         plot_results_kwargs_base['hist_keys'] = ['h1_bin0_'+binscheme_name for i in range(len(plot_results_kwargs_base['hist_paths']))]
 
