@@ -103,6 +103,13 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     yaml_path = load_yaml(yaml_path)[binschemes_paths_name][0]
     binschemes = load_yaml(yaml_path)
 
+    # Set aliases
+    aliases = {"binschemes":{
+                        str(el):list(el.keys())[0]+"_binscheme"
+                        for el in binschemes["binschemes"]
+                    }
+                }
+
     # Arguments for sagas.get_config_list()
     result_name = "a0" #NOTE: This also gets recycled as the asymmetry name
 
@@ -190,7 +197,8 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     out_dirs_list = sagas.get_out_dirs_list(
                                     configs,
                                     base_dir,
-                                    aggregate_keys=aggregate_keys
+                                    aggregate_keys=aggregate_keys,
+                                    aliases=aliases,
                                 )
 
     #---------- Loop bin schemes ----------#
@@ -260,6 +268,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                     binscheme_name+sep+mc_rgh_name+sep+result_name,
                     config,
                     sep=sep,
+                    aliases=aliases,
                     ext=ext,
                 )
             config_out_path = os.path.join(base_dir,config_out_path)
