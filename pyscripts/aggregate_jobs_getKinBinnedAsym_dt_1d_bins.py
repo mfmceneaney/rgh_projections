@@ -27,6 +27,7 @@ parser.add_argument('--hist_linewidth', default=2, help='Histogram linewidth', n
 args = parser.parse_args()
 
 # Set configuration
+verbose = args.verbose
 run_groups = args.rgs # ["dt_rgc"]
 channels = args.chs # ["pi","pim","pipim"]
 asyms = args.asyms # [-0.1,0.0,0.1]
