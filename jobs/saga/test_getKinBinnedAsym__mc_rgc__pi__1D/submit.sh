@@ -5,10 +5,10 @@
 #SBATCH --error=/farm_out/%u/%x-%j-%N.err
 #SBATCH --partition=production
 #SBATCH --account=clas12
-#SBATCH -c 1
+#SBATCH -c 4
 #SBATCH --mem-per-cpu=2G
 ##SBATCH --gres=disk:1000
-#SBATCH --time=1:00:00
+#SBATCH --time=6:00:00
 
 export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getKinBinnedAsym__mc_rgc__pi__1D"
 export YAML=args.yaml
