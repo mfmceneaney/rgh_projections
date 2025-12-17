@@ -11,6 +11,7 @@ from saga.plot import set_default_plt_settings, plot_results
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Script to aggregate and rescale `getKinBinnedAsym` jobs on RGH and RGC single and dipion data and MC')
+parser.add_argument('--use_sector4', action="store_true", help='Use jobs including sector4 for RGH')
 parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=["dt_rgc"])
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
@@ -53,7 +54,7 @@ chain_configs = dict(
 ) if nbatch > 1 else {}
 
 # Set sector4 label
-sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+sector4_label = if args.use_sector4 else '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
 
 # Set base directories to aggregate
 base_dirs  = [
@@ -98,7 +99,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
     # Load the binschemes from the path specified in the job yaml assuming there is only one given path and it is an absolute path
     binschemes_paths_name = "binschemes_paths"
-    yaml_path = load_yaml(yaml_path)[binschemes_names][0]
+    yaml_path = load_yaml(yaml_path)[binschemes_paths_name][0]
     binschemes = load_yaml(yaml_path)
 
     # Arguments for sagas.get_config_list()
