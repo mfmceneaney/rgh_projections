@@ -12,6 +12,7 @@ from saga.plot import set_default_plt_settings, plot_results
 # Parse arguments
 parser = argparse.ArgumentParser(description='Script to aggregate and rescale `getKinBinnedAsym` jobs on RGH and RGC single and dipion data and MC')
 parser.add_argument('--use_sector4', action="store_true", help='Use jobs including sector4 for RGH')
+parser.add_argument('--verbose', action="store_true", help='Print out path information used for rescaling')
 parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=["dt_rgc"])
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
@@ -34,14 +35,6 @@ graph_yvalue = args.graph_yvalue # 0.1
 tpol_factor  = args.tpol_factor # 0.85
 tdil_factor  = args.tdil_factor # 3/17
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
-
-# Setup configuration dictionary
-sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
-seeds   = {"inject_seed":[2**i for i in range(1)]}
-configs = dict(
-    sgasyms,
-    **seeds,
-)
 
 # Set up chaining for batched data (specifically `old_dat_path`)
 nbatch = 1
@@ -111,6 +104,15 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                     }
                 }
 
+    # Setup configuration dictionary
+    sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
+    seeds   = {"inject_seed":[2**i for i in range(1)]}
+    configs = dict(
+        sgasyms,
+        **new_binschemes,
+        **seeds,
+    )
+
     # Arguments for sagas.get_config_list()
     result_name = "a0" #NOTE: This also gets recycled as the asymmetry name
 
@@ -171,25 +173,6 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     #NOTE: Set outpath within the loop for unique naming
     use_default_plt_settings = True
 
-    # If you want to rescale your results using results from other base directories set the following arguments
-    rescale = True
-    if rescale:
-        plot_results_kwargs_base = dict(
-            plot_results_kwargs_base,
-            **{
-                'old_dat_path':os.path.basename(base_dir),
-                'new_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgh{sector4_label}__{ch}__1D/')),
-                'old_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/')),
-                'count_key':'count',
-                'yerr_key':'',
-                'xs_ratio': xs_ratio,
-                'lumi_ratio':lumi_ratio,
-                'graph_yvalue':graph_yvalue,
-                'tpol_factor':tpol_factor,
-                'tdil_factor':tdil_factor, 
-            },
-        )
-
     #---------- Set configurations ----------#
     # Get list of configurations
     config_list = sagas.get_config_list(configs,aggregate_keys=aggregate_keys)
@@ -219,9 +202,9 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         plot_results_kwargs_base['xlabel'] = xlabel_map[binscheme_name]
         plot_results_kwargs_base['binlims'] = binlims
         plot_results_kwargs_base['hist_paths'] = [
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins{sector4_label}_binscheme_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_1d_bins_binscheme_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_binscheme_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins{sector4_label}_{binscheme_name}_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_1d_bins_{binscheme_name}_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_{binscheme_name}_kinematics.root')),
         ]
         plot_results_kwargs_base['hist_keys'] = ['h1_bin0_'+binscheme_name for i in range(len(plot_results_kwargs_base['hist_paths']))]
 
@@ -262,6 +245,14 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             config = config_list[config_idx]
             out_dirs = out_dirs_list[config_idx]
 
+            # Check config and bin scheme match
+            if not binscheme_name in config["binschemes"]: continue
+
+            # Get the config without the binscheme so you 
+            # can get the file names and directories used for rescaling
+            config_wo_binscheme = config.copy()
+            config_wo_binscheme.pop("binschemes")
+
             # Set the output path basename for this config
             config_out_path = sagas.get_config_out_path(
                     base_dir,
@@ -272,7 +263,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                     aliases=aliases,
                     ext=ext,
                 )
-            config_out_path = os.path.join(base_dir,config_out_path)
+            if verbose: print("INFO: config_out_path = ",config_out_path)
 
             # Get the name of the CSV file for the binning scheme you are interested in
             out_file_names = [sagas.get_out_file_name(
@@ -282,8 +273,67 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                     ext=out_file_name_ext
                 ) for outdir in out_dirs]
 
+            if verbose: print("INFO: out_file_names = [")
+            for ofn in out_file_names:
+                if verbose: print(f"INFO: \t{ofn},")
+            if verbose: print("INFO: ]")
+
             # Load pandas dataframes from the files
-            dfs = [load_csv(out_file_name,config=config,chain_configs=chain_configs) for out_file_name in out_file_names]
+            dfs = [load_csv(out_file_name,config=config,chain_configs=chain_configs,aliases=aliases) for out_file_name in out_file_names]
+            if verbose: print("INFO: Loaded dataframes")
+
+            # If you want to rescale your results using results from other base directories set the following arguments
+            rescale = True
+            if rescale:
+
+                # Get the output path basenames for the new sim
+                new_sim_base_dir = os.path.abspath(
+                    os.path.join(
+                        RGH_PROJECTIONS_HOME,
+                        f'jobs/saga/test_getKinBinnedAsym__mc_rgh{sector4_label}__{ch}__1D/'
+                    )
+                )
+                new_sim_config_out_path = sagas.get_config_out_path(
+                    new_sim_base_dir,
+                    aggregate_keys,
+                    binscheme_name+sep+mc_rgh_name+sep+result_name,
+                    config_wo_binscheme,
+                    sep=sep,
+                    ext=ext,
+                )
+                if verbose: print("INFO: new_sim_config_out_path = ",new_sim_config_out_path)
+
+                # Get the output path basenames for the old sim
+                old_sim_base_dir = os.path.abspath(
+                    os.path.join(
+                        RGH_PROJECTIONS_HOME,
+                        f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/',
+                    )
+                )
+                old_sim_config_out_path = sagas.get_config_out_path(
+                    old_sim_base_dir,
+                    aggregate_keys,
+                    binscheme_name+sep+'mc_rgc'+sep+result_name,
+                    config_wo_binscheme,
+                    sep=sep,
+                    ext=ext,
+                )
+                if verbose: print("INFO: old_sim_config_out_path = ",old_sim_config_out_path)
+
+                # Update the plot_results kwargs
+                update_dict = {
+                        'old_dat_path':config_out_path,
+                        'new_sim_path':new_sim_config_out_path,
+                        'old_sim_path':old_sim_config_out_path,
+                        'yerr_key':'',
+                        'xs_ratio': xs_ratio,
+                        'lumi_ratio':lumi_ratio,
+                        'graph_yvalue':graph_yvalue,
+                        'tpol_factor':tpol_factor,
+                        'tdil_factor':tdil_factor, 
+                    }
+                plot_results_kwargs_base.update(update_dict)
+            
 
             # Apply bin migration correction
             if use_bin_mig:
