@@ -54,7 +54,7 @@ chain_configs = dict(
 ) if nbatch > 1 else {}
 
 # Set sector4 label
-sector4_label = if args.use_sector4 else '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+sector4_label = '_sector4' if args.use_sector4 else '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
 
 # Set base directories to aggregate
 base_dirs  = [
