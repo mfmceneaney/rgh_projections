@@ -103,6 +103,7 @@ asymfit_formula_pu: ""
 asymfit_formula_up: >-
   x[4]*sin(x[0])*sin(x[1]+x[2])*x[3]
 asymfit_formula_pp: ""
+asymfitpar_inits: [0.0]
 asymfitpar_initlims: [[-0.5,0.5]]
 use_sumw2error: false
 use_average_depol: false #NOTE: Make sure your asymfit_formula_* arguments are correctly set for this option.
