@@ -110,7 +110,7 @@ def format_value(x, precision, verbose):
 
     # Decide on scientific notation
     if abs_x < 1e-3 or abs_x > 10:
-        exponent = int(np.floor(np.log10(abs_x)))
+        exponent = max(int(np.floor(np.log10(abs_x))), p+1)
 
         # Normalize
         mantissa = x / (10 ** exponent)
