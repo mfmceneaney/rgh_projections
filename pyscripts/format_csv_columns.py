@@ -49,6 +49,13 @@ def parse_args():
     )
 
     parser.add_argument(
+        "--times-bounds",
+        nargs=2,
+        metavar=("LOW", "HIGH"),
+        help="Set the LOW and HIGH bounds for using VALUE X10^{exp} LaTeX notation"
+    )
+
+    parser.add_argument(
         "--overwrite",
         action="store_true",
         help="Overwrite original CSV files"
@@ -88,7 +95,7 @@ def round_to_precision(value, precision):
     return (d_value / d_prec).to_integral_value(rounding=ROUND_HALF_UP) * d_prec
 
 
-def format_value(x, precision, verbose):
+def format_value(x, precision, verbose, lower_bound, upper_bound):
     if pd.isna(x):
         return x
 
@@ -101,7 +108,7 @@ def format_value(x, precision, verbose):
     p = precision_exponent(precision)  # precision = 10^p
 
     if x<precision and x!=0.0:
-        return format_value(0.0, precision, verbose)
+        return format_value(0.0, precision, verbose, lower_bound, upper_bound)
 
     if x == 0:
         return f"{Decimal(0):.{max(0, -p)}f}"
@@ -109,7 +116,7 @@ def format_value(x, precision, verbose):
     abs_x = abs(x)
 
     # Decide on scientific notation
-    if abs_x < 1e-3 or abs_x > 10:
+    if abs_x < lower_bound or abs_x > upper_bound:
         exponent = max(int(np.floor(np.log10(abs_x))), p+1)
 
         # Normalize
@@ -143,8 +150,11 @@ def reset_index_column(df, column_name, start):
     return df
 
 
-def process_csv(csv_path, columns, new_columns, precisions, overwrite, reset_index_args, verbose):
+def process_csv(csv_path, columns, new_columns, precisions, overwrite, reset_index_args, times_bounds_args, verbose):
     df = pd.read_csv(csv_path)
+
+    # Set bounds for using times notation
+    lower_bound, upper_bound = (float(el) for el in times_bounds_args) if times_bounds_args else (1e-3, 10)
 
     # Reset index column if requested
     if reset_index_args:
@@ -155,7 +165,7 @@ def process_csv(csv_path, columns, new_columns, precisions, overwrite, reset_ind
         if col not in df.columns:
             raise ValueError(f"Column '{col}' not found in {csv_path}")
 
-        df[col] = df[col].apply(lambda x: format_value(x, prec, verbose))
+        df[col] = df[col].apply(lambda x: format_value(x, prec, verbose, lower_bound, upper_bound))
 
     df = df.rename(columns=dict(zip(columns, new_columns)))
 
@@ -187,6 +197,7 @@ def main():
             args.precision,
             args.overwrite,
             args.reset_index,
+            args.times_bounds,
             args.verbose
         )
 
