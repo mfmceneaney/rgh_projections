@@ -92,7 +92,7 @@ xlabel_map = {
     'Q2':'$Q^{2}$ (GeV$^{2}$)', 'W':'$W$ (GeV)', 'x':'$x$', 'y':'$y$',
     'z_pi':'$z_{\\pi^{+}}$', 'mx_pi':'$M_{X, \\pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\\pi^{+}, \\perp}$ (GeV)',
     'z_pim':'$z_{\\pi^{-}}$', 'mx_pim':'$M_{X, \\pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\\pi^{-}, \\perp}$ (GeV)',
-    'z_pipim':'$z_{\\pi^{+}\\pi^{-}}$', 'mx_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\\pi^{+}\\pi^{-}, \\perp}$ (GeV)', 'mass_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)',
+    'z_pipim':'$z_{\\pi^{+}\\pi^{-}}$', 'mx_pipim':'$M_{X, \\pi^{+}\\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\\pi^{+}\\pi^{-}, \\perp}$ (GeV)', 'mass_pipim':'$M_{\\pi^{+}\\pi^{-}}$ (GeV)',
 }
 
 # Loop base directories
