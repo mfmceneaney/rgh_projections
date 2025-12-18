@@ -24,6 +24,11 @@ parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for
 parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
 parser.add_argument('--hist_linewidth', default=2, help='Histogram linewidth', nargs=1, type=int)
+parser.add_argument('--title', default="Uncertainty Projections", help='Plot titles', type=str)
+parser.add_argument('--watermark_size', default=50, help='Water mark size', type=int)
+parser.add_argument('--watermark_rotation', default=25.0, help='Water mark rotation angle', type=float)
+parser.add_argument('--watermark_color', default="gray", help='Water mark color', type=str)
+parser.add_argument('--watermark_alpha', default=0.5, help='Water mark alpha', type=float)
 args = parser.parse_args()
 
 # Set configuration
@@ -39,6 +44,12 @@ tpol_factor  = args.tpol_factor # 0.85
 tdil_factor  = args.tdil_factor # 3/17
 hist_density = args.hist_density # True
 hist_linewidth = args.hist_linewidth # 2
+watermark_kwargs = {
+    "size":args.watermark_size,
+    "rotation":args.watermark_rotation,
+    "color":args.watermark_color,
+    "alpha":args.watermark_alpha,
+}
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
@@ -72,7 +83,7 @@ chs = [ch for rg in run_groups for ch in channels]
 ch_sgasym_labels = {
     'pi':'$A_{UT}^{\\sin{(\\phi_{\\pi^{+}}+\\phi_{S})}}$',
     'pim':'$A_{UT}^{\\sin{(\\phi_{\\pi^{-}}+\\phi_{S})}}$',
-    'pipim':'$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R}+\\phi_{S})}}$',
+    'pipim':'$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R_{\\perp}}+\\phi_{S})}}$',
 }
 ch_sgasym_labels = [ch_sgasym_labels[ch] for rg in run_groups for ch in channels]
 
@@ -168,6 +179,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             'RGC Data',
         ],
         'watermark':'CLAS12 Preliminary',
+        'watermark_kwargs':watermark_kwargs,
         'hist_clone_axis':True,
         'hist_ylims':hist_ylims,
         'hist_density':hist_density,
@@ -207,6 +219,8 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         binlims = binscheme[proj_var]
         plot_results_kwargs_base['xlims'] = [binlims[0],binlims[-1]]
         plot_results_kwargs_base['xlabel'] = xlabel_map[binscheme_name]
+        plot_results_kwargs_base['ylabel'] = ch_sgasym_label
+        plot_results_kwargs_base['title'] = args.title
         plot_results_kwargs_base['binlims'] = binlims
         plot_results_kwargs_base['hist_paths'] = [
             os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh{sector4_label}_fullbin_binscheme_kinematics.root')),
