@@ -57,8 +57,8 @@ for ch, ch_label in zip(channels, ch_labels):
     kinvar_labels = [
         '$x$',
         '$z_{'+ch_label+'}$',
-        '$M_{X,'+ch_label+'}$ (GeV)',
-        '$P_{\perp, '+ch_label+'}$ (GeV)',
+        '$M_{X'+ch_label+'}$ (GeV)',
+        '$P_{'+ch_label+'\\perp}$ (GeV)',
         '$M_{'+ch_label+'}$ (GeV)',
     ]
 
