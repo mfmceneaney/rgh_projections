@@ -12,7 +12,7 @@ parser.add_argument('--dry_run', action="store_true", help='Dry run without job 
 parser.add_argument('--rgs', default=["mc_rgc"], help='Run group', nargs="+", choices=["mc_rgh","mc_rgh_sector4","mc_rgc"])
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected', nargs="+", type=float)
-parser.add_argument('--n_inject_seeds', default=1, help='Number of random injection seeds to use')
+parser.add_argument('--n_inject_seeds', default=1, help='Number of random injection seeds to use', type=int)
 args = parser.parse_args()
 
 # Set dry run to `False` once you are sure you want to submit.
