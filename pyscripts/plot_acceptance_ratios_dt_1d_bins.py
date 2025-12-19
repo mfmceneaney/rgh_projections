@@ -23,20 +23,8 @@ title = 'Ratio of Acceptance Rates'
 ylabel = '$R_{S \\neq 4}/R_{All}$'
 ylims = [0.0,1.1]
 
-# Set input directories
+# Set MC RGH labels
 rgh_mc_names = ['_sector4',''] #NOTE: ORDER IS OLD/DENOMINATOR (Sector4) , NEW/NUMERATOR (No Sector4)
-dir_old = os.path.abspath(
-    os.path.join(
-        RGH_PROJECTIONS_HOME,
-        'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
-    )
-)
-dir_new = os.path.abspath(
-    os.path.join(
-        RGH_PROJECTIONS_HOME,
-        'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
-    )
-)
 
 # Set channels and labels
 channels = ['pi', 'pim', 'pipim']
@@ -44,6 +32,20 @@ ch_labels = ['\\pi^{+}', '\\pi^{-}', '\\pi^{+}\\pi^{-}']
 
 # Loop channels
 for ch, ch_label in zip(channels, ch_labels):
+
+    # Set input directories
+    dir_old = os.path.abspath(
+        os.path.join(
+            RGH_PROJECTIONS_HOME,
+            'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
+        )
+    )
+    dir_new = os.path.abspath(
+        os.path.join(
+            RGH_PROJECTIONS_HOME,
+            'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
+        )
+    )
 
     # Set info for kinematic variables
     kinvars = [
