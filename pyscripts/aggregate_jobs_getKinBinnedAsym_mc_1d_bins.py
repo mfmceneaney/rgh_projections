@@ -14,12 +14,14 @@ parser = argparse.ArgumentParser(description='Script to aggregate `getKinBinnedA
 parser.add_argument('--rgs', default=["mc_rgc"], help='Run group', nargs="+", choices=['mc_rgh','mc_rgh_sector4','mc_rgc'])
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
+parser.add_argument('--n_inject_seeds', default=1, help='Number of random injection seeds to use')
 args = parser.parse_args()
 
 # Set configuration
 run_groups = args.rgs # ["dt_rgc"]
 channels = args.chs # ["pi","pim","pipim"]
 asyms = args.asyms # [-0.1,0.0,0.1]
+n_inject_seeds = args.inject_seeds # 1
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Setup configuration dictionary #NOTE: RGC HAS 6 ASYMMETRIES, RGH HAS 9 so just filter the states that inject up to 3 asymmetries
@@ -30,7 +32,7 @@ sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
 #     if np.sum(np.abs(sgasym))<0.3:
 #         newsgasyms["sgasyms"].append(sgasym)
 # sgasyms = newsgasyms
-seeds   = {"inject_seed":[2**i for i in range(1)]}
+seeds   = {"inject_seed":[2**i for i in range(n_inject_seeds)]}
 configs = dict(
     sgasyms,
     **seeds,
@@ -134,7 +136,7 @@ for rg, base_dir, ch_sgasym_label in zip(rgs,base_dirs,ch_sgasym_labels):
         #NOTE: Set the bin migration path below since this is binscheme dependent
 
         # Set aggregate keys
-        aggregate_keys = []
+        aggregate_keys = ["inject_seed"] if n_inject_seeds>1 else []
 
         # Load the binschemes from the path specified in the job yaml assuming there is only one given path and it is an absolute path
         binschemes_paths_name = "binschemes_paths"
