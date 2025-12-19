@@ -91,8 +91,8 @@ for rg in rgs:
 
                     # Set bin variable labels and limits inside loop since they depend on channel and energy
                     binvar_labels = {
-                        f'px_{p}':'$p_{x'+ch_labels[p]+'\\perp}$ (GeV)',
-                        f'py_{p}':'$p_{y'+ch_labels[p]+'\\perp}$ (GeV$^{2}$)'
+                        f'px_{p}':'$p_{x'+ch_labels[p]+'}$ (GeV)',
+                        f'py_{p}':'$p_{y'+ch_labels[p]+'}$ (GeV)'
                     }
                     binvar_lims = {
                         f'px_{p}': plims[ch][p],
