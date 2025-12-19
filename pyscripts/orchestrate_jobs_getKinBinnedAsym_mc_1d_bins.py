@@ -22,7 +22,7 @@ dry_run=args.dry_run
 run_groups = args.rgs # ["mc_rgh","mc_rgh_sector4","mc_rgc"]
 channels = args.chs # ["pi","pim","pipim"]
 asyms = args.asyms # [-0.1,0.0,0.1]
-n_inject_seeds = args.inject_seeds # 1
+n_inject_seeds = args.n_inject_seeds # 1
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set base directories

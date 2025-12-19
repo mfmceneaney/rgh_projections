@@ -21,7 +21,7 @@ args = parser.parse_args()
 run_groups = args.rgs # ["dt_rgc"]
 channels = args.chs # ["pi","pim","pipim"]
 asyms = args.asyms # [-0.1,0.0,0.1]
-n_inject_seeds = args.inject_seeds # 1
+n_inject_seeds = args.n_inject_seeds # 1
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Setup configuration dictionary #NOTE: RGC HAS 6 ASYMMETRIES, RGH HAS 9 so just filter the states that inject up to 3 asymmetries
