@@ -37,7 +37,7 @@ rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
 ps = {
     "pi":["e","pi"],
-    "pi":["e","pi"],
+    "pim":["e","pim"],
     "pipim":["e","pi","pim"],
 }
 plims = {
