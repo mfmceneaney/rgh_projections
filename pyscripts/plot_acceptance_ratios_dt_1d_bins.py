@@ -74,10 +74,10 @@ for ch, ch_label in zip(channels, ch_labels):
 
     # Set file names
     file_names_old = [
-        f'aggregate___inject_seed___sgasyms_0.1___{kinvar}'+rgh_mc_names[0]+'_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[0]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
     file_names_new = [
-        f'aggregate___inject_seed___sgasyms_0.1___{kinvar}'+rgh_mc_names[1]+'_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[1]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
 
     # Load dataframes
