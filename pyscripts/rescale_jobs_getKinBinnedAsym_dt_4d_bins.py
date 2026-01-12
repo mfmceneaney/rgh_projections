@@ -14,6 +14,7 @@ parser.add_argument('--dry_run', action="store_true", help='Dry run without job 
 parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=["dt_rgc"])
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[0.0], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
+parser.add_argument('--n_inject_seeds', default=1, help='Number of random injection seeds to use', type=int)
 parser.add_argument('--nbatch', default=30, help='Number of batches into which to split 4d binning scheme', type=int)
 parser.add_argument('--xs_ratio', default=7.908/9.194, help='Cross-section ratio (new/old) for rescaling uncertainties', type=float)
 parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ratio (new/old) for rescaling uncertainties', type=float)
@@ -31,7 +32,7 @@ RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Setup configuration dictionary
 sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
-seeds   = {"inject_seed":[2**i for i in range(1)]}
+seeds   = {"inject_seed":[2**i for i in range(n_inject_seeds)]}
 configs = dict(
     sgasyms,
     **seeds,
@@ -46,6 +47,7 @@ chain_configs = dict(
     **ibatches,
 ) if nbatch > 1 else {}
 aggregate_config = {} if nbatch > 1 else {} #NOTE: You must set this to correctly determine the path when chaining and aggregating.
+aggregate_config = seeds if n_inject_seeds>1 else {} #TODO: DOUBLE CHECK THIS
 
 # Loop run groups and channels
 for rg in run_groups:

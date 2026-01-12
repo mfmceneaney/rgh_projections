@@ -13,6 +13,7 @@ parser.add_argument('--rgs', default=["mc_rgc"], help='Run group', nargs="+", ch
 parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
 parser.add_argument('--asyms', default=[0.0], help='Asymmetries injected', nargs="+", type=float)
 parser.add_argument('--nbatch', default=30, help='Number of batches into which to split 4d binning scheme', type=int)
+parser.add_argument('--n_inject_seeds', default=1, help='Number of random injection seeds to use', type=int)
 args = parser.parse_args()
 
 # Set dry run to `False` once you are sure you want to submit.
@@ -22,6 +23,7 @@ dry_run=args.dry_run
 run_groups = args.rgs # [["mc_rgh","mc_rgh_sector4","mc_rgc"]
 channels = args.chs # ["pi","pim","pipim"]
 asyms = args.asyms # [-0.1,0.0,0.1]
+n_inject_seeds = args.n_inject_seeds # 1
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set base directories
@@ -40,7 +42,7 @@ for base_dir in base_dirs:
     #     if np.sum(np.abs(sgasym))<0.3:
     #         newsgasyms["sgasyms"].append(sgasym)
     # sgasyms = newsgasyms
-    seeds   = {"inject_seed":[2**i for i in range(1)]}
+    seeds   = {"inject_seed":[2**i for i in range(n_inject_seeds)]}
 
     # Set job file paths and configs
     submit_path =  os.path.join(base_dir,"submit.sh")
