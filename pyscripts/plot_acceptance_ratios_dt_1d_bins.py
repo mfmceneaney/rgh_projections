@@ -6,9 +6,11 @@ import os
 
 # Import saga modules
 from saga.plot import set_default_plt_settings
+from saga.data import load_yaml
 
 # Set base directory from environment
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
+YAML_DIR = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,'yamls'))
 
 # Set plt settings
 set_default_plt_settings()
@@ -23,17 +25,36 @@ title = 'Ratio of Acceptance Rates'
 ylabel = '$R_{S \\neq 4}/R_{All}$'
 ylims = [0.0,1.1]
 
-# Set input directories
+# Set MC RGH labels
 rgh_mc_names = ['_sector4',''] #NOTE: ORDER IS OLD/DENOMINATOR (Sector4) , NEW/NUMERATOR (No Sector4)
-dir_old = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'))
-dir_new = os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,'jobs/saga/test_getKinBinnedAsym__rgc_dt__'+ch+'__1D'))
 
 # Set channels and labels
 channels = ['pi', 'pim', 'pipim']
 ch_labels = ['\\pi^{+}', '\\pi^{-}', '\\pi^{+}\\pi^{-}']
 
+# Set paths for 1D bin scheme yaml for splitting
+yaml_paths = [
+    os.path.join(YAML_DIR,f'out_1d_bins_{ch}.yaml') for ch in channels
+]
+
 # Loop channels
-for ch, ch_label in zip(channels, ch_labels):
+for ch, ch_label, yaml_path in zip(channels, ch_labels, yaml_paths):
+
+    # Set input directories
+    dir_old = os.path.abspath(
+        os.path.join(
+            RGH_PROJECTIONS_HOME,
+            'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
+        )
+    )
+    dir_new = os.path.abspath(
+        os.path.join(
+            RGH_PROJECTIONS_HOME,
+            'jobs/saga/test_getKinBinnedAsym__dt_rgc__'+ch+'__1D'
+        )
+    )
+
+
 
     # Set info for kinematic variables
     kinvars = [
@@ -47,8 +68,8 @@ for ch, ch_label in zip(channels, ch_labels):
     kinvar_labels = [
         '$x$',
         '$z_{'+ch_label+'}$',
-        '$M_{X,'+ch_label+'}$ (GeV)',
-        '$P_{\perp, '+ch_label+'}$ (GeV)',
+        '$M_{X'+ch_label+'}$ (GeV)',
+        '$P_{'+ch_label+'\\perp}$ (GeV)',
         '$M_{'+ch_label+'}$ (GeV)',
     ]
 
@@ -62,10 +83,10 @@ for ch, ch_label in zip(channels, ch_labels):
 
     # Set file names
     file_names_old = [
-        f'aggregate______inject_seed_1__sgasyms_0.1___{kinvar}'+rgh_mc_names[0]+'_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[0]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
     file_names_new = [
-        f'aggregate______inject_seed_1__sgasyms_0.1___{kinvar}'+rgh_mc_names[1]+'_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[1]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
 
     # Load dataframes
@@ -76,8 +97,14 @@ for ch, ch_label in zip(channels, ch_labels):
         pd.read_csv(os.path.join(dir_new,file_name)) for file_name in file_names_new
     ]
 
+    # Load binscheme yaml
+    yaml_binschemes = load_yaml(yaml_path)
+
     # Loop kinvars and plot and save
     for kinvar, kinvar_label, kinvar_lim, df_old, df_new in zip(kinvars, kinvar_labels, kinvar_lims, dfs_old, dfs_new):
+
+        # Get kinematic variable bin scheme from loaded yaml
+        binlims = yaml_binschemes[kinvar][kinvar]
 
         # Open plot
         fig, ax = plt.subplots(figsize=figsize)
@@ -94,11 +121,28 @@ for ch, ch_label in zip(channels, ch_labels):
 
         # Plot ratios
         ratios = np.divide(df_new[ratio_key], df_old[ratio_key])
-        ax.errorbar(
-            df_new[xkey],ratios,xerr=None,yerr=None,
-                        elinewidth=0, capsize=0,
-                        color='tab:blue', marker='o', alpha=1.0,
-                        linewidth=0, markersize=20)
+        # ax.errorbar(
+        #     df_new[xkey],ratios,xerr=None,yerr=None,
+        #                 elinewidth=0, capsize=0,
+        #                 color='tab:blue', marker='o', alpha=1.0,
+        #                 linewidth=0, markersize=20)
+
+
+        # Plot systematics by source for each x point
+        nbins = len(df_new[xkey])
+        xbins = df_new[xkey]
+        plt.hist(
+            xbins,
+            weights=ratios,
+            bins=binlims,
+            alpha=0.5,
+            label=None,
+            stacked=False,
+            log=False,
+            linewidth=2,
+            edgecolor='black',
+            facecolor='skyblue',
+        )
         
         # Save and close figure
         ratio_name = '_'.join(rgh_mc_names)

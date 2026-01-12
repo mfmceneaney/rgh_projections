@@ -7,21 +7,19 @@
 #SBATCH --account=clas12
 #SBATCH -c 4
 #SBATCH --mem-per-cpu=2G
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 
-export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/findBinLims
-export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_findBinLims__pim_22GeV"
 export YAML=args_1d_bins.yaml
 export YAML2=args_4d_bins.yaml
 
-echo $MYEXECUTABLE
 echo $OUTDIR
 echo $YAML
 
 cd $OUTDIR
 ls -lrth
 pwd
-$MYEXECUTABLE $YAML
-$MYEXECUTABLE $YAML2
+RGH_SAGA_COMMAND "findBinLims $YAML"
+RGH_SAGA_COMMAND "findBinLims $YAML2"
 echo DONE

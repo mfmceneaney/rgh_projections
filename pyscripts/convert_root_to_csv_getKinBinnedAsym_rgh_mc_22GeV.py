@@ -34,8 +34,16 @@ channels = ["pi", "pim", "k", "km"]
 treename = "t"
 infile = "out_dataset.root"
 outfile = infile.replace(".root", ".csv")
-inpaths = [os.path.abspath(f"{RGH_PROJECTIONS_HOME}/jobs/saga/test_getKinBinnedAsym__mc_rgh_22GeV__{ch}/{infile}") for ch in channels]
-outpaths = [os.path.abspath(f"{RGH_PROJECTIONS_HOME}/jobs/saga/test_getKinBinnedAsym__mc_rgh_22GeV__{ch}/{outfile}") for ch in channels]
+inpaths = [
+    os.path.abspath(
+        f"{RGH_PROJECTIONS_HOME}/jobs/saga/test_getKinBinnedAsym__mc_rgh_22GeV__{ch}/{infile}"
+    ) for ch in channels
+]
+outpaths = [
+    os.path.abspath(
+        f"{RGH_PROJECTIONS_HOME}/jobs/saga/test_getKinBinnedAsym__mc_rgh_22GeV__{ch}/{outfile}"
+    ) for ch in channels
+]
 
 # Loop over input and output paths
 for inpath, outpath in zip(inpaths, outpaths):

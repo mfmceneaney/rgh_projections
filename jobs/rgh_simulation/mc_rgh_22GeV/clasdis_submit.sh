@@ -6,12 +6,12 @@
 #SBATCH --partition=production
 #SBATCH --account=clas12
 #SBATCH --mem-per-cpu=4000
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=24:00:00
 #SBATCH --mail-user=%u@jlab.org
 
 export OUTDIR=$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/lund
-export CLASDIS_TRIG_HALF=`echo "$CLASDIS_TRIG/2" | bc`
+# export CLASDIS_TRIG_HALF=`echo "$CLASDIS_TRIG/2" | bc`
 
 # Create output directory
 mkdir -p $OUTDIR
@@ -21,7 +21,7 @@ cd $OUTDIR
 if ((!$CLASDIS_GEN_PM)); then
 
     # Run clasdis event generation 
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}
 
     # Move files to numbered prefix names for ease of use
     i=1
@@ -38,8 +38,8 @@ if ((!$CLASDIS_GEN_PM)); then
 else
 
     # Run clasdis event generation for both positive and negative polarization
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
-    nohup clasdis --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${CLASDIS_PREFIX}-${CLASDIS_POL}_
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${CLASDIS_PREFIX}-${CLASDIS_POL}_
 
     # Move files to numbered prefix names for ease of use
     i=1

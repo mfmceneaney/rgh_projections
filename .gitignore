@@ -1,0 +1,12 @@
+env.txt
+*.bak
+*.pdf
+*.root
+jobs/**/*.bak
+jobs/**/*.txt
+jobs/**/*.pdf
+jobs/**/*.root
+jobs/**/*.csv
+jobs/**/submit?*.sh
+jobs/**/job?*.sh
+**/*~

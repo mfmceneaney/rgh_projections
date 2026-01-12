@@ -2,23 +2,55 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import argparse
 
 # Import saga modules
 import saga.aggregate as sagas
 from saga.data import load_yaml, load_csv, save_bin_mig_mat_to_csv
 from saga.plot import set_default_plt_settings, plot_results
 
-# Set base directory from environment
-RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
+# Parse arguments
+parser = argparse.ArgumentParser(description='Script to aggregate and rescale `getKinBinnedAsym` jobs on RGH and RGC single and dipion data and MC')
+parser.add_argument('--use_sector4', action="store_true", help='Use jobs including sector4 for RGH')
+parser.add_argument('--verbose', action="store_true", help='Print out path information used for rescaling')
+parser.add_argument('--rgs', default=["dt_rgc"], help='Run group', nargs="+", choices=["dt_rgc"])
+parser.add_argument('--chs', default=["pi"], help='Channels', nargs="+", choices=["pi","pim","pipim"])
+parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injected (to match MC naming schemes)', nargs="+", type=float)
+parser.add_argument('--hist_ylims', default=[0.0,0.06], help='Normalized histogram y-axis limits', nargs=2, type=float)
+parser.add_argument('--xs_ratio', default=7.908/9.194, help='Cross-section ratio (new/old) for rescaling uncertainties', type=float)
+parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ratio (new/old) for rescaling uncertainties', type=float)
+parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties')
+parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for rescaling uncertainties', type=float)
+parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
+parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
+parser.add_argument('--hist_linewidth', default=2, help='Histogram linewidth', nargs=1, type=int)
+parser.add_argument('--title', default="Uncertainty Projections", help='Plot titles', type=str)
+parser.add_argument('--watermark_size', default=50, help='Water mark size', type=int)
+parser.add_argument('--watermark_rotation', default=25.0, help='Water mark rotation angle', type=float)
+parser.add_argument('--watermark_color', default="gray", help='Water mark color', type=str)
+parser.add_argument('--watermark_alpha', default=0.5, help='Water mark alpha', type=float)
+args = parser.parse_args()
 
-# Setup configuration dictionary
-asyms = [-0.1,0.0,0.1]
-sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
-seeds   = {"inject_seed":[2**i for i in range(1)]}
-configs = dict(
-    sgasyms,
-    **seeds,
-)
+# Set configuration
+verbose = args.verbose
+run_groups = args.rgs # ["dt_rgc"]
+channels = args.chs # ["pi","pim","pipim"]
+asyms = args.asyms # [-0.1,0.0,0.1]
+hist_ylims = args.hist_ylims #[0.0,0.06]
+xs_ratio     = args.xs_ratio # 7.908/9.194
+lumi_ratio   = args.lumi_ratio # 100/13.2 * 5/40, # <- RGC NH3 FALL 22, RGC NH3 SUMMER 22 -> 100/17.7 * 5/20, #NOTE: L_integrated = T * L_instant.
+graph_yvalue = args.graph_yvalue # 0.1
+tpol_factor  = args.tpol_factor # 0.85
+tdil_factor  = args.tdil_factor # 3/17
+hist_density = args.hist_density # True
+hist_linewidth = args.hist_linewidth # 2
+watermark_kwargs = {
+    "size":args.watermark_size,
+    "rotation":args.watermark_rotation,
+    "color":args.watermark_color,
+    "alpha":args.watermark_alpha,
+}
+RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
 nbatch = 1
@@ -31,13 +63,17 @@ chain_configs = dict(
 ) if nbatch > 1 else {}
 
 # Set sector4 label
-sector4_label = '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+sector4_label = '_sector4' if args.use_sector4 else '' #NOTE: USE '_sector4' if you want to aggregate and rescale the sector4 jobs.
+mc_rgh_name = 'mc_rgh' + sector4_label
 
 # Set base directories to aggregate
-run_groups = ['dt_rgc']
-channels   = ['pi','pim','pipim']
 base_dirs  = [
-    os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/')) for rg in run_groups for ch in channels
+    os.path.abspath(
+        os.path.join(
+                RGH_PROJECTIONS_HOME,
+                f'jobs/saga/test_getKinBinnedAsym__{rg}__{ch}__1D/'
+            )
+        ) for rg in run_groups for ch in channels
 ]
 
 # Set list of channels for each base directory
@@ -45,18 +81,18 @@ chs = [ch for rg in run_groups for ch in channels]
 
 # Set channel label for each base directory
 ch_sgasym_labels = {
-    'pi':'$\mathcal{A}_{UT}^{\sin{\phi_{\pi^{+}}}}$',
-    'pim':'$\mathcal{A}_{UT}^{\sin{\phi_{\pi^{-}}}}$',
-    'pipim':'$\mathcal{A}_{UT}^{\sin{\phi_{R_{T}}}\sin{\\theta}}$',
+    'pi':'$A_{UT}^{\\sin{(\\phi_{\\pi^{+}}+\\phi_{S})}}$',
+    'pim':'$A_{UT}^{\\sin{(\\phi_{\\pi^{-}}+\\phi_{S})}}$',
+    'pipim':'$A_{UT}^{\\sin{\\theta}\\sin{(\\phi_{R_{\\perp}}+\\phi_{S})}}$',
 }
 ch_sgasym_labels = [ch_sgasym_labels[ch] for rg in run_groups for ch in channels]
 
 # Set x-axis labels for kinematic variables in all channels
 xlabel_map = {
     'Q2':'$Q^{2}$ (GeV$^{2}$)', 'W':'$W$ (GeV)', 'x':'$x$', 'y':'$y$',
-    'z_pi':'$z_{\pi^{+}}$', 'mx_pi':'$M_{X, \pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\pi^{+}, \perp}$ (GeV)',
-    'z_pim':'$z_{\pi^{-}}$', 'mx_pim':'$M_{X, \pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\pi^{-}, \perp}$ (GeV)',
-    'z_pipim':'$z_{\pi^{+}\pi^{-}}$', 'mx_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\pi^{+}\pi^{-}, \perp}$ (GeV)', 'mass_pipim':'$M_{X, \pi^{+}\pi^{-}}$ (GeV)',
+    'z_pi':'$z_{\\pi^{+}}$', 'mx_pi':'$M_{X \\pi^{+}}$ (GeV)', 'phperp_pi':'$P_{\\pi^{+} \\perp}$ (GeV)',
+    'z_pim':'$z_{\\pi^{-}}$', 'mx_pim':'$M_{X \\pi^{-}}$ (GeV)', 'phperp_pim':'$P_{\\pi^{-} \\perp}$ (GeV)',
+    'z_pipim':'$z_{\\pi^{+}\\pi^{-}}$', 'mx_pipim':'$M_{X \\pi^{+}\\pi^{-}}$ (GeV)', 'phperp_pipim':'$P_{\\pi^{+}\\pi^{-} \\perp}$ (GeV)', 'mass_pipim':'$M_{\\pi^{+}\\pi^{-}}$ (GeV)',
 }
 
 # Loop base directories
@@ -73,8 +109,25 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
     # Load the binschemes from the path specified in the job yaml assuming there is only one given path and it is an absolute path
     binschemes_paths_name = "binschemes_paths"
-    yaml_path = load_yaml(yaml_path)[binschemes_names][0]
+    yaml_path = load_yaml(yaml_path)[binschemes_paths_name][0]
     binschemes = load_yaml(yaml_path)
+
+    # Set aliases
+    new_binschemes = {"binschemes":[{el:binschemes[el]} for el in binschemes]}
+    aliases = {"binschemes":{
+                        str(el):list(el.keys())[0]+"_binscheme"
+                        for el in new_binschemes["binschemes"]
+                    }
+                }
+
+    # Setup configuration dictionary
+    sgasyms = {"sgasyms":[[a1] for a1 in asyms]}
+    seeds   = {"inject_seed":[2**i for i in range(1)]}
+    configs = dict(
+        sgasyms,
+        **new_binschemes,
+        **seeds,
+    )
 
     # Arguments for sagas.get_config_list()
     result_name = "a0" #NOTE: This also gets recycled as the asymmetry name
@@ -105,10 +158,10 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     # Arguments for saga.plot.plot_results()
     plot_results_kwargs_base = {
         'ylims':[-0.05,0.2],
-        'sgasyms':[0.0,0.1,0.0],
+        'sgasyms':[0.0],
         'sgasym_idx':0,
         'sgasym_labels':[ch_sgasym_label],
-        'sg_colors':['blue','red','green'],
+        'sg_colors':['blue'],
         'bgasyms':[],
         'bgasym_labels':[],
         'bg_colors':[],
@@ -125,8 +178,12 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             'RGC MC',
             'RGC Data',
         ],
+        'watermark':'CLAS12 Preliminary',
+        'watermark_kwargs':watermark_kwargs,
         'hist_clone_axis':True,
-        'hist_ylims':[0.0,0.06],
+        'hist_ylims':hist_ylims,
+        'hist_density':hist_density,
+        'hist_linewidth':hist_linewidth,
         'old_dat_path':None
     }
 
@@ -134,25 +191,6 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     figsize = (16,10)
     #NOTE: Set outpath within the loop for unique naming
     use_default_plt_settings = True
-
-    # If you want to rescale your results using results from other base directories set the following arguments
-    rescale = False
-    if rescale:
-        plot_results_kwargs_base = dict(
-            plot_results_kwargs_base,
-            **{
-                'old_dat_path':os.path.basename(base_dir),
-                'new_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgh{sector4_label}__{ch}__1D/')),
-                'old_sim_path':os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/')),
-                'count_key':'count',
-                'yerr_key':'',
-                'xs_ratio': 7.908/9.194,
-                'lumi_ratio':100/13.2 * 5/40, # <- RGC NH3 FALL 22, RGC NH3 SUMMER 22 -> 100/17.7 * 5/20, #NOTE: L_integrated = T * L_instant.
-                'graph_yvalue':0.1,
-                'tpol_factor':0.85,
-                'tdil_factor':3/17, 
-            },
-        )
 
     #---------- Set configurations ----------#
     # Get list of configurations
@@ -162,7 +200,8 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
     out_dirs_list = sagas.get_out_dirs_list(
                                     configs,
                                     base_dir,
-                                    aggregate_keys=aggregate_keys
+                                    aggregate_keys=aggregate_keys,
+                                    aliases=aliases,
                                 )
 
     #---------- Loop bin schemes ----------#
@@ -180,13 +219,25 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
         binlims = binscheme[proj_var]
         plot_results_kwargs_base['xlims'] = [binlims[0],binlims[-1]]
         plot_results_kwargs_base['xlabel'] = xlabel_map[binscheme_name]
+        plot_results_kwargs_base['ylabel'] = ch_sgasym_label
+        plot_results_kwargs_base['title'] = args.title
         plot_results_kwargs_base['binlims'] = binlims
         plot_results_kwargs_base['hist_paths'] = [
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh_1d_bins{sector4_label}_binscheme_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_1d_bins_binscheme_kinematics.root')),
-            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_1d_bins_binscheme_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgh{sector4_label}_fullbin_binscheme_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_mc_rgc_fullbin_binscheme_kinematics.root')),
+            os.path.abspath(os.path.join(RGH_PROJECTIONS_HOME,f'jobs/saga/test_getBinKinematicsTH1Ds__{ch}/out_dt_rgc_fullbin_binscheme_kinematics.root')),
         ]
         plot_results_kwargs_base['hist_keys'] = ['h1_bin0_'+binscheme_name for i in range(len(plot_results_kwargs_base['hist_paths']))]
+
+        if verbose:
+            print("INFO: hist_paths = [")
+            for hist_path in plot_results_kwargs_base['hist_paths']:
+                print(f"INFO: \t{hist_path}")
+            print("INFO: ]")
+            print("INFO: hist_keys = [")
+            for hist_key in plot_results_kwargs_base['hist_keys']:
+                print(f"INFO: \t{hist_key}")
+            print("INFO: ]")
 
         # Get the bin migration path
         bin_mig_path = sagas.get_out_file_name(
@@ -225,16 +276,25 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             config = config_list[config_idx]
             out_dirs = out_dirs_list[config_idx]
 
+            # Check config and bin scheme match
+            if not binscheme_name in config["binschemes"]: continue
+
+            # Get the config without the binscheme so you 
+            # can get the file names and directories used for rescaling
+            config_wo_binscheme = config.copy()
+            config_wo_binscheme.pop("binschemes")
+
             # Set the output path basename for this config
             config_out_path = sagas.get_config_out_path(
                     base_dir,
                     aggregate_keys,
-                    binscheme_name+sep+rgh_mc_name+sep+result_name,
+                    binscheme_name+sep+mc_rgh_name+sep+result_name,
                     config,
                     sep=sep,
+                    aliases=aliases,
                     ext=ext,
                 )
-            config_out_path = os.path.join(base_dir,config_out_path)
+            if verbose: print("INFO: config_out_path = ",config_out_path)
 
             # Get the name of the CSV file for the binning scheme you are interested in
             out_file_names = [sagas.get_out_file_name(
@@ -244,8 +304,67 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                     ext=out_file_name_ext
                 ) for outdir in out_dirs]
 
+            if verbose: print("INFO: out_file_names = [")
+            for ofn in out_file_names:
+                if verbose: print(f"INFO: \t{ofn},")
+            if verbose: print("INFO: ]")
+
             # Load pandas dataframes from the files
-            dfs = [load_csv(out_file_name,config=config,chain_configs=chain_configs) for out_file_name in out_file_names]
+            dfs = [load_csv(out_file_name,config=config,chain_configs=chain_configs,aliases=aliases) for out_file_name in out_file_names]
+            if verbose: print("INFO: Loaded dataframes")
+
+            # If you want to rescale your results using results from other base directories set the following arguments
+            rescale = True
+            if rescale:
+
+                # Get the output path basenames for the new sim
+                new_sim_base_dir = os.path.abspath(
+                    os.path.join(
+                        RGH_PROJECTIONS_HOME,
+                        f'jobs/saga/test_getKinBinnedAsym__mc_rgh{sector4_label}__{ch}__1D/'
+                    )
+                )
+                new_sim_config_out_path = sagas.get_config_out_path(
+                    new_sim_base_dir,
+                    aggregate_keys,
+                    binscheme_name+sep+mc_rgh_name+sep+result_name,
+                    config_wo_binscheme,
+                    sep=sep,
+                    ext=ext,
+                )
+                if verbose: print("INFO: new_sim_config_out_path = ",new_sim_config_out_path)
+
+                # Get the output path basenames for the old sim
+                old_sim_base_dir = os.path.abspath(
+                    os.path.join(
+                        RGH_PROJECTIONS_HOME,
+                        f'jobs/saga/test_getKinBinnedAsym__mc_rgc__{ch}__1D/',
+                    )
+                )
+                old_sim_config_out_path = sagas.get_config_out_path(
+                    old_sim_base_dir,
+                    aggregate_keys,
+                    binscheme_name+sep+'mc_rgc'+sep+result_name,
+                    config_wo_binscheme,
+                    sep=sep,
+                    ext=ext,
+                )
+                if verbose: print("INFO: old_sim_config_out_path = ",old_sim_config_out_path)
+
+                # Update the plot_results kwargs
+                update_dict = {
+                        'old_dat_path':config_out_path,
+                        'new_sim_path':new_sim_config_out_path,
+                        'old_sim_path':old_sim_config_out_path,
+                        'yerr_key':'',
+                        'xs_ratio': xs_ratio,
+                        'lumi_ratio':lumi_ratio,
+                        'graph_yvalue':graph_yvalue,
+                        'tpol_factor':tpol_factor,
+                        'tdil_factor':tdil_factor, 
+                    }
+                plot_results_kwargs_base.update(update_dict)
+            
 
             # Apply bin migration correction
             if use_bin_mig:
@@ -288,3 +407,6 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
             # Save the graph
             f.savefig(config_out_path)
+
+            # Close the figure to save memory
+            plt.close('all')

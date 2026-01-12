@@ -7,19 +7,17 @@
 #SBATCH --account=clas12
 #SBATCH -c 4
 #SBATCH --mem-per-cpu=2G
-#SBATCH --gres=disk:1000
+##SBATCH --gres=disk:1000
 #SBATCH --time=4:00:00
 
-export MYEXECUTABLE=$SAGA_BUILD_DIR/saga/getBinKinematicsTH1Ds
-export OUTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export OUTDIR="$RGH_PROJECTIONS_HOME/jobs/saga/test_getBinKinematicsTH1Ds__km_22GeV"
 export YAML=args.yaml
 
-echo $MYEXECUTABLE
 echo $OUTDIR
 echo $YAML
 
 cd $OUTDIR
 ls -lrth
 pwd
-$MYEXECUTABLE $YAML
+RGH_SAGA_COMMAND "getBinKinematicsTH1Ds $YAML"
 echo DONE

@@ -2,11 +2,18 @@ baseoutpath: "out_" #NOTE: This will be prepended to the default output path lik
 inpath: "/RGH_PROJECTIONS_VOL_DIR/jobs/c12analysis/mc_rgc/skim_pim_*.root"
 tree: "t"
 nthreads: 1
-cuts: "Q2>1 && W>2 && y<0.75 && mx_pim>1.5 && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)>1.25 && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)<5.0 && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(px_e,pz_e))<25.0*TMath::Pi()/180.0 && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0"
+cuts: >-
+  Q2>1 && W>2 && y<0.75 && mx_pim>1.5 
+  && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)>1.25 
+  && sqrt(px_pim*px_pim+py_pim*py_pim+pz_pim*pz_pim)<5.0 
+  && TMath::Abs(TMath::ATan2(px_pim,pz_pim))<25.0*TMath::Pi()/180.0 
+  && TMath::Abs(TMath::ATan2(py_pim,pz_pim))<25.0*TMath::Pi()/180.0 
+  && TMath::Abs(TMath::ATan2(px_e,pz_e))<25.0*TMath::Pi()/180.0 
+  && TMath::Abs(TMath::ATan2(py_e,pz_e))<25.0*TMath::Pi()/180.0
 inject_asym: true
 inject_seed: 2
 mc_cuts: "sqrt(px_e*px_e+py_e*py_e+pz_e*pz_e)>2.0 && vz_e>-25.0 && vz_e<20.0" #NOTE: This cut is preapplied on data skim but not in MC
-sgasyms: [0.0,0.1,0.0,0.0,0.0,0.0]
+sgasyms: [0.0]
 bgasyms: [0.0]
 particle_suffixes: ["_pim"]
 mc_sg_match_name: "mc_sg_match"
@@ -15,13 +22,14 @@ phi_s_original_name: "" #NOTE: Make sure you specify this variable name here AND
 phi_s_original_name_dn: "" #NOTE: You also need the phi of the negative spin vector
 phi_s_injected_name: "" #NOTE: The asymmetry fit variable with name `phi_s_original_name` will be renamed to this after injection if `phi_s_original_name`!=""
 fsgasyms_xs_uu_name: "fsgasyms_xs_uu" #NOTE: Define beam helicity dependent asymmetry terms
-fsgasyms_xs_uu_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(cos(phi_h_pim)*depol0_uu*sgasyms[0])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_uu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
 fsgasyms_xs_pu_name: "fsgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
-fsgasyms_xs_pu_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(sin(phi_h_pim)*depol0_lu*sgasyms[1])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_pu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
 fsgasyms_xs_up_name: "fsgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
-fsgasyms_xs_up_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(sin(2.0*phi_h_pim)*depol0_ul*sgasyms[2]+sin(phi_h_pim)*depol1_ul*sgasyms[3])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_up_formula: >-
+  (float)((1.0+0.1*(phperp_pim-0.625)/1.25)*(sin(phi_h_pim)*depol1_ul*sgasyms[0]))
 fsgasyms_xs_pp_name: "fsgasyms_xs_pp" #NOTE: Define beam helicity and target spin dependent asymmetry terms
-fsgasyms_xs_pp_formula: "(float)(1.0+0.1*(phperp_pim-0.625)/1.25)*(depol0_lu*sgasyms[4]+cos(phi_h_pim)*depol0_ll*sgasyms[5])" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
+fsgasyms_xs_pp_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Signal asymmetries should be referenced by "sgasyms[index]".
 fbgasyms_xs_pu_name: "fbgasyms_xs_pu" #NOTE: Define beam helicity dependent asymmetry terms
 fbgasyms_xs_pu_formula: "(float)0.0" #NOTE: Fit and depolarization variables will be converted to their MC counterparts automatically.  Background asymmetries should be referenced by "bgasyms[index]".
 fbgasyms_xs_up_name: "fbgasyms_xs_up" #NOTE: Define target spin dependent asymmetry terms
@@ -71,7 +79,7 @@ binschemes_paths: ["/RGH_PROJECTIONS_HOME/yamls/out_4d_bins_pim.yaml"] #NOTE: Yo
 binvars: ["Q2","W","x","y","xF_pim","phperp2_pim","phperp_pim","z_pim","mx_pim"]
 binvar_titles: ["Q^{2} (GeV^{2})","W (GeV)","x","y","x_{F,#pi^{-}}","P^{2}_{#perp#pi^{-}} (GeV)","P_{#perp#pi^{-}} (GeV)","z_{#pi^{-}}","M_{X, #pi^{-}} (GeV)"]
 binvar_lims: [[1,11],[0,10],[0,1],[0,1],[-2,2],[0,1.6],[0,1.25],[0,1],[0.0,5]]
-binvar_bins: [16,16,16,16,16,16,16]
+binvar_bins: [16,16,16,16,16,16,16,16,16]
 depolvars: ["depol_y"] #["depol0_uu","depol0_lu","depol0_ul","depol0_ll"]
 depolvar_titles: ["y"] #["depol0_uu","depol0_lu","depol0_ul","depol0_ll"]
 depolvar_lims: [[0,1]] #[[-4,0],[-2,0],[-1,0],[0,1]]
@@ -86,12 +94,13 @@ massfitvar_lims: []
 massfitvar_bins: []
 bpol: 1.0 #NOTE: Beam helicity values will only be injected if the beam polarization is > 0.
 tpol: 1.0 #NOTE: Target spin values will only be injected if the target polarization is > 0.
-asymfit_formula_uu: "cos(x[0])*(-2*(2-x[7])*sqrt(1-x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[1]" #NOTE: Unpolarized AND transverse target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfit_formula_pu: "sin(x[0])*(-2*x[7]*sqrt(1-x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[2]" #NOTE: Beam helicity dependent asymmetries. Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfit_formula_up: "sin(2.0*x[0])*(-(1-x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[3]-sin(x[0])*(-2*(2-x[7])*sqrt(1-x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[4]" #NOTE: Target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfit_formula_pp: "(-2*x[7]*sqrt(1-x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[5]+cos(x[0])*(x[7]*(1-0.5*x[7])/(1-x[7]+0.5*x[7]*x[7]))*x[6]" #NOTE: Beam helicity and target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
-asymfitpar_inits: [0.0, 0.0, 0.0, 0.0 ,0.0, 0.0]
-asymfitpar_initlims: [[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5],[-0.5,0.5]]
+asymfit_formula_uu: "" #NOTE: Unpolarized AND transverse target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_pu: "" #NOTE: Beam helicity dependent asymmetries. Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfit_formula_up: >-
+  -sin(x[0])*(-2*(2-x[2])*sqrt(1-x[2])/(1-x[2]+0.5*x[2]*x[2]))*x[1]
+asymfit_formula_pp: "" #NOTE: Beam helicity and target spin dependent asymmetries.  Empty formulas are not used. This asymmetry is converted internally to a RooSimultaneous PDF: 1 + helicity[RooCategory] * pol * A(\vec{x}; \vec{a}; \vec{d}).  Arguments are: x0,x1,x2,...,a0,a1,a2,...,d0,d1,d2,...
+asymfitpar_inits: [0.0]
+asymfitpar_initlims: [[-0.5,0.5]]
 use_sumw2error: false
 use_average_depol: false
 use_extended_nll: false
