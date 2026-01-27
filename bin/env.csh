@@ -13,6 +13,10 @@ setenv CLASDIS_NJOBS_HALF 500
 setenv CLASDIS_POL 1
 setenv CLASDIS_PREFIX out_tp_
 setenv CLASDIS_GEN_PM 1
+setenv CLASDIS_ZPOS 0.0
+setenv CLASDIS_ZWIDTH 2.84
+setenv CLASDIS_PARJ21 0.5
+setenv CLASDIS_RASTER 0.02
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis
 setenv BEAM_ENERGY_RGA 10.6

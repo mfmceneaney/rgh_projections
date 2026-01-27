@@ -13,6 +13,10 @@ export CLASDIS_NJOBS_HALF=500
 export CLASDIS_POL=1
 export CLASDIS_PREFIX=out_tp_
 export CLASDIS_GEN_PM=1
+export CLASDIS_ZPOS=0.0
+export CLASDIS_ZWIDTH=2.84
+export CLASDIS_PARJ21=0.5
+export CLASDIS_RASTER=0.02
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 export BEAM_ENERGY_RGA=10.6
