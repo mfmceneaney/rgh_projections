@@ -19,7 +19,7 @@ parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injecte
 parser.add_argument('--hist_ylims', default=[0.0,0.06], help='Normalized histogram y-axis limits', nargs=2, type=float)
 parser.add_argument('--xs_ratio', default=7.908/9.194, help='Cross-section ratio (new/old) for rescaling uncertainties', type=float)
 parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ratio (new/old) for rescaling uncertainties', type=float)
-parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties')
+parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties', type=float)
 parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for rescaling uncertainties', type=float)
 parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
