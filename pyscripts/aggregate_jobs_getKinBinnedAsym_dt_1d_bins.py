@@ -29,6 +29,7 @@ parser.add_argument('--watermark_size', default=50, help='Water mark size', type
 parser.add_argument('--watermark_rotation', default=25.0, help='Water mark rotation angle', type=float)
 parser.add_argument('--watermark_color', default="gray", help='Water mark color', type=str)
 parser.add_argument('--watermark_alpha', default=0.5, help='Water mark alpha', type=float)
+parser.add_argument('--norescale', action="store_true", help="Do not rescale results")
 args = parser.parse_args()
 
 # Set configuration
@@ -50,6 +51,7 @@ watermark_kwargs = {
     "color":args.watermark_color,
     "alpha":args.watermark_alpha,
 }
+rescale = not args.norescale
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
@@ -314,7 +316,6 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             if verbose: print("INFO: Loaded dataframes")
 
             # If you want to rescale your results using results from other base directories set the following arguments
-            rescale = True
             if rescale:
 
                 # Get the output path basenames for the new sim
