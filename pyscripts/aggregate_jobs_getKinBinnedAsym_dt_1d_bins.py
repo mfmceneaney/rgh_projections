@@ -30,6 +30,7 @@ parser.add_argument('--watermark_rotation', default=25.0, help='Water mark rotat
 parser.add_argument('--watermark_color', default="gray", help='Water mark color', type=str)
 parser.add_argument('--watermark_alpha', default=0.5, help='Water mark alpha', type=float)
 parser.add_argument('--norescale', action="store_true", help="Do not rescale results")
+parser.add_argument('--yerr_key', default="", help='Y error key for rescaling, uses errors instead of statistics for rescaling', type=str)
 args = parser.parse_args()
 
 # Set configuration
@@ -52,6 +53,7 @@ watermark_kwargs = {
     "alpha":args.watermark_alpha,
 }
 rescale = not args.norescale
+yerr_key = args.yerr_key
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
@@ -357,7 +359,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                         'old_dat_path':config_out_path,
                         'new_sim_path':new_sim_config_out_path,
                         'old_sim_path':old_sim_config_out_path,
-                        'yerr_key':'',
+                        'yerr_key':yerr_key,
                         'xs_ratio': xs_ratio,
                         'lumi_ratio':lumi_ratio,
                         'graph_yvalue':graph_yvalue,
