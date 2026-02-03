@@ -403,7 +403,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
             # Set additional arguments for saga.plot.plot_results()
             plot_results_kwargs_base['sgasyms'] = config['sgasyms']
-            plot_results_kwargs_base['outpath'] = config_out_path.replace(sep+result_name+ext,sector4_label+sep+result_name+ext)
+            plot_results_kwargs_base['outpath'] = config_out_path.replace(sep+result_name+ext,sep+result_name+ext)
 
             # Plot the graph
             plot_results(ax,**aggregate_graph,**plot_results_kwargs_base)
