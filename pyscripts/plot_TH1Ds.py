@@ -42,10 +42,10 @@ for rg in rgs:
 
             # Set binvars
             if ch=='pipim':
-                allowed_binvars = ['x', 'mass', 'mx', 'z']
+                allowed_binvars = ['x', 'mass', 'mx', 'z', 'phi_h', 'phi_rt', 'sintheta_p1', 'phi_s']
                 binvars = [el for el in args.binvars if el in allowed_binvars]
             else:
-                allowed_binvars = ['x', 'mx', 'phperp', 'z']
+                allowed_binvars = ['x', 'mx', 'phperp', 'z', 'phi_h', 'phi_s']
                 binvars = [el for el in args.binvars if el in allowed_binvars]
             binvars = [el+(f'_{ch}' if el!='x' else '') for el in binvars]
 
@@ -58,6 +58,10 @@ for rg in rgs:
                 f'mass_{ch}'   : 'M_{'+ch_labels[ch]+'}',
                 f'mx_{ch}'     : 'M_{X '+ch_labels[ch]+'}',
                 f'z_{ch}'      : 'z_{'+ch_labels[ch]+'}',
+                f'phi_h_{ch}'  : '\\phi_{'+ch_labels[ch]+'}',
+                f'phi_s'       : '\\phi_{S} ('+ch_labels[ch]+')',
+                f'phi_rt_{ch}' : '\\phi_{R_{\\perp},'+ch_labels[ch]+'}',
+                f'sintheta_p1_{ch}' : '\\sin{\\theta_{P_1,'+ch_labels[ch]+'}}',
             }
             binvar_unit_titles = {
                 'x'            : '',
@@ -67,6 +71,10 @@ for rg in rgs:
                 f'mass_{ch}'   : ' (GeV)',
                 f'mx_{ch}'     : ' (GeV)',
                 f'z_{ch}'      : '',
+                f'phi_h_{ch}'  : '',
+                f'phi_s'       : '',
+                f'phi_rt_{ch}' : '',
+                f'sintheta_p1_{ch}' : '',
             }
 
             # Loop 1D bin variables
@@ -104,6 +112,10 @@ for rg in rgs:
                         f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
+                        f'phi_h_{ch}'   : '\\phi_{'+ch_labels[ch]+'}',
+                        f'phi_s'        : '\\phi_{S}',
+                        f'phi_rt_{ch}'  : '\\phi_{R_{\\perp},'+ch_labels[ch]+'}',
+                        f'sintheta_p1_{ch}' : '\\sin{\\theta_{P_1,'+ch_labels[ch]+'}}',
                     }                    
                     xlims = {
                         'x'             : [0.0,1.0],
@@ -113,6 +125,10 @@ for rg in rgs:
                         f'phperp_{ch}'  : [0.0,2.25] if beam_suffix=='_22GeV' else [0.0,1.25],
                         f'phperp2_{ch}' : [0.0,5.0]  if beam_suffix=='_22GeV' else [0.0,1.6],
                         f'z_{ch}'       : [0.0,1.0],
+                        f'phi_h_{ch}'   : [0.0,2.0*np.pi],
+                        f'phi_s'        : [0.0,2.0*np.pi],
+                        f'phi_rt_{ch}'  : [0.0,2.0*np.pi],
+                        f'sintheta_p1_{ch}' : [-1.0,1.0],
                     }
                     hist_colors = {
                         'x'             : ['tab:purple'],
@@ -122,6 +138,10 @@ for rg in rgs:
                         f'phperp_{ch}'  : ['tab:red'],
                         f'phperp2_{ch}' : ['tab:green'],
                         f'z_{ch}'       : ['tab:orange'],
+                        f'phi_h_{ch}'   : ['firebrick'],
+                        f'phi_s'        : ['forestgreen'],
+                        f'phi_rt_{ch}'  : ['goldenrod'],
+                        f'sintheta_p1_{ch}' : ['deepskyblue'],
                     }
 
                     # Only add bin variable values above plots for now
