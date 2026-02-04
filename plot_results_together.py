@@ -80,7 +80,7 @@ def main():
     parser.add_argument(
         "--ylabel",
         help="Optional y-axis label (LaTeX allowed)",
-        default="$\\delta A_{UT}$",
+        default="$\\delta A_{UL}$",
     )
     parser.add_argument(
         "--plot-uncertainty-ratio",
@@ -98,6 +98,18 @@ def main():
         type=float,
         default=1.0,
         help="Scale factor applied to yerr of second dataset",
+    )
+    parser.add_argument(
+        "--set-y1",
+        type=float,
+        default=None,
+        help="Set all y values of the first dataset to this constant (overrides CSV y)",
+    )
+    parser.add_argument(
+        "--set-y2",
+        type=float,
+        default=None,
+        help="Set all y values of the second dataset to this constant (overrides CSV y)",
     )
 
     args = parser.parse_args()
@@ -117,6 +129,14 @@ def main():
         df2 = df2.copy()
         df2["yerr"] = df2["yerr"] * args.scale_yerr2
 
+    # Optionally set y values to a constant for either dataset
+    if args.set_y1 is not None:
+        df1 = df1.copy()
+        df1["y"] = float(args.set_y1)
+    if args.set_y2 is not None:
+        df2 = df2.copy()
+        df2["y"] = float(args.set_y2)
+
     # Apply offset to second dataset
     x2_offset = df2["x"] + args.delta
 
@@ -129,7 +149,11 @@ def main():
         df1["y"],
         yerr=df1["yerr"],
         fmt="o",
-        capsize=3,
+        markersize=20,
+        ecolor='black',
+        elinewidth=2.0,
+        capsize=18,
+        capthick=2.0,
         label=label1,
     )
     plt.errorbar(
@@ -137,10 +161,14 @@ def main():
         df2["y"],
         yerr=df2["yerr"],
         fmt="s",
-        capsize=3,
+        markersize=20,
+        ecolor='black',
+        elinewidth=2.0,
+        capsize=18,
+        capthick=2.0,
         label=label2,
     )
-
+    plt.xlim(0.0,1.0)
     plt.xlabel("$x$", usetex=True)
     plt.ylabel(args.ylabel, usetex=True)
     plt.legend(loc='best', frameon=False)
@@ -173,10 +201,12 @@ def main():
         ratio[mask_nonzero] = matched_yerr2[mask_nonzero] / yerr1[mask_nonzero]
 
         plt.figure(figsize=(16,10))
+        plt.xlim(0.0,1.0)
         plt.axhline(1.0, color="0.6", linestyle="--", label="ratio = 1")
-        plt.plot(x1, ratio, marker="o", linestyle="-", label=f"Uncertainty ratio {label2} / {label1}")
+        plt.plot(x1, ratio, marker="o", markersize=20,
+        linestyle="-", label=f"Uncertainty ratio {label2} / {label1}")
         plt.xlabel("$x$", usetex=True)
-        plt.ylabel(f"Uncertainty ratio ({label2} / {label1})")
+        plt.ylabel(f"Uncertainty ratio")
         plt.legend(loc="best", frameon=False)
         plt.tight_layout()
         if args.output:
