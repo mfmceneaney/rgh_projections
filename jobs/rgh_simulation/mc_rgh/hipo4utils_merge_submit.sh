@@ -15,26 +15,6 @@ cd "${RGH_PROJECTIONS_HOME:-.}/jobs/rgh_simulation/mc_rgh" || exit 1
 
 NMERGE_FILES=${RGH_NMERGE_FILES}
 
-# Collect .hipo files produced by the jobs. Exclude files that look like already-merged outputs
-shopt -s nullglob
-hipo_files=( *.hipo )
-#!/usr/bin/env bash
-set -euo pipefail
-
-# Set environment
-export OUTDIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh"
-
-# Merge submit helper for outputs produced by jobs in this directory
-# Groups .hipo files into batches of $RGH_NMERGE_FILES and submits one sbatch job per batch
-
-cd "${RGH_PROJECTIONS_HOME:-.}/jobs/rgh_simulation/mc_rgh" || exit 1
-
-# Required environment variables (should be set by bin/env.sh or bin/env.csh)
-: "${RGH_HIPO_UTILS_COMMAND:?Please set RGH_HIPO_UTILS_COMMAND in your environment ($RGH_PROJECTIONS_HOME/env.txt)}"
-: "${RGH_NMERGE_FILES:?Please set RGH_NMERGE_FILES in your environment ($RGH_PROJECTIONS_HOME/env.txt)}"
-
-NMERGE_FILES=${RGH_NMERGE_FILES}
-
 # File to collect all sbatch submit commands so the user can run them separately
 submit_all="submit_all_merge_jobs.sh"
 # Initialize/overwrite the submit-all wrapper
@@ -48,7 +28,7 @@ chmod +x "$submit_all"
 
 # Collect .hipo files produced by the jobs. Exclude files that look like already-merged outputs
 shopt -s nullglob
-#hipo_files=( $OUTDIR/dst/*.hipo )
+hipo_files=( $OUTDIR/dst/*.hipo )
 filtered=()
 for f in "${hipo_files[@]}"; do
     if [[ "$f" == *merged* || "$f" == *_merged* ]]; then
