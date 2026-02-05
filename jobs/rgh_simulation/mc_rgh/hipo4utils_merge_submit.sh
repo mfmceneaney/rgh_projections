@@ -43,38 +43,69 @@ if [ "$total" -eq 0 ]; then
     exit 0
 fi
 
-echo "Found $total .hipo files to merge. Grouping into batches of $NMERGE_FILES..."
+echo "Found $total .hipo files to merge. Splitting into positive/negative target-polarization groups (per jobs/c12analysis/mc_rgh/job.sh) and batching into $NMERGE_FILES per merge..."
 
-grp=0
-i=0
-while [ $i -lt $total ]; do
-    start=$i
-    end=$(( i + NMERGE_FILES - 1 ))
-    if [ $end -ge $(( total - 1 )) ]; then
-        end=$(( total - 1 ))
+# Prepare merged output dir
+mkdir -p "$OUTDIR/merged"
+
+# Split into pos/neg groups using the same rule as job.sh
+pos_group=()
+neg_group=()
+if [ -z "${CLASDIS_GEN_PM:-}" ] || [ "${CLASDIS_GEN_PM}" -eq 0 ] 2>/dev/null; then
+    # CLASDIS_GEN_PM unset or zero -> all files treated as positive-target spin
+    pos_group=( "${filtered[@]}" )
+else
+    for f in "${filtered[@]}"; do
+        name=$(basename "$f")
+        if echo "$name" | grep -q "${CLASDIS_PREFIX}-${CLASDIS_POL}_"; then
+            # matches pattern -> goes into negative-target group (TSPIN_SIGN=-1)
+            neg_group+=("$f")
+        else
+            pos_group+=("$f")
+        fi
+    done
+fi
+
+# Function to write batches for a named array (portable, avoids nameref)
+write_group_batches() {
+    local array_name="$1"  # name of array variable holding file paths
+    local label="$2"       # label to use in output filenames (pos/neg)
+    local files
+    # copy named array into local 'files' array
+    eval "files=( \"\${${array_name}[@]}\" )"
+    local total_g=${#files[@]}
+    if [ "$total_g" -eq 0 ]; then
+        echo "No files for group: $label"
+        return
     fi
-    count=$(( end - start + 1 ))
-    grp=$(( grp + 1 ))
 
-    # Prepare input list for this group
-    inputs=( "${filtered[@]:$start:$count}" )
-    outfile="$OUTDIR/merged/merged_${grp}.hipo"
-    mergescript="merge_job_${grp}.sh"
-    submitscript="submit_merge_${grp}.sh"
+    local idx=0
+    local grp_id=0
+    while [ $idx -lt $total_g ]; do
+        local start=$idx
+        local end=$(( idx + NMERGE_FILES - 1 ))
+        if [ $end -ge $(( total_g - 1 )) ]; then
+            end=$(( total_g - 1 ))
+        fi
+        local count=$(( end - start + 1 ))
+        grp_id=$(( grp_id + 1 ))
 
-    # Write the actual merge command script
-    cat > "$mergescript" <<EOF
+        local inputs=( "${files[@]:$start:$count}" )
+        local outfile="$OUTDIR/merged/merged_${label}_${grp_id}.hipo"
+        local mergescript="merge_${label}_${grp_id}.sh"
+        local submitscript="submit_merge_${label}_${grp_id}.sh"
+
+        cat > "$mergescript" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 cd "${RGH_PROJECTIONS_HOME:-.}/jobs/rgh_simulation/mc_rgh"
-\$RGH_HIPO_UTILS_COMMAND -merge -o "$outfile" ${inputs[*]}
+${RGH_HIPO_UTILS_COMMAND} -merge -o "$outfile" ${inputs[*]}
 EOF
-    chmod +x "$mergescript"
+        chmod +x "$mergescript"
 
-    # Write a minimal sbatch submit script for the merge job
-    cat > "$submitscript" <<EOF
+        cat > "$submitscript" <<EOF
 #!/usr/bin/env bash
-#SBATCH --job-name=mc_rgh_merge
+#SBATCH --job-name=merge_${label}_${grp_id}
 #SBATCH --output=$RGH_PROJECTIONS_FARM_OUT/%x-%j-%N.out
 #SBATCH --error=$RGH_PROJECTIONS_FARM_OUT/%x-%j-%N.err
 #SBATCH --partition=$RGH_HPC_PARTITION
@@ -84,12 +115,18 @@ EOF
 bash "$(pwd)/$mergescript"
 EOF
 
-    # Add the sbatch invocation to the submit-all wrapper (do not submit here)
-    echo "Adding submit entry for merge job files ${start}..${end} -> $outfile"
-    echo "sbatch \"$(pwd)/$submitscript\"" >> "$submit_all"
+        echo "Adding submit entry for $label group files ${start}..${end} -> $outfile"
+        echo "sbatch \"$(pwd)/$submitscript\"" >> "$submit_all"
 
-    i=$(( end + 1 ))
-done
+        idx=$(( end + 1 ))
+    done
 
-echo "Wrote $grp merge job scripts and a submit-all wrapper: $submit_all"
+    echo "Wrote $grp_id merge jobs for group: $label"
+}
+
+# Write batches for positive and negative groups separately
+write_group_batches pos_group pos
+write_group_batches neg_group neg
+
+echo "Wrote merge job scripts and a submit-all wrapper: $submit_all"
 echo "To submit the merge jobs, run: ./$submit_all"
