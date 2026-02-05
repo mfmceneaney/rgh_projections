@@ -173,7 +173,7 @@ for rg in rgs:
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
                                 'ylabel':'Counts',
-                                'hist_linewidth':histlinewidth,
+                                'hist_linewidth':hist_linewidth,
                             }
                             for bin_id in bin_ids
                     ]
