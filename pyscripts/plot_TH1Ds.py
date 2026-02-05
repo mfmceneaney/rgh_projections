@@ -111,10 +111,10 @@ for rg in rgs:
                         f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
-                        f'phi_h_{ch}'   : '\\phi_{'+ch_labels[ch]+'}',
-                        f'phi_s_up'     : '\\phi_{S}',
-                        f'phi_rt_{ch}'  : '\\phi_{R_{\\perp},'+ch_labels[ch]+'}',
-                        f'sintheta_p1_{ch}' : '\\sin{\\theta_{P_1,'+ch_labels[ch]+'}}',
+                        f'phi_h_{ch}'   : '$\\phi_{'+ch_labels[ch]+'}$',
+                        f'phi_s_up'     : '$\\phi_{S}$',
+                        f'phi_rt_{ch}'  : '$\\phi_{R_{\\perp},'+ch_labels[ch]+'}$',
+                        f'sintheta_p1_{ch}' : '$\\sin{\\theta_{P_1,'+ch_labels[ch]+'}}$',
                     }                    
                     xlims = {
                         'x'             : [0.0,1.0],
