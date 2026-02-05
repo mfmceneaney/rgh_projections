@@ -51,6 +51,7 @@ export RGH_PROJECTIONS_VOL_DIR="/volatile/clas12/users/$USER/rgh_projections" #N
 
 # Set variables for rgh_simulation
 export RGH_SIM_HOME="/work/clas12/users/$USER/rgh_simulation" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
+export RGH_NMERGE_FILES=20
 
 # Set image paths
 export RGH_PROJECTIONS_GEMC_IMG="gemc_dev-almalinux94/"
