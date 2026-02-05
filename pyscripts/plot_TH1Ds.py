@@ -96,7 +96,7 @@ for rg in rgs:
                 allowed_angkinvars = ['phi_h', 'phi_s_up']
                 if ch=='pipim':
                     allowed_angkinvars.extend(['phi_rt', 'sintheta_p1'])
-                allowed_angkinvars = [el+(f'_{ch}' if el!='x' else '') for el in allowed_angkinvars]
+                allowed_angkinvars = [el+(f'_{ch}' if el!='x' and el!='phi_s_up' else '') for el in allowed_angkinvars]
                 kinvars.extend(allowed_angkinvars)
 
                 # Loop kinematic variable pairs
