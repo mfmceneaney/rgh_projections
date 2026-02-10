@@ -106,7 +106,7 @@ alias RGH_SAGA_COMMAND "apptainer exec -B \
     bash -c \"\!*\""
 
 # Set project HIPO data paths for CLAS12-Analysis
-setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"
+setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/merged"
 setenv RGH_MC_DIR_22GeV "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/dst"
 
 # Set path to target polarization csv for RGC data and saga

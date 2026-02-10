@@ -121,7 +121,7 @@ RGH_SAGA_COMMAND() {
 export -f RGH_SAGA_COMMAND
 
 # Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
-export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"
+export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/merged"
 export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/dst"
 
 # Set path to target polarization csv for RGC data and saga
