@@ -125,8 +125,8 @@ EOF
 }
 
 # Write batches for positive and negative groups separately
-write_group_batches pos_group pos
-write_group_batches neg_group neg
+write_group_batches pos_group ${CLASDIS_PREFIX}${CLASDIS_POL}_
+write_group_batches neg_group ${CLASDIS_PREFIX}-${CLASDIS_POL}_
 
 echo "Wrote merge job scripts and a submit-all wrapper: $submit_all"
 echo "To submit the merge jobs, run: ./$submit_all"
