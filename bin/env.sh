@@ -13,6 +13,10 @@ export CLASDIS_NJOBS_HALF=500
 export CLASDIS_POL=1
 export CLASDIS_PREFIX=out_tp_
 export CLASDIS_GEN_PM=1
+export CLASDIS_ZPOS=0.0
+export CLASDIS_ZWIDTH=2.84
+export CLASDIS_PARJ21=0.5
+export CLASDIS_RASTER=0.02
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis #NOTE: CHANGE AS NEEDED
 export BEAM_ENERGY_RGA=10.6
@@ -47,6 +51,7 @@ export RGH_PROJECTIONS_VOL_DIR="/volatile/clas12/users/$USER/rgh_projections" #N
 
 # Set variables for rgh_simulation
 export RGH_SIM_HOME="/work/clas12/users/$USER/rgh_simulation" #NOTE: CHANGE AS NEEDED. This is a path to your local repo of: https://github.com/mfmceneaney/rgh_simulation for gcard and service yaml files for `gemc` and `recon-util`.
+export RGH_NMERGE_FILES=20
 
 # Set image paths
 export RGH_PROJECTIONS_GEMC_IMG="gemc_dev-almalinux94/"
@@ -116,7 +121,7 @@ RGH_SAGA_COMMAND() {
 export -f RGH_SAGA_COMMAND
 
 # Set project HIPO data paths for CLAS12-Analysis #NOTE: CHANGE AS NEEDED
-export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"
+export RGH_MC_DIR="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/merged"
 export RGH_MC_DIR_22GeV="$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/dst"
 
 # Set path to target polarization csv for RGC data and saga

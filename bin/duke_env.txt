@@ -35,9 +35,14 @@ RGA_MC_DIR="NULL/cache/clas12/rg-a/production/montecarlo/clasdis_pass1/fall2018/
 RGC_MC_DIR_TP1="/work/mfm45/polarized-plus-10.5GeV-proton/hipo/"
 RGC_MC_DIR_TM1="/work/mfm45/polarized-minus-10.5GeV-proton/hipo/"
 RGA_DT_DIR="NULL/cache/clas12/rg-a/production/recon/fall2018/torus-1/pass1/v1/dst/train/nSidis/"
-RGC_DT_DIR="/work/mfm45/sidisdvcs/"
+RGC_DT_DIR="/hpc/group/vossenlab/mfm45/data_jobs_rgc_C12TRAINS_vtx_3_5_25/"
 RGC_MC_DIR_TP1_22GeV="/work/mfm45/polarized-plus-22GeV-proton/hipo/"
 RGC_MC_DIR_TM1_22GeV="/work/mfm45/polarized-minus-22GeV-proton/hipo/"
+
+# Set numeric values for saga
+DT_RGC_BEAM_POLARIZATION=0.562
+MC_RGC_BEAM_POLARIZATION=1.0
+MC_RGH_BEAM_POLARIZATION=1.0
 
 # Set output directory for slurm job stdout and stderr
 RGH_PROJECTIONS_FARM_OUT="/work/mfm45/farm_out"
@@ -47,7 +52,6 @@ RGH_PROJECTIONS_VOL_DIR="/cwork/mfm45/rgh_projections"
 
 # Set variables for rgh_simulation
 RGH_SIM_HOME="/hpc/group/vossenlab/mfm45/rgh_simulation"
-RGH_NMERGE_FILES=20
 
 # Set image paths
 RGH_PROJECTIONS_GEMC_IMG="/hpc/home/mfm45/gemc_dev-almalinux94/"

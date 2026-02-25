@@ -21,7 +21,7 @@ cd $OUTDIR
 if ((!$CLASDIS_GEN_PM)); then
 
     # Run clasdis event generation 
-    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos $CLASDIS_ZPOS --zwidth $CLASDIS_ZWIDTH --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 $CLASDIS_PARJ21 --beam $BEAM_ENERGY_RGH_22GeV --raster $CLASDIS_RASTER --trig $CLASDIS_TRIG --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}
 
     # Move files to numbered prefix names for ease of use
     i=1
@@ -38,8 +38,8 @@ if ((!$CLASDIS_GEN_PM)); then
 else
 
     # Run clasdis event generation for both positive and negative polarization
-    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
-    nohup $RGH_C12ANALYSIS_COMMAND --zpos -4.5 --zwidth 5.0 --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 0.6 --beam $BEAM_ENERGY_RGH_22GeV --raster 1.8 --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${CLASDIS_PREFIX}-${CLASDIS_POL}_
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos $CLASDIS_ZPOS --zwidth $CLASDIS_ZWIDTH --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 $CLASDIS_PARJ21 --beam $BEAM_ENERGY_RGH_22GeV --raster $CLASDIS_RASTER --trig $CLASDIS_TRIG_HALF --pol $CLASDIS_POL --path ${CLASDIS_PREFIX}${CLASDIS_POL}_
+    nohup $RGH_C12ANALYSIS_COMMAND --zpos $CLASDIS_ZPOS --zwidth $CLASDIS_ZWIDTH --targ $CLASDIS_TARG --nont --nmax $CLASDIS_NMAX --parj21 $CLASDIS_PARJ21 --beam $BEAM_ENERGY_RGH_22GeV --raster $CLASDIS_RASTER --trig $CLASDIS_TRIG_HALF --pol -$CLASDIS_POL --path ${CLASDIS_PREFIX}-${CLASDIS_POL}_
 
     # Move files to numbered prefix names for ease of use
     i=1

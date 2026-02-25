@@ -19,7 +19,7 @@ parser.add_argument('--asyms', default=[-0.1,0.0,0.1], help='Asymmetries injecte
 parser.add_argument('--hist_ylims', default=[0.0,0.06], help='Normalized histogram y-axis limits', nargs=2, type=float)
 parser.add_argument('--xs_ratio', default=7.908/9.194, help='Cross-section ratio (new/old) for rescaling uncertainties', type=float)
 parser.add_argument('--lumi_ratio', default=100/13.2 * 5/40, help='Luminosity ratio (new/old) for rescaling uncertainties', type=float)
-parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties')
+parser.add_argument('--graph_yvalue', default=0.1, help='Graph y-value for rescaled uncertainties', type=float)
 parser.add_argument('--tpol_factor', default=0.85, help='Target polarization for rescaling uncertainties', type=float)
 parser.add_argument('--tdil_factor', default=3/17, help='Target dilution factor for rescaling uncertainties', type=float)
 parser.add_argument('--hist_density', action="store_true", help='Plot normalized histograms')
@@ -29,6 +29,8 @@ parser.add_argument('--watermark_size', default=50, help='Water mark size', type
 parser.add_argument('--watermark_rotation', default=25.0, help='Water mark rotation angle', type=float)
 parser.add_argument('--watermark_color', default="gray", help='Water mark color', type=str)
 parser.add_argument('--watermark_alpha', default=0.5, help='Water mark alpha', type=float)
+parser.add_argument('--norescale', action="store_true", help="Do not rescale results")
+parser.add_argument('--yerr_key', default="", help='Y error key for rescaling, uses errors instead of statistics for rescaling', type=str)
 args = parser.parse_args()
 
 # Set configuration
@@ -50,6 +52,8 @@ watermark_kwargs = {
     "color":args.watermark_color,
     "alpha":args.watermark_alpha,
 }
+rescale = not args.norescale
+yerr_key = args.yerr_key
 RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set up chaining for batched data (specifically `old_dat_path`)
@@ -314,7 +318,6 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
             if verbose: print("INFO: Loaded dataframes")
 
             # If you want to rescale your results using results from other base directories set the following arguments
-            rescale = True
             if rescale:
 
                 # Get the output path basenames for the new sim
@@ -356,7 +359,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
                         'old_dat_path':config_out_path,
                         'new_sim_path':new_sim_config_out_path,
                         'old_sim_path':old_sim_config_out_path,
-                        'yerr_key':'',
+                        'yerr_key':yerr_key,
                         'xs_ratio': xs_ratio,
                         'lumi_ratio':lumi_ratio,
                         'graph_yvalue':graph_yvalue,
@@ -400,7 +403,7 @@ for base_dir, ch_sgasym_label, ch in zip(base_dirs,ch_sgasym_labels,chs):
 
             # Set additional arguments for saga.plot.plot_results()
             plot_results_kwargs_base['sgasyms'] = config['sgasyms']
-            plot_results_kwargs_base['outpath'] = config_out_path.replace(sep+result_name+ext,sector4_label+sep+result_name+ext)
+            plot_results_kwargs_base['outpath'] = config_out_path.replace(sep+result_name+ext,sep+result_name+ext)
 
             # Plot the graph
             plot_results(ax,**aggregate_graph,**plot_results_kwargs_base)
