@@ -25,7 +25,7 @@ RGH_PROJECTIONS_HOME = os.environ['RGH_PROJECTIONS_HOME']
 
 # Set channels and beam suffixes to loop
 chs = args.chs #['pi','pim','pipim']#,'k','km']
-ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
+ch_labels = {'pi':'\\pi^{+}','pim':'\\pi^{-}','pipim':'\\pi^{+}\\pi^{-}','k':'K^{+}','km':'K^{-}'}
 beam_suffixes = ['']#,'_22GeV']
 rgs = args.rgs #['dt_rgc','mc_rgc','mc_rgh', 'mc_rgh_sector4']
 rg_labels = {'dt_rgc':'Data RGC','mc_rgc':'MC RGC','mc_rgh':'MC RGH','mc_rgh_sector4':'MC RGH with Sector 4'}
@@ -92,6 +92,13 @@ for rg in rgs:
                 kinvars = binvars.copy()
                 kinvars.remove(binvar)
 
+                # Add angular kinvars
+                allowed_angkinvars = ['phi_h', 'phi_s_up']
+                if ch=='pipim':
+                    allowed_angkinvars.extend(['phi_rt', 'sintheta_p1'])
+                allowed_angkinvars = [el+(f'_{ch}' if el!='x' and el!='phi_s_up' else '') for el in allowed_angkinvars]
+                kinvars.extend(allowed_angkinvars)
+
                 # Loop kinematic variable pairs
                 for kinvar_x in kinvars:
 
@@ -104,6 +111,10 @@ for rg in rgs:
                         f'phperp2_{ch}' : '$P^{2}_{'+ch_labels[ch]+'\\perp}$ (GeV$^{2}$)',
                         f'z_{ch}'       : '$z_{'+ch_labels[ch]+'}$',
                         f'mass_{ch}'    : '$M_{'+ch_labels[ch]+'}$ (GeV)',
+                        f'phi_h_{ch}'   : '$\\phi_{'+ch_labels[ch]+'}$',
+                        f'phi_s_up'     : '$\\phi_{S}$',
+                        f'phi_rt_{ch}'  : '$\\phi_{R_{\\perp},'+ch_labels[ch]+'}$',
+                        f'sintheta_p1_{ch}' : '$\\sin{\\theta_{P_1,'+ch_labels[ch]+'}}$',
                     }                    
                     xlims = {
                         'x'             : [0.0,1.0],
@@ -113,6 +124,10 @@ for rg in rgs:
                         f'phperp_{ch}'  : [0.0,2.25] if beam_suffix=='_22GeV' else [0.0,1.25],
                         f'phperp2_{ch}' : [0.0,5.0]  if beam_suffix=='_22GeV' else [0.0,1.6],
                         f'z_{ch}'       : [0.0,1.0],
+                        f'phi_h_{ch}'   : [0.0,2.0*np.pi],
+                        f'phi_s_up'     : [0.0,2.0*np.pi],
+                        f'phi_rt_{ch}'  : [0.0,2.0*np.pi],
+                        f'sintheta_p1_{ch}' : [-1.0,1.0],
                     }
                     hist_colors = {
                         'x'             : ['tab:purple'],
@@ -122,6 +137,10 @@ for rg in rgs:
                         f'phperp_{ch}'  : ['tab:red'],
                         f'phperp2_{ch}' : ['tab:green'],
                         f'z_{ch}'       : ['tab:orange'],
+                        f'phi_h_{ch}'   : ['firebrick'],
+                        f'phi_s_up'     : ['forestgreen'],
+                        f'phi_rt_{ch}'  : ['goldenrod'],
+                        f'sintheta_p1_{ch}' : ['deepskyblue'],
                     }
 
                     # Only add bin variable values above plots for now
@@ -154,7 +173,7 @@ for rg in rgs:
                                 'xlabel':xlabels[kinvar_x],
                                 'ylims':ylims,
                                 'ylabel':'Counts',
-                                'hist_linewidth':histlinewidth,
+                                'hist_linewidth':hist_linewidth,
                             }
                             for bin_id in bin_ids
                     ]

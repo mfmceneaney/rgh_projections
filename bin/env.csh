@@ -13,6 +13,10 @@ setenv CLASDIS_NJOBS_HALF 500
 setenv CLASDIS_POL 1
 setenv CLASDIS_PREFIX out_tp_
 setenv CLASDIS_GEN_PM 1
+setenv CLASDIS_ZPOS 0.0
+setenv CLASDIS_ZWIDTH 2.84
+setenv CLASDIS_PARJ21 0.5
+setenv CLASDIS_RASTER 0.02
 
 # Set beam energies and target lund pids for clasdis and CLAS12-Analysis
 setenv BEAM_ENERGY_RGA 10.6
@@ -47,6 +51,7 @@ setenv RGH_PROJECTIONS_VOL_DIR "/volatile/clas12/users/$USER/rgh_projections"
 
 # Set variables for rgh_simulation
 setenv RGH_SIM_HOME "/work/clas12/users/$USER/rgh_simulation"
+env RGH_NMERGE_FILES 20
 
 # Set image paths
 setenv RGH_PROJECTIONS_GEMC_IMG "gemc_dev-almalinux94/"
@@ -101,7 +106,7 @@ alias RGH_SAGA_COMMAND "apptainer exec -B \
     bash -c \"\!*\""
 
 # Set project HIPO data paths for CLAS12-Analysis
-setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/dst"
+setenv RGH_MC_DIR "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh/merged"
 setenv RGH_MC_DIR_22GeV "$RGH_PROJECTIONS_VOL_DIR/jobs/rgh_simulation/mc_rgh_22GeV/dst"
 
 # Set path to target polarization csv for RGC data and saga
