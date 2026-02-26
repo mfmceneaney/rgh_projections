@@ -115,7 +115,8 @@ for rg in rgs:
                 if args.watermark:
                     watermark = "CLAS12 Preliminary"
                     plot_watermark(
-                        watermark,
+                        ax,
+                        watermark=watermark,
                         size=75,
                         rotation=25.0,
                         color="gray",
