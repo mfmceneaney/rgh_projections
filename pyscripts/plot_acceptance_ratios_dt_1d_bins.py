@@ -83,10 +83,10 @@ for ch, ch_label, yaml_path in zip(channels, ch_labels, yaml_paths):
 
     # Set file names
     file_names_old = [
-        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[0]}_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.0___{kinvar}_mc_rgh{rgh_mc_names[0]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
     file_names_new = [
-        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.1___{kinvar}_mc_rgh{rgh_mc_names[1]}_a0.pdf_rescaled.csv' for kinvar in kinvars
+        f'aggregate______{kinvar}_binscheme__inject_seed_1__sgasyms_0.0___{kinvar}_mc_rgh{rgh_mc_names[1]}_a0.pdf_rescaled.csv' for kinvar in kinvars
     ]
 
     # Load dataframes
